@@ -33,6 +33,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'sqlite3', '~> 1.4'
   gem 'rspec-rails', '~> 4.0'
+  gem 'capybara', '~> 2.13'
 end
 
 group :development do
@@ -51,7 +52,8 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
-  gem 'rspec-rails', '~> 4.0'
+  gem 'rails-controller-testing'
+  gem 'simplecov', :require => false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
