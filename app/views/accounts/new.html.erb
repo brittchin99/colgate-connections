@@ -1,0 +1,14 @@
+<h1>Create an Account</h1>
+<%= simple_form_for @account, :url => url_for(:action => 'create', :controller => 'accounts'), :method => 'post' do |f| %>
+    <%= f.error_notification %>
+    
+    <%= f.input :first_name %>
+    
+    <%= f.input :last_name %>
+    
+    <%= f.input :email, label: 'Colgate email', placeholder: 'user@colgate.edu' %>
+    
+    <%= f.input :password, input_html: { autocomplete: 'current-password' } %>
+    
+    <%= f.button :submit, class: "btn-primary" %>
+<% end %>
