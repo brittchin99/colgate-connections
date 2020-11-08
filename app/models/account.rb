@@ -1,4 +1,7 @@
 class Account < ApplicationRecord
+  has_many :connections, dependent: :destroy
+  has_many :friends, through: :connections
+  
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
