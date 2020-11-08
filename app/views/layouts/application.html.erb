@@ -17,10 +17,10 @@
         </div>
         <ul class="nav navbar-nav navbar-right">
           <% if account_signed_in? %>
-            Logged in as <strong><%= current_account.email %></strong>.
-            <%= link_to "Log out", destroy_account_session_path, method: :delete, :class => "btn btn-sm btn-primary"  %>
+            <span>Logged in as <strong><%= current_account.email %></strong>. </span>
+            <%= link_to "Log Out", destroy_account_session_path, method: :delete, :class => "btn btn-sm btn-primary"  %>
           <% else %>
-            <%= link_to "Log in/Sign Up", new_account_session_path %>
+            <%= link_to "Log In / Sign Up", new_account_session_path %>
           <% end %>
         </ul>
       </div>
@@ -36,8 +36,6 @@
         </div>
     <% end %>
     </div>
-    <%= yield %>
-  
     <div class="container">
       <div class="row">
         <% if account_signed_in? %>
@@ -52,5 +50,6 @@
         <% end %>
       </div>
     </div>
+    <%= yield %>
   </body>
 </html>

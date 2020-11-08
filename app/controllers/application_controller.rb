@@ -15,4 +15,8 @@ class ApplicationController < ActionController::Base
     def devise_mapping
       @devise_mapping ||= Devise.mappings[:account]
     end
+    
+    def after_sign_in_path_for(resource)
+      profile_path(current_account)
+    end
 end
