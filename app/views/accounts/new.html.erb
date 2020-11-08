@@ -14,11 +14,11 @@
     
     <%= f.input :class_year, as: :radio_buttons, collection: Account::CLASS_YEARS %>
     
-    <%= f.input :majors, label: "Major(s)", collection: Account::MAJORS, input_html: { multiple: true, required: true } %>
+    <%= f.input :majors, label: "Major(s)", collection: Account::MAJORS, input_html: { multiple: true, required: true }, include_hidden: false %>
     
-    <%= f.input :minors, label: "Minor(s)", collection: Account::MAJORS, input_html: { multiple: true, required: true } %>
+    <%= f.input :minors, label: "Minor(s)", collection: Account::MAJORS, input_html: { multiple: true, required: true }, include_hidden: false %>
     
-    <%= f.input :interests, as: :check_boxes, collection: Account::INTERESTS, wrapper: :vertical_collection_inline %>
+    <%= f.input :interests, as: :check_boxes, collection: Account::INTERESTS, wrapper: :vertical_collection_inline, include_hidden: false %>
     
     <%= f.button :submit, class: "btn-primary" %>
 <% end %>

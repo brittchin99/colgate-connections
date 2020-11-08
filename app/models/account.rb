@@ -4,7 +4,7 @@ class Account < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
          
-  validates :first_name, :last_name, :email, :password, :pronouns, :class_year, :majors, :minors, :interests, presence: true
+  validates :first_name, :last_name, :email, :password, :pronouns, :class_year, :majors, :interests, presence: true
   validates :email, uniqueness: true
 
   PRONOUNS = ['she/her/hers', 'he/him/his', 'they/them/theirs', 'Other']

@@ -5,3 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+Account.delete_all
+
+Account.create!(:email => 'admin@colgate.edu', :admin => true, :password => "colgate13", :first_name => "Admin", :last_name => "Colgate",
+    :pronouns => "they/them/theirs", :class_year => 2021, :majors => "Computer Science", :minors => "English", :interests => "Dance")
