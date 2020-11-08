@@ -10,6 +10,45 @@
   </head>
 
   <body>
+    <div>
+      <div>
+        <% if account_signed_in? %>
+          Logged in as <strong><%= current_account.email %></strong>.
+          <%= link_to "Log out", destroy_account_session_path, method: :delete, :class => "btn btn-sm btn-primary"  %>
+        <% else %>
+          <%= link_to "Sign up", new_account_registration_path, :class => "btn btn-sm btn-primary"  %> |
+          <%= link_to "Log in", new_account_session_path, :class => "btn btn-sm btn-primary" %>
+        <% end %>
+      </div>
+      
+      <div>
+        <% if account_signed_in? %>
+          <div>
+            <span>
+              <%= "Welcome #{current_account.email}" %>
+            </span>
+            <% if current_account.admin %>
+              <span>(admin account)</span>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      
+      <% if flash[:notice] %>
+        <div class="row">
+          <div class="col-md-4 alert alert-primary notice">
+            <%= "#{flash[:notice]}" %>
+          </div>
+        </div>
+      <% end %>
+      <% if flash[:alert] %>
+        <div class="row">
+          <div class="col-md-4 alert alert-warning alert">
+            <%= "#{flash[:alert]}" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
     <%= yield %>
   </body>
 </html>
