@@ -23,8 +23,6 @@
             <%= link_to "Log in/Sign Up", new_account_session_path %>
           <% end %>
         </ul>
-      <%= render 'devise/shared/login_form' %>
-      <%= link_to "Login", "", data: {toggle: "modal", target: ".bd-example-modal-lg"} %>
       </div>
     </nav>
     <% if flash[:notice] %>
