@@ -2,13 +2,23 @@
 <%= simple_form_for @account, :url => url_for(:action => 'create', :controller => 'accounts'), :method => 'post' do |f| %>
     <%= f.error_notification %>
     
-    <%= f.input :first_name %>
+    <%= f.input :first_name, input_html: { required: true, size: 40 }%>
     
-    <%= f.input :last_name %>
+    <%= f.input :last_name, input_html: { required: true } %>
     
-    <%= f.input :email, label: 'Colgate email', placeholder: 'user@colgate.edu' %>
+    <%= f.input :email, label: 'Colgate email', placeholder: 'user@colgate.edu', input_html: { required: true } %>
     
-    <%= f.input :password, input_html: { autocomplete: 'current-password' } %>
+    <%= f.input :password, input_html: { required: true } %>
+    
+    <%= f.input :pronouns, as: :radio_buttons, collection: Account::PRONOUNS %>
+    
+    <%= f.input :class_year, as: :radio_buttons, collection: Account::CLASS_YEARS %>
+    
+    <%= f.input :majors, label: "Major(s)", collection: Account::MAJORS, input_html: { multiple: true, required: true } %>
+    
+    <%= f.input :minors, label: "Minor(s)", collection: Account::MAJORS, input_html: { multiple: true, required: true } %>
+    
+    <%= f.input :interests, as: :check_boxes, collection: Account::INTERESTS, wrapper: :vertical_collection_inline %>
     
     <%= f.button :submit, class: "btn-primary" %>
 <% end %>

@@ -7,21 +7,21 @@ class AccountsController < ApplicationController
     end
   
     def create
-        # @account = Account.new(account_params)
         puts account_params
-        flash[:notice] = "Test succeeded"
-        redirect_to connections_path and return
-        # if @product.save
-        #   flash[:notice] = "New product #{@product.name} created"
-        #   redirect_to products_path and return
-        # else
-        #   flash[:alert] = "Failed to save new product"
-        #   redirect_to new_product_path and return
-        # end
+        
+        @account = Account.new(account_params)
+
+        if @account.save
+            flash[:notice] = "Account successfully created. Please check email for verification link."
+            redirect_to connections_path and return
+        else
+            flash[:alert] = "Failed to create account."
+            render new_account_path and return
+        end
     end
     
     private
     def account_params
-        params.require(:account).permit(:first_name, :last_name, :password,)
+        params.require(:account).permit(:first_name, :last_name, :email, :password, :pronouns, :class_year, :majors, :minors, :interests)
     end
 end
