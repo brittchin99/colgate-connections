@@ -6,22 +6,40 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body>
-    <div>
-      <div>
-        <% if account_signed_in? %>
-          Logged in as <strong><%= current_account.email %></strong>.
-          <%= link_to "Log out", destroy_account_session_path, method: :delete, :class => "btn btn-sm btn-primary"  %>
-        <% else %>
-          <%= link_to "Sign up", new_account_registration_path, :class => "btn btn-sm btn-primary"  %> |
-          <%= link_to "Log in", new_account_session_path, :class => "btn btn-sm btn-primary" %>
-        <% end %>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <%= link_to "Colgate Connections", connections_path, :class => "navbar-brand" %>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <% if account_signed_in? %>
+            Logged in as <strong><%= current_account.email %></strong>.
+            <%= link_to "Log out", destroy_account_session_path, method: :delete, :class => "btn btn-sm btn-primary"  %>
+          <% else %>
+            <%= link_to "Log in/Sign Up", new_account_session_path %>
+          <% end %>
+        </ul>
       </div>
-      
-      <div>
+    </nav>
+    <% if flash[:notice] %>
+        <div class="alert alert-primary notice">
+          <%= "#{flash[:notice]}" %>
+        </div>
+    <% end %>
+    <% if flash[:alert] %>
+        <div class="alert alert-warning alert">
+          <%= "#{flash[:alert]}" %>
+        </div>
+    <% end %>
+    </div>
+    <%= yield %>
+  
+    <div class="container">
+      <div class="row">
         <% if account_signed_in? %>
           <div>
             <span>
@@ -33,22 +51,6 @@
           </div>
         <% end %>
       </div>
-      
-      <% if flash[:notice] %>
-        <div class="row">
-          <div class="col-md-4 alert alert-primary notice">
-            <%= "#{flash[:notice]}" %>
-          </div>
-        </div>
-      <% end %>
-      <% if flash[:alert] %>
-        <div class="row">
-          <div class="col-md-4 alert alert-warning alert">
-            <%= "#{flash[:alert]}" %>
-          </div>
-        </div>
-      <% end %>
     </div>
-    <%= yield %>
   </body>
 </html>
