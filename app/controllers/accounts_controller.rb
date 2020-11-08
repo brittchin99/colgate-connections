@@ -8,7 +8,7 @@ class AccountsController < Devise::RegistrationsController
 
     if @account.save
       flash[:notice] = "Account successfully created. Please check email for verification link."
-        redirect_to connections_path and return
+        redirect_to root and return
     else
       flash[:alert] = "Failed to create account."
         render new_account_path and return
@@ -17,6 +17,6 @@ class AccountsController < Devise::RegistrationsController
   
   private
     def account_params
-        params.require(:account).permit(:first_name, :last_name, :email, :password, :pronouns, :class_year, :majors, :minors, :interests)
+        params.require(:account).permit(:first_name, :last_name, :email, :password, :pronouns, :class_year, :majors => [], :minors => [], :interests => [])
     end
 end
