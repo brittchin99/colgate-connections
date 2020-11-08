@@ -23,9 +23,9 @@ ActiveRecord::Schema.define(version: 2020_11_08_063642) do
     t.string "last_name"
     t.string "pronouns"
     t.integer "class_year"
-    t.string "majors"
-    t.string "minors"
-    t.string "interests"
+    t.text "majors"
+    t.text "minors"
+    t.text "interests"
     t.index ["email"], name: "index_accounts_on_email", unique: true
   end
 

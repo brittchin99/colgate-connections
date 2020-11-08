@@ -15,6 +15,10 @@ class AccountsController < Devise::RegistrationsController
     end
   end
   
+  def show
+    @account = Account.find(params[:id])
+  end
+  
   private
     def account_params
         params.require(:account).permit(:first_name, :last_name, :email, :password, :pronouns, :class_year, :majors => [], :minors => [], :interests => [])
