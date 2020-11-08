@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_05_213908) do
+ActiveRecord::Schema.define(version: 2020_11_08_014105) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "first_name"
@@ -25,4 +25,14 @@ ActiveRecord::Schema.define(version: 2020_11_05_213908) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "connections", force: :cascade do |t|
+    t.integer "account_id"
+    t.integer "friend_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_connections_on_account_id"
+    t.index ["friend_id"], name: "index_connections_on_friend_id"
+  end
+
+  add_foreign_key "connections", "accounts"
 end
