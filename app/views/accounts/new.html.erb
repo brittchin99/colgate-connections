@@ -1,24 +1,31 @@
-<h1>Create an Account</h1>
-<%= simple_form_for @account, :url => url_for(:action => 'create', :controller => 'accounts'), :method => 'post' do |f| %>
-    <%= f.error_notification %>
-    
-    <%= f.input :first_name, input_html: { required: true, size: 40 }%>
-    
-    <%= f.input :last_name, input_html: { required: true } %>
-    
-    <%= f.input :email, label: 'Colgate Email', placeholder: 'user@colgate.edu', input_html: { required: true } %>
-    
-    <%= f.input :password, input_html: { required: true } %>
-    
-    <%= f.input :pronouns, as: :radio_buttons, collection: Account::PRONOUNS %>
-    
-    <%= f.input :class_year, as: :radio_buttons, collection: Account::CLASS_YEARS %>
-    
-    <%= f.input :majors, label: "Major(s)", collection: Account::MAJORS, input_html: { multiple: true, required: true }, include_hidden: false %>
-    
-    <%= f.input :minors, label: "Minor(s)", collection: Account::MAJORS, input_html: { multiple: true, required: true }, include_hidden: false %>
-    
-    <%= f.input :interests, as: :check_boxes, collection: Account::INTERESTS, wrapper: :vertical_collection_inline, include_hidden: false %>
-    
-    <%= f.button :submit, class: "btn-primary" %>
-<% end %>
+<!DOCTYPE html>
+<html>
+    <body>
+        <div class="center form">
+            <h1>Create an Account</h1>
+            <%= simple_form_for @account, :url => url_for(:action => 'create', :controller => 'accounts'), :method => 'post' do |f| %>
+                <%= f.error_notification %>
+                
+                <%= f.input :first_name, input_html: { required: true, size: 40 }%>
+                
+                <%= f.input :last_name, input_html: { required: true } %>
+                
+                <%= f.input :email, label: 'Colgate Email', placeholder: 'user@colgate.edu', input_html: { required: true } %>
+                
+                <%= f.input :password, input_html: { required: true } %>
+                
+                <%= f.input :pronouns, as: :radio_buttons, collection: Account::PRONOUNS %>
+                
+                <%= f.input :class_year, as: :radio_buttons, collection: Account::CLASS_YEARS %>
+                
+                <%= f.input :majors, label: "Major(s)", collection: Account::MAJORS, input_html: { multiple: true, required: true }, include_hidden: false %>
+                
+                <%= f.input :minors, label: "Minor(s)", collection: Account::MAJORS, input_html: { multiple: true, required: true }, include_hidden: false %>
+                
+                <%= f.input :interests, as: :check_boxes, collection: Account::INTERESTS, wrapper: :vertical_collection_inline, include_hidden: false %>
+                
+                <%= f.button :submit, class: "btn-primary" %>
+            <% end %>
+        </div>
+    </body>
+</html>

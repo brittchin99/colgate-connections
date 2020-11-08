@@ -39,3 +39,9 @@
 .center {
     text-align: center
 }
+
+.form {
+    padding-left: 500px;
+    padding-right: 500px;
+    padding-bottom: 50px;
+}

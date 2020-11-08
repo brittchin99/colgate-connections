@@ -9,44 +9,45 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
-<body>
+  
+  <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <%= link_to "Colgate Connections", connections_path, :class => "navbar-brand" %>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <% if account_signed_in? %>
-          Logged in as <strong><%= current_account.email %></strong>.
-          <%= link_to "Log out", destroy_account_session_path, method: :delete, :class => "btn btn-sm btn-primary"  %>
-        <% else %>
-          <%= link_to "Log in/Sign Up", new_account_session_path, :class => "glyphicon glyphicon-user" %>
-        <% end %>
-    </ul>
-     
-  </div>
-</nav>
-<br/>
-      <% if flash[:notice] %>
-        <div class="row">
-          <div class="col-md-4 alert alert-primary notice">
-            <%= "#{flash[:notice]}" %>
-          </div>
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <%= link_to "Colgate Connections", connections_path, :class => "navbar-brand" %>
         </div>
-      <% end %>
-      <% if flash[:alert] %>
-        <div class="row">
-          <div class="col-md-4 alert alert-warning alert">
-            <%= "#{flash[:alert]}" %>
-          </div>
+        <ul class="nav navbar-nav navbar-right">
+          <% if account_signed_in? %>
+            Logged in as <strong><%= current_account.email %></strong>.
+            <%= link_to "Log out", destroy_account_session_path, method: :delete, :class => "btn btn-sm btn-primary"  %>
+          <% else %>
+            <%= link_to "Log in/Sign Up", new_account_session_path %>
+          <% end %>
+        </ul>
+      <%= render 'devise/shared/login_form' %>
+      <%= link_to "Login", "", data: {toggle: "modal", target: ".bd-example-modal-lg"} %>
+      </div>
+    </nav>
+    <br/>
+    <% if flash[:notice] %>
+      <div class="row">
+        <div class="col-md-4 alert alert-primary notice">
+          <%= "#{flash[:notice]}" %>
         </div>
-      <% end %>
+      </div>
+    <% end %>
+    <% if flash[:alert] %>
+      <div class="row">
+        <div class="col-md-4 alert alert-warning alert">
+          <%= "#{flash[:alert]}" %>
+        </div>
+      </div>
+    <% end %>
     </div>
     <%= yield %>
   
-<div class="container">
-    <div class="row">
+    <div class="container">
+      <div class="row">
         <% if account_signed_in? %>
           <div>
             <span>
@@ -58,6 +59,6 @@
           </div>
         <% end %>
       </div>
-</div>
-
+    </div>
+  </body>
 </html>
