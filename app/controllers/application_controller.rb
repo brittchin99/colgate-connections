@@ -19,4 +19,15 @@ class ApplicationController < ActionController::Base
     def after_sign_in_path_for(resource)
       profile_path(current_account)
     end
+    
+    protected
+    def authenticate_account!
+      if account_signed_in?
+        super
+      else
+        if request.path!=homes_path && request.path!=new_account_session_path && request.path!=new_account_registration_path
+          redirect_to new_account_session_path
+        end
+      end
+    end
 end

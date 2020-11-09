@@ -1,19 +1,59 @@
-<!DOCTYPE html>
-<html>
-    <body>
-        <div class="main">
-            <h4 class="name"> <%= "Profile of #{@profile.first_name}" %> </h4>
-                <div class="profile-container">
-                        <p><%= "My pronouns are: #{@profile.pronouns}"%></p>
-                        <p><%= "Majors: #{@profile.majors}"%></p>
-                        <p><%= "Minors: #{@profile.minors}"%></p>
-                        <p><%= "Interested in: #{@profile.interests}"%></p>
-                </div>
-                <div>
-                    <% if current_account!=@profile && !current_account.connected_to(@profile) %>
-                        <div><%= link_to "Add Connection", connections_path(:friend_id => @profile), :method => :post, :class => "btn" %></div>
-                    <% end %>
-                </div>
-        </div>
-    </body>
-</html>
+<div class="profile-container">
+      <!--check logged in to the right user -->
+      <!--<button onclick="f()" class="update-button">Update Profile</button>-->
+      <%= link_to "Update Profile", edit_profile_path(@profile), :class => "update-button" %>
+  
+      <div>
+          <% if current_account!=@profile && !current_account.connected_to(@profile) %>
+              <div><%= link_to "Add Connection", connections_path(:friend_id => @profile), :method => :post, :class => "btn" %></div>
+           <% end %>
+      </div>
+      <div class="profile-basic">
+            <div class="profile-image-circle"></div>
+            <div class="profile-text">
+                 <h4><%= "#{@profile.first_name} #{@profile.last_name}" %> </h4>
+                 <p> <%= "#{@profile.pronouns}"%></p>   
+                  <!--check logged in to the right user -->
+                  <!--connected & message button -->
+                 <button onclick="f()" class="add-button">Add a status</button>
+            </div>
+      </div> 
+      <div>
+        <table class="profile-info">
+              <tr>
+                <th><%= "Class of #{@profile.class_year}" %></th>
+              </tr>
+              <tr>
+                <th>Major(s)</th>
+                <td> <%= @profile.majors %> </td>
+                 <!-- need to loop through them to list it -->
+              </tr>
+              <tr>
+                <th>Minor(s)</th>
+                <td> <%= @profile.minors %> </td>
+              </tr>
+              <tr>
+                <th>Interested in:</th>
+                <td> <%= @profile.interests %> </td>
+              </tr>
+        </table>
+        
+      <!--check logged in to the right user -->
+     <button onclick="f()" class="add-button">Upload profile photos</button>
+     
+     <div class="photos">
+            <div class="profile-image-square"></div> 
+            <div class="profile-image-square"></div> 
+            <div class="profile-image-square"></div> 
+     </div>
+     </div>
+
+</div>
+    
+    
+<script>
+function f() {
+  alert("Not implemented yet");
+}
+</script>
+

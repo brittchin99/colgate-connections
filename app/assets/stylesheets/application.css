@@ -34,13 +34,24 @@ p {
 
 .subtext {
   color: whitesmoke;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: normal;
 }
 
 .subtext:hover {
   color: #D2D4D6;
   text-decoration: none;
+}
+
+.heading {
+  font-size: 16px;
+  padding-top: 50px;
+  margin-right: 10px;
+}
+
+.search {
+  margin-top: 15px;
+  margin-left: 10px;
 }
 
 .centered {
@@ -51,7 +62,11 @@ p {
 }
 
 .center {
-    text-align: center
+  text-align: center
+}
+
+.small {
+  width: 100px;
 }
 
 .form {
@@ -107,7 +122,6 @@ p {
   padding-right: 40px;
 }
 
-
 .left {
   width: 40%;
 }
@@ -129,7 +143,12 @@ p {
 }
 
 .btn {
-  background-color: #bb2222;
-  color: #D2D4D6;
+  background-color: #E10028;
+  color: whitesmoke;
   text-decoration: none;
+}
+
+.spacer {
+  margin-left: 5px;
+  margin-right: 5px;
 }

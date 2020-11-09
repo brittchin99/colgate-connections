@@ -1,4 +1,5 @@
 class AccountsController < Devise::RegistrationsController
+  before_action :authenticate_account!, except: [:create, :new]
   def new
     super
   end
