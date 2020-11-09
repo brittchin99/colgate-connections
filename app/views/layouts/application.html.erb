@@ -12,6 +12,16 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
+        
+        <div>
+          <%= form_with url: profiles_path, html: {:class => "form-inline"}, method: :get, local: true do |f| %>
+            <p><%= f.text_field "query" %></p>
+            <p><%= f.submit "Search profiles" %></p>
+          <% end %>
+        </div>
+        
+        <p><%= link_to "All users", profiles_path %></p>
+        
         <div class="navbar-header">
           <%= link_to "Colgate Connections", connections_path, :class => "navbar-brand" %>
         </div>
