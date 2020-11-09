@@ -1,9 +1,5 @@
 class ProfilesController < ApplicationController
   before_action :authenticate_account!
-  def index
-    @connections = current_account.friendships
-  end
-  
   def show
     @profile = Account.find(params[:id])
   end
@@ -23,31 +19,29 @@ class ProfilesController < ApplicationController
 
   def index
     @profiles = Account.all
-    if params.has_key?("/profiles")
-      # THE FORM IN INDEX SHOULD BE FIXED
-      p = params["/profiles"]
-      @profiles = @profiles.where("first_name LIKE ?", "%#{p["first_name"]}")
-                          .where("last_name LIKE ?", "%#{p["last_name"]}")
-                          .where("email LIKE ?", "%#{p["email"]}")
-                          .where("pronouns LIKE ?", "%#{p["pronouns"]}")
-                          .where("class_year LIKE ?", "%#{p["class_year"]}")
-                          .where("majors LIKE ?", "%#{p["majors"]}")
-                          .where("minors LIKE ?", "%#{p["minors"]}")
-                          .where("interests LIKE ?", "%#{p["interests"]}")
-    elsif params.has_key?("query")
-      @profiles = @profiles.where("first_name LIKE ? 
-                                  OR last_name LIKE ?
-                                  OR email LIKE ?
-                                  OR pronouns LIKE ? 
-                                  OR class_year LIKE ?
-                                  OR majors LIKE ?
-                                  OR minors LIKE ?
-                                  OR interests LIKE ?", params["query"], params["query"], params["query"], params["query"], params["query"], params["query"], params["query"], params["query"])
+    
+    if !params.has_key?("reset")
+      if p = (params["filter_list"] || session["filter_list"])
+        if !p.has_key?("general_search_term")
+          @profiles = @profiles.where("first_name LIKE ?", "%#{p["first_name"]}")
+                              .where("last_name LIKE ?", "%#{p["last_name"]}")
+                              .where("email LIKE ?", "%#{p["email"]}")
+                              .where("pronouns LIKE ?", "%#{p["pronouns"]}")
+                              .where("class_year LIKE ?", "%#{p["class_year"]}")
+                              .where("majors LIKE ?", "%#{p["majors"]}")
+                              .where("minors LIKE ?", "%#{p["minors"]}")
+                              .where("interests LIKE ?", "%#{p["interests"]}")
+        else
+          @profiles = @profiles.where("first_name LIKE ? 
+                                      OR last_name LIKE ?
+                                      OR email LIKE ?
+                                      OR pronouns LIKE ? 
+                                      OR class_year LIKE ?", p["general_search_term"], p["general_search_term"], p["general_search_term"], p["general_search_term"], p["general_search_term"])
+        end
+        session["filter_list"] = params["filter_list"]
+      end
     end
+    
   end
-  
-   private
-  def profile_params
-      params.require(:profile).permit(:first_name, :last_name, :email, :password, :pronouns, :class_year, :majors => [], :minors => [], :interests => [])
-  end 
+ 
 end
