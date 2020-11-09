@@ -1,9 +1,19 @@
-<h4 class="name"> <%= "Profile of #{@profile.first_name}" %> </h4>
-        
-<div class="profile-container">
-        <p><%= "My pronouns are: #{@profile.pronouns}"%></p>
-        <p><%= "Majors: #{@profile.majors}"%></p>
-        <p><%= "Minors: #{@profile.minors}"%></p>
-        <p><%= "Interested in: #{@profile.interests}"%></p>
-</div>
-    
+<!DOCTYPE html>
+<html>
+    <body>
+        <div class="main">
+            <h4 class="name"> <%= "Profile of #{@profile.first_name}" %> </h4>
+                <div class="profile-container">
+                        <p><%= "My pronouns are: #{@profile.pronouns}"%></p>
+                        <p><%= "Majors: #{@profile.majors}"%></p>
+                        <p><%= "Minors: #{@profile.minors}"%></p>
+                        <p><%= "Interested in: #{@profile.interests}"%></p>
+                </div>
+                <div>
+                    <% if current_account!=@profile && !current_account.connected_to(@profile) %>
+                        <div><%= link_to "Add Connection", connections_path(:friend_id => @profile), :method => :post, :class => "btn" %></div>
+                    <% end %>
+                </div>
+        </div>
+    </body>
+</html>
