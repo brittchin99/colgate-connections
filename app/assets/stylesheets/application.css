@@ -45,6 +45,13 @@ p {
 
 .heading {
   font-size: 16px;
+  padding-top: 50px;
+  margin-right: 10px;
+}
+
+.search {
+  margin-top: 15px;
+  margin-left: 10px;
 }
 
 .centered {
@@ -70,10 +77,6 @@ p {
 
 .navbar {
   background-color: #821019;
-}
-
-.navbar-header {
-  float: left;
 }
 
 .top-alert {
