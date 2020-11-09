@@ -1,0 +1,4 @@
+<p>My friends(?)</p>
+<% @connections.each do |c| %>
+    <%= "#{c.friend.first_name} #{c.friend.last_name}" %>
+<% end %>

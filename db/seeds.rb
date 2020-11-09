@@ -9,3 +9,5 @@ Account.delete_all
 
 Account.create!(:email => 'admin@colgate.edu', :admin => true, :password => "colgate13", :first_name => "Admin", :last_name => "Colgate",
     :pronouns => "they/them/theirs", :class_year => 2021, :majors => "Computer Science", :minors => "English", :interests => "Dance")
+Account.create!(:email => 'ptnguyen@colgate.edu', :admin => false, :password => "colgate13", :first_name => "Amber", :last_name => "Nguyen",
+    :pronouns => "she/her/hers", :class_year => 2021, :majors => ["Computer Science", "Economics"], :minors => "English", :interests => "Anime")

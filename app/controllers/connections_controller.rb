@@ -1,18 +1,17 @@
 class ConnectionsController < ApplicationController
-    before_action :authenticate_user!, except: [:index]
     def index
-        redirect_to profile_path(current_account) if account_signed_in?
+        @accounts = Account.all
     end
     
     def create
-        if params.include?(:friend_id)
-            @new_connections = Connection.create_reciprocal_for_ids(current_account.id, params[:friend_id])
+        @connection = current_account.connections.build(:friend_id => params[:friend_id])
+        if @connection.save
+            flash[:notice] = "Added friend."
+            redirect_to root_url
         else
-            params[:account][:friend_ids].each do |f_id|
-                @new_connections = Connection.create_reciprocal_for_ids(current_account.id, f_id)
-            end
+            flash[:notice] = "Unable to add friend."
+            redirect_to root_url
         end
-        redirect_to accounts_path
     end
     
     def destroy
