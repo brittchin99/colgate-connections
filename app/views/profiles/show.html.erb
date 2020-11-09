@@ -1,9 +1,15 @@
-<h4 class="name"> <%= "Profile of #{@profile.first_name}" %> </h4>
+<!DOCTYPE html>
+<html>
+    <body>
+        <div class="main">
+            <h4 class="name"> <%= "Profile of #{@profile.first_name}" %> </h4>
         
-<div class="profile-container">
-        <p><%= "My pronouns are: #{@profile.pronouns}"%></p>
-        <p><%= "Majors: #{@profile.majors}"%></p>
-        <p><%= "Minors: #{@profile.minors}"%></p>
-        <p><%= "Interested in: #{@profile.interests}"%></p>
-</div>
-    
+                <div class="profile-container">
+                        <p><%= "My pronouns are: #{@profile.pronouns}"%></p>
+                        <p><%= "Majors: #{@profile.majors}"%></p>
+                        <p><%= "Minors: #{@profile.minors}"%></p>
+                        <p><%= "Interested in: #{@profile.interests}"%></p>
+                </div>
+        </div>
+    </body>
+</html>
