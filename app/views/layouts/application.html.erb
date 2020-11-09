@@ -21,16 +21,15 @@
     
     <nav class="navbar navbar-expand-lg navbar-static-top">
       <div class="container-fluid">
-        
         <div>
           <% if account_signed_in? %>
-            <%= form_with url: profiles_path, html: {:class => "form-inline"}, method: :get, local: true do |f| %>
-              <p><%= f.text_field "query" %></p>
-              <p><%= f.submit "Search profiles" %></p>
+            <%= simple_form_for :filter_list, url: profiles_path, :method => 'get' do |f| %>
+              <%= f.input :general_search_term, label: false, placeholder: "Name, year, email..."%>
+              <%= f.button :submit, "Search", class: "btn-primary"%>
             <% end %>
           <% end %>
         </div>
-        
+  
         <div class="navbar-header">
           <%= link_to image_tag("logo_white2.png", height:60, alt:"Colgate Connections"), connections_path %>
           

@@ -18,6 +18,17 @@ class Account < ApplicationRecord
     end
     connected
   end
+  
+  def toList(str)
+    contents = []
+    str.scan(/"([^"]*)"/) { |match| 
+      contents.append(match[0])
+    }
+    if contents.length() == 0
+      contents.append(str)
+    end
+    contents
+  end
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
