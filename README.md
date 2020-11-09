@@ -1,6 +1,8 @@
 # Colgate Connections
 Colgate Connections is a social application created for students at Colgate University as part of COSC415 - Software Engineering.
 
+![Colgate Connections Logo](https://drive.google.com/uc?export=view&id=1TCI6yRzdhjN-sTWp-k4AnmI_yFbkiE1G)
+
 ## Motivation
 Colgate Connections is designed to connect Colgate students during Covid-19. As most on-campus events have been moved to a virtual platform, it has become harder to make new friends and meet new people. Colgate Connections aims to overcome this social barrier by allowing students to find others with similar interests in a fun, Colgate-specific way.
 
