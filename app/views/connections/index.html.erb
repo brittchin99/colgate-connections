@@ -1,14 +1,8 @@
 <div class="main">
-    <% for account in @accounts %>
-    <div class="account">
-        <p>
-            <% if current_account!=account && !current_account.connected_to(account) %>
-              <strong><%= link_to "#{account.first_name} #{account.last_name}", profile_path(account.id), :method => :get %></strong>
-              <%= link_to "Add Connection", connections_path(:friend_id => account), :method => :post %>
-              <div class="clear"></div>
-            <% end %>
-        </p>
+    <p>My Connections</p>
+    <div>
+        <% @connections.each do |c| %>
+            <p><%= link_to "#{c.friend.first_name} #{c.friend.last_name}", profile_path(c.friend.id), :method => :get %></p>
+        <% end %>
     </div>
-    <% end %>
 </div>
-

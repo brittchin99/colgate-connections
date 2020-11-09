@@ -127,3 +127,9 @@ p {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
+
+.btn {
+  background-color: #bb2222;
+  color: #D2D4D6;
+  text-decoration: none;
+}

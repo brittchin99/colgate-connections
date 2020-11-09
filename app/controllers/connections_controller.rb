@@ -1,16 +1,16 @@
 class ConnectionsController < ApplicationController
     def index
-        @accounts = Account.all
+        @connections = current_account.friendships
     end
     
     def create
         @connection = current_account.connections.build(:friend_id => params[:friend_id])
         if @connection.save
             flash[:notice] = "Added friend."
-            redirect_to root_url
+            redirect_to connections_path
         else
             flash[:notice] = "Unable to add friend."
-            redirect_to root_url
+            redirect_to profile_path(params[:friend_id])
         end
     end
     

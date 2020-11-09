@@ -13,17 +13,24 @@
     <% if account_signed_in? %>
         <div class="sidenav">
         <%= link_to "My Profile", profile_path(current_account) %>
-        <a href="#clients">Search</a>
-        <%= link_to "People", connections_path %>
-        <%= link_to "My Connections", profiles_path %>
-        <a href="#contact">Messages</a>
-        <a href="#contact">Events</a>
+        <%= link_to "My Connections", connections_path %>
+        <%= link_to "All Users", profiles_path %>
         <%= link_to "Log Out", destroy_account_session_path, method: :delete %>
         </div>
     <% end %>
     
     <nav class="navbar navbar-expand-lg navbar-static-top">
       <div class="container-fluid">
+        
+        <div>
+          <% if account_signed_in? %>
+            <%= form_with url: profiles_path, html: {:class => "form-inline"}, method: :get, local: true do |f| %>
+              <p><%= f.text_field "query" %></p>
+              <p><%= f.submit "Search profiles" %></p>
+            <% end %>
+          <% end %>
+        </div>
+        
         <div class="navbar-header">
           <%= link_to image_tag("logo_white2.png", height:60, alt:"Colgate Connections"), connections_path %>
           
