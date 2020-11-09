@@ -1,0 +1,6 @@
+<div class="main">
+    <p>My friends</p>
+    <% @connections.each do |c| %>
+        <%= link_to "#{c.friend.first_name} #{c.friend.last_name}", profile_path(c.friend.id), :method => :get %>
+    <% end %>
+</div>

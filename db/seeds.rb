@@ -9,3 +9,9 @@ Account.delete_all
 
 Account.create!(:email => 'admin@colgate.edu', :admin => true, :password => "colgate13", :first_name => "Admin", :last_name => "Colgate",
     :pronouns => "they/them/theirs", :class_year => 2021, :majors => "Computer Science", :minors => "English", :interests => "Dance")
+Account.create!(:email => 'ptnguyen@colgate.edu', :admin => false, :password => "colgate13", :first_name => "Amber", :last_name => "Nguyen",
+    :pronouns => "she/her/hers", :class_year => 2021, :majors => ["Computer Science", "Economics"], :minors => "Japanese", :interests => "Anime")
+Account.create!(:email => 'ecruzgonzalez@colgate.edu', :admin => false, :password => "colgate13", :first_name => "Emily", :last_name => "Cruz Gonzalez",
+    :pronouns => "she/her/hers", :class_year => 2021, :majors => ["Computer Science", "English"], :minors => "Anthropology", :interests => "Anime")
+Account.create!(:email => 'bchin@colgate.edu', :admin => false, :password => "colgate13", :first_name => "Brittney", :last_name => "Chin",
+    :pronouns => "she/her/hers", :class_year => 2021, :majors => "Computer Science", :minors => ["LGBTQ Studies", "Educational Studies"], :interests => "Performing Arts")

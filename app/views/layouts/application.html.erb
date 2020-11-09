@@ -14,7 +14,8 @@
         <div class="sidenav">
         <%= link_to "My Profile", profile_path(current_account) %>
         <a href="#clients">Search</a>
-        <a href="#services">Connections</a>
+        <%= link_to "People", connections_path %>
+        <%= link_to "My Connections", profiles_path %>
         <a href="#contact">Messages</a>
         <a href="#contact">Events</a>
         <%= link_to "Log Out", destroy_account_session_path, method: :delete %>
