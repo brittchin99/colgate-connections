@@ -1,4 +1,5 @@
 class ProfilesController < ApplicationController
+  before_action :authenticate_account!
   def index
     @connections = current_account.friendships
   end

@@ -2,9 +2,6 @@ class Account < ApplicationRecord
   has_many :connections
   has_many :friends, through: :connections
 
-  #has_many :friend_requests_as_sender, foreign_key: :sender_id, class_name: :FriendRequest
-  #has_many :friend_requests_as_receiver, foreign_key: :receiver_id, class_name: :FriendRequest
-
   def friendships
     self.connections
   end
