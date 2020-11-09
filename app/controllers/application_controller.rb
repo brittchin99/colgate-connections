@@ -25,8 +25,8 @@ class ApplicationController < ActionController::Base
       if account_signed_in?
         super
       else
-        if request.path!=homes_path && request.path!=new_account_path && request.path!=new_account_registration_path
-          redirect_to new_account_path
+        if request.path!=homes_path && request.path!=new_account_session_path && request.path!=new_account_registration_path
+          redirect_to new_account_session_path
         end
       end
     end
