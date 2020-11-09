@@ -1,9 +1,11 @@
 <% for account in @accounts %>
   <div class="account">
     <p>
-      <strong><%=h account.email %></strong>
-      <%= link_to "Add Connection", connections_path(:friend_id => account), :method => :post %>
-      <div class="clear"></div>
+        <% if current_account!=account %>
+          <strong><%= link_to "#{account.first_name} #{account.last_name}", profile_path(account.id), :method => :get %></strong>
+          <%= link_to "Add Connection", connections_path(:friend_id => account), :method => :post %>
+          <div class="clear"></div>
+        <% end %>
     </p>
   </div>
 <% end %>
