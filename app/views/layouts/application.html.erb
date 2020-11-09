@@ -37,12 +37,12 @@
       </div>
     </nav>
     <% if flash[:notice] && !account_signed_in? %>
-        <div class="alert alert-primary notice">
+        <div class="alert alert-primary notice top-alert">
           <%= "#{flash[:notice]}" %>
         </div>
     <% end %>
     <% if flash[:alert] && !account_signed_in? %>
-        <div class="alert alert-warning alert">
+        <div class="alert alert-warning alert top-alert">
           <%= "#{flash[:alert]}" %>
         </div>
     <% end %>
