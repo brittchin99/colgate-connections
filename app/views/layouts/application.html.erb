@@ -6,48 +6,61 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body>
-    <div>
-      <div>
-        <% if account_signed_in? %>
-          Logged in as <strong><%= current_account.email %></strong>.
-          <%= link_to "Log out", destroy_account_session_path, method: :delete, :class => "btn btn-sm btn-primary"  %>
-        <% else %>
-          <%= link_to "Sign up", new_account_registration_path, :class => "btn btn-sm btn-primary"  %> |
-          <%= link_to "Log in", new_account_session_path, :class => "btn btn-sm btn-primary" %>
-        <% end %>
-      </div>
-      
-      <div>
-        <% if account_signed_in? %>
-          <div>
-            <span>
-              <%= "Welcome #{current_account.email}" %>
-            </span>
-            <% if current_account.admin %>
-              <span>(admin account)</span>
+    <% if account_signed_in? %>
+        <div class="sidenav">
+        <%= link_to "My Profile", profile_path(current_account) %>
+        <%= link_to "My Connections", connections_path %>
+        <%= link_to "All Users", profiles_path %>
+        <%= link_to "Log Out", destroy_account_session_path, method: :delete %>
+        </div>
+    <% end %>
+    
+    <nav class="navbar navbar-expand-md navbar-static-top">
+      <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
+          <div class="navbar-header">
+            <%= link_to image_tag("logo_white2.png", height:60, alt:"Colgate Connections"), root_path %>
+          </div>
+          
+          <div class="search">
+            <% if account_signed_in? %>
+              <%= form_with url: profiles_path, html: {:class => "form-inline"}, method: :get, local: true do |f| %>
+                <p><%= f.text_field "query", class: "form-control" %></p>
+                <p><%= f.submit "Search profiles", class: "btn btn-light spacer" %></p>
+              <% end %>
             <% end %>
           </div>
-        <% end %>
+        </ul>
       </div>
       
-      <% if flash[:notice] %>
-        <div class="row">
-          <div class="col-md-4 alert alert-primary notice">
-            <%= "#{flash[:notice]}" %>
-          </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto navbar-right">
+          <li class="nav-item">
+            <% if account_signed_in? %>
+              <%= link_to (current_account.first_name + " " + current_account.last_name), profile_path(current_account), :class => "nav-link subtext heading" %>
+            <% else %>
+              <%= link_to "Log In / Sign Up", new_account_session_path, :class => "nav-link subtext heading" %>
+            <% end %>
+          </li>
+          <div class="nav-item spacer"/>
+        </ul>
+      </div>
+    </nav>
+    
+    <% if flash[:notice] && !account_signed_in? %>
+        <div class="alert alert-primary notice top-alert">
+          <%= "#{flash[:notice]}" %>
         </div>
-      <% end %>
-      <% if flash[:alert] %>
-        <div class="row">
-          <div class="col-md-4 alert alert-warning alert">
-            <%= "#{flash[:alert]}" %>
-          </div>
+    <% end %>
+    <% if flash[:alert] && !account_signed_in? %>
+        <div class="alert alert-warning alert top-alert">
+          <%= "#{flash[:alert]}" %>
         </div>
-      <% end %>
+    <% end %>
     </div>
     <%= yield %>
   </body>

@@ -13,3 +13,142 @@
  *= require_tree .
  *= require_self
  */
+.masthead {
+  min-height: 500px;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: visible;
+  margin-top: -50px;
+}
+
+p {
+  font-size: 16px;
+}
+
+.masthead_text {
+  color: whitesmoke;
+  font-size: 60px;
+}
+
+.subtext {
+  color: whitesmoke;
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.subtext:hover {
+  color: #D2D4D6;
+  text-decoration: none;
+}
+
+.heading {
+  font-size: 16px;
+  padding-top: 50px;
+  margin-right: 10px;
+}
+
+.search {
+  margin-top: 15px;
+  margin-left: 10px;
+}
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.center {
+  text-align: center
+}
+
+.small {
+  width: 100px;
+}
+
+.form {
+    padding-left: 500px;
+    padding-right: 500px;
+    padding-bottom: 50px;
+}
+
+.navbar {
+  background-color: #821019;
+}
+
+.top-alert {
+  width: 100%;
+  top: -25px;
+  padding-bottom: 50px;
+}
+
+.sidenav {
+  height: 100%;
+  width: 160px;
+  position: fixed;
+  z-index: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #D2D4D6;
+  overflow-x: hidden;
+  padding-top: 100px;
+}
+
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 18px;
+  display: block;
+  color: black;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+  background-color: #821019;
+  text-decoration: none;
+}
+
+.main {
+  margin-left: 160px; /* Same as the width of the sidenav */
+  padding: 0px 10px;
+}
+
+.fill {
+  background-color: white;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.left {
+  width: 40%;
+}
+
+.right {
+  width: 60%;
+}
+
+.home-img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  padding: 20px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.btn {
+  background-color: #E10028;
+  color: whitesmoke;
+  text-decoration: none;
+}
+
+.spacer {
+  margin-left: 5px;
+  margin-right: 5px;
+}

@@ -29,4 +29,14 @@ ActiveRecord::Schema.define(version: 2020_11_08_063642) do
     t.index ["email"], name: "index_accounts_on_email", unique: true
   end
 
+  create_table "connections", force: :cascade do |t|
+    t.integer "account_id"
+    t.integer "friend_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_connections_on_account_id"
+    t.index ["friend_id"], name: "index_connections_on_friend_id"
+  end
+
+  add_foreign_key "connections", "accounts"
 end

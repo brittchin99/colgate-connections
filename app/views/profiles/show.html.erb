@@ -2,6 +2,12 @@
       <!--check logged in to the right user -->
       <!--<button onclick="f()" class="update-button">Update Profile</button>-->
       <%= link_to "Update Profile", edit_profile_path(@profile), :class => "update-button" %>
+  
+      <div>
+          <% if current_account!=@profile && !current_account.connected_to(@profile) %>
+              <div><%= link_to "Add Connection", connections_path(:friend_id => @profile), :method => :post, :class => "btn" %></div>
+           <% end %>
+      </div>
       <div class="profile-basic">
             <div class="profile-image-circle"></div>
             <div class="profile-text">
@@ -11,8 +17,6 @@
                   <!--connected & message button -->
                  <button onclick="f()" class="add-button">Add a status</button>
             </div>
-          
-          
       </div> 
       <div>
         <table class="profile-info">
@@ -22,6 +26,7 @@
               <tr>
                 <th>Major(s)</th>
                 <td> <%= @profile.majors %> </td>
+                 <!-- need to loop through them to list it -->
               </tr>
               <tr>
                 <th>Minor(s)</th>
@@ -51,3 +56,4 @@ function f() {
   alert("Not implemented yet");
 }
 </script>
+

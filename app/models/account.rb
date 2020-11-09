@@ -1,4 +1,21 @@
 class Account < ApplicationRecord
+  has_many :connections
+  has_many :friends, through: :connections
+
+  def friendships
+    self.connections
+  end
+  
+  def connected_to(account)
+    connected = false
+    self.connections.each do |c|
+      if (c.friend == account) 
+        connected = true
+      end
+    end
+    connected
+  end
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
