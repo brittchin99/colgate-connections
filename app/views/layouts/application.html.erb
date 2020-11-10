@@ -28,9 +28,9 @@
           
           <div class="search">
             <% if account_signed_in? %>
-              <%= form_with url: profiles_path, html: {:class => "form-inline"}, method: :get, local: true do |f| %>
-                <p><%= f.text_field "query", class: "form-control" %></p>
-                <p><%= f.submit "Search profiles", class: "btn btn-light spacer" %></p>
+              <%= simple_form_for :filter_list, url: profiles_path, :method => 'get', html: {:class => "form-inline"} do |f| %>
+                <%= f.input :general_search_term, label: false, placeholder: "Name, year, email..."%>
+                <%= f.button :submit, "Search", class: "btn btn-light spacer"%>
               <% end %>
             <% end %>
           </div>

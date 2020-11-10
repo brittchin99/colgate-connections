@@ -17,6 +17,9 @@ class Account < ApplicationRecord
   end
   
   def toList(str)
+    if str.blank?
+      return []
+    end
     contents = []
     str.scan(/"([^"]*)"/) { |match| 
       contents.append(match[0])
