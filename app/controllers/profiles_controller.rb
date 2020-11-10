@@ -50,5 +50,5 @@ class ProfilesController < ApplicationController
   private
   def profile_params
     params.require(:account).permit(:first_name, :last_name, :email, :password, :pronouns, :class_year, :majors => [], :minors => [], :interests => [])
-  end
+  end 
 end
