@@ -21,5 +21,7 @@
             <%= f.input :interests, as: :check_boxes, collection: Account::INTERESTS, wrapper: :vertical_collection_inline, include_hidden: false %>
             
             <%= f.button :submit, class: "btn-primary" %>
+            
+            <%= link_to "Cancel", profile_path(current_account), class: "btn btn-danger" %>
         <% end %>
 </div>
