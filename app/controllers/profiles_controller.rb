@@ -40,7 +40,7 @@ class ProfilesController < ApplicationController
                                       OR last_name LIKE ?
                                       OR email LIKE ?
                                       OR pronouns LIKE ? 
-                                      OR class_year LIKE ?", p["general_search_term"], p["general_search_term"], p["general_search_term"], p["general_search_term"], p["general_search_term"])
+                                      OR cast(class_year as text) LIKE ?", p["general_search_term"], p["general_search_term"], p["general_search_term"], p["general_search_term"], p["general_search_term"])
         end
         session["filter_list"] = params["filter_list"]
       end
