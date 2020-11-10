@@ -1,21 +1,24 @@
 <div class="profile-container">
       <!--check logged in to the right user -->
       <!--<button onclick="f()" class="update-button">Update Profile</button>-->
-      <%= link_to "Update Profile", edit_profile_path(@profile), :class => "update-button" %>
-  
-      <div>
-          <% if current_account!=@profile && !current_account.connected_to(@profile) %>
-              <div><%= link_to "Add Connection", connections_path(:friend_id => @profile), :method => :post, :class => "btn" %></div>
-           <% end %>
-      </div>
+      <% if current_account==@profile %>
+        <%= link_to "Update Profile", edit_profile_path(@profile), :class => "update-button" %>
+      <% end %>
       <div class="profile-basic">
             <div class="profile-image-circle"></div>
             <div class="profile-text">
                  <h4><%= "#{@profile.first_name} #{@profile.last_name}" %> </h4>
                  <p> <%= "#{@profile.pronouns}"%></p>   
                   <!--check logged in to the right user -->
+                  <% if current_account==@profile %>
+                    <button onclick="f()" class="add-button">Add a status</button>
+                  <% end %>
                   <!--connected & message button -->
-                 <button onclick="f()" class="add-button">Add a status</button>
+                  <div>
+                    <% if current_account!=@profile && !current_account.connected_to(@profile) %>
+                        <div><%= link_to "Add Connection", connections_path(:friend_id => @profile), :method => :post, :class => "btn" %></div>
+                    <% end %>
+                  </div>
             </div>
       </div> 
       <div>
@@ -39,8 +42,10 @@
         </table>
         
       <!--check logged in to the right user -->
-     <button onclick="f()" class="add-button">Upload profile photos</button>
-     
+      <% if current_account==@profile %>
+        <button onclick="f()" class="add-button">Upload profile photos</button>
+      <% end %>
+
      <div class="photos">
             <div class="profile-image-square"></div> 
             <div class="profile-image-square"></div> 
