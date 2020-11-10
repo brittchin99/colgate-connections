@@ -2,7 +2,7 @@
       <!--check logged in to the right user -->
       <!--<button onclick="f()" class="update-button">Update Profile</button>-->
       <% if current_account==@profile %>
-        <%= link_to "Update Profile", edit_profile_path(@profile), :class => "update-button" %>
+        <%= link_to "Update Profile", edit_profile_path(@profile), :class => "btn btn-primary update-button" %>
       <% end %>
       <div class="profile-basic">
             <div class="profile-image-circle"></div>
