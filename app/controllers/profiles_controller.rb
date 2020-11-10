@@ -21,7 +21,9 @@ class ProfilesController < ApplicationController
     if @profile.update(profile_params)
       redirect_to profile_path(@profile)
     else 
-      render json: @profile.errors.full_messages, status: 422
+      respond_to do |format|
+        format.html { render :edit }
+      end
     end 
   end 
 
