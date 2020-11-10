@@ -31,7 +31,7 @@ class ProfilesController < ApplicationController
                               .where("last_name LIKE ?", "%#{p["last_name"]}")
                               .where("email LIKE ?", "%#{p["email"]}")
                               .where("pronouns LIKE ?", "%#{p["pronouns"]}")
-                              .where("class_year LIKE ?", "%#{p["class_year"]}")
+                              .where("cast(class_year as text) LIKE ?", "%#{p["class_year"]}")
                               .where("majors LIKE ?", "%#{p["majors"]}")
                               .where("minors LIKE ?", "%#{p["minors"]}")
                               .where("interests LIKE ?", "%#{p["interests"]}")
