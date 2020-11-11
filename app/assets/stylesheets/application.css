@@ -77,11 +77,14 @@ p {
 
 .navbar {
   background-color: #821019;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
 }
 
 .top-alert {
   width: 100%;
-  top: -25px;
+  top: 0px;
   padding-bottom: 50px;
 }
 
