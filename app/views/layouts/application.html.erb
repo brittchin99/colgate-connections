@@ -27,7 +27,7 @@
             <%= link_to image_tag("logo_white2.png", height:60, alt:"Colgate Connections"), root_path %>
           </div>
           
-          <div class="search">
+          <div class="search pad-left">
             <% if account_signed_in? %>
               <%= simple_form_for :filter_list, url: profiles_path, :method => 'get', html: {:class => "form-inline"} do |f| %>
                 <%= f.input :general_search_term, label: false, placeholder: "Name, year, email..."%>

@@ -1,8 +1,81 @@
-<div class="main">
-    <p>My Connections</p>
-    <div>
-        <% @connections.each do |c| %>
-            <p><%= link_to "#{c.friend.first_name} #{c.friend.last_name}", profile_path(c.friend.id), :method => :get %></p>
-        <% end %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <div class="main">
+    <ul class="nav nav-tabs">
+      <li class="active"><a data-toggle="tab" href="#connections">Connections</a></li>
+      <li><a data-toggle="tab" href="#requests">Connection Requests</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="connections" class="tab-pane active">
+        <h4>Suggested Connections</h4>
+        <h3>My Connections</h3>
+          <div class="search" style="display: table-cell;">
+            <%= simple_form_for :filter_list, url: profiles_path, :method => 'get', html: {:class => "form-inline"} do |f| %>
+              <%= f.input :general_search_term, label: false, placeholder: "Search connections"%>
+              <%= f.button :submit, "Search", class: "btn btn-light spacer"%>
+            <% end %>
+          </div>
+          
+          <div style="display: table-cell; padding: 5px;">
+            <p>Sort By </p>
+          </div>
+          
+          <div style="width: 200px; display: table-cell;">
+            <%= simple_form_for :filter_list, :method => 'get' do |f| %>
+                <%= f.input :sort_by, label: false, collection: ["Name", "Date Connected: Latest", "Date Connected: Earliest"], selected: "Name" %>
+            <% end %>
+          </div>
+          <br/>
+          
+      <% if @connections.length() == 0 %>
+        <p class="center">No connections found. Add some?</p>
+      <% else %>
+        <table class="table">
+        <thead class="thead-light">
+          <tr class="products_header">
+            <th>Name</th>
+            <th>Year</th>
+            <th>Majors</th>
+            <th>Minors</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @connections.each do |c| %>
+            <tr><p>
+              <td>
+                <%= link_to "#{c.friend.first_name} #{c.friend.last_name}", profile_path(c.friend.id) %>
+              </td>
+              <td><%= c.friend.class_year %></td>
+              <td>
+                <% c.friend.toList(c.friend.majors).each do |m| %>
+                  <%= m %><br>
+                <% end %>
+              </td>
+              <td>
+                <% c.friend.toList(c.friend.minors).each do |m| %>
+                  <%= m %><br>
+                <% end %>
+              </td>
+            </p></tr>
+            <% end %>
+          </tbody>
+        </table>  
+      <% end %>
+      </div>
+      
+      <div id="requests" class="tab-pane">
+        <h3>Connection Requests</h3>
+        <p>No current connection requests.</p>
+      </div>
     </div>
-</div>
+  </div>
+</body>
+</html>
+
