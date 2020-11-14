@@ -8,6 +8,17 @@ class ConnectionsController < ApplicationController
         if params.has_key?("filter_list")
             p = params["filter_list"] 
             
+            
+            if p.has_key?("general_search_term")
+               @connections = @connections.joins(:friend).where("first_name LIKE ? 
+                                      OR last_name LIKE ?
+                                      OR email LIKE ?
+                                      OR pronouns LIKE ? 
+                                      OR first_name || ' ' || last_name LIKE ? 
+                                      OR cast(class_year as text) LIKE ?", p["general_search_term"], p["general_search_term"], p["general_search_term"], p["general_search_term"], p["general_search_term"], p["general_search_term"])
+            end
+            
+            
             if p.has_key?("sort_by")
                 sort_key = p["sort_by"]
                 if sort_key == "Date Connected: Latest"
