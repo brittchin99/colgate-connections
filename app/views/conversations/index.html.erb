@@ -1,0 +1,32 @@
+<div class="main">
+    <div class="ui segment">
+ <h3>Mailbox</h3>
+ <div class="ui list">
+  <div class="item">
+   <% @conversations.each do |conversation| %>
+   <% if conversation.sender_id == current_account.id || conversation.receiver_id == current_account.id %>
+    <% if conversation.sender_id == current_account.id %>
+      <% receiver = Account.find(conversation.receiver_id) %>
+    <% else %>
+      <% receiver = Account.find(conversation.sender_id) %>
+    <% end %>
+    <%= link_to receiver.first_name, conversation_messages_path(conversation)%>
+   <% end %>
+  <% end %>
+  </div>
+ </div>
+</div>
+
+<div class="ui segment">
+ <h3>All Users</h3>
+  <div class="ui list">
+   <% @accounts.each do |account| %>
+    <% if account.id != current_account.id %>
+     <div class="item">
+   <%= account.first_name %> <%= link_to 'Message me!', conversations_path(sender_id: current_account.id, receiver_id: account.id), method: 'post'%>
+ </div>
+  <% end %>
+ <% end %>
+ </div>
+</div>
+</div>

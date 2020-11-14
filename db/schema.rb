@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_08_063642) do
+ActiveRecord::Schema.define(version: 2020_11_14_224456) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -38,5 +38,25 @@ ActiveRecord::Schema.define(version: 2020_11_08_063642) do
     t.index ["friend_id"], name: "index_connections_on_friend_id"
   end
 
+  create_table "conversations", force: :cascade do |t|
+    t.integer "sender_id"
+    t.integer "receiver_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "body"
+    t.integer "conversation_id", null: false
+    t.integer "account_id", null: false
+    t.boolean "read"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_messages_on_account_id"
+    t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+  end
+
   add_foreign_key "connections", "accounts"
+  add_foreign_key "messages", "accounts"
+  add_foreign_key "messages", "conversations"
 end

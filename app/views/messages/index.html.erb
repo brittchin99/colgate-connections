@@ -1,0 +1,32 @@
+<div class="main">
+    <% if @over_ten %>
+ <%= link_to 'Show Previous', '?m=all' %>
+<% end %>
+<div class="ui segment">
+ <% @messages.each do |message| %>
+  <% if message.body %>
+   <% account = Account.find(message.account_id) %>
+   <div class="item">
+    <div class="content">
+     <div class="header"><strong><%= account.first_name %></strong> <%= message.message_time %></div>
+      <div class="list">
+       <div class="item">
+        <i class="right triangle icon"></i>
+         <%= message.body %>
+      </div>
+    </div>
+   </div>
+ </div>
+ <% end %>
+<% end %>
+</div>
+<%= form_for [@conversation, @message], html: {class: "ui reply form"} do |f| %>
+ <div class="field">
+   <%= f.text_area :body, class: "form-control" %>
+ </div>
+ <%= f.text_field :account_id, value: current_account.id, type: "hidden" %>
+ <div>
+   <%= f.submit "Send Message", class: "ui blue labeled submit icon button" %>
+ </div>
+<% end %>
+</div>
