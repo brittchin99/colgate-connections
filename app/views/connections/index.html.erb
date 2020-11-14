@@ -17,7 +17,7 @@
         <h4>Suggested Connections</h4>
         <h3>My Connections</h3>
           <div class="search" style="display: table-cell;">
-            <%= simple_form_for :filter_list, url: profiles_path, :method => 'get', html: {:class => "form-inline"} do |f| %>
+            <%= simple_form_for :filter_list, url: connections_path, :method => 'get', html: {:class => "form-inline"} do |f| %>
               <%= f.input :general_search_term, label: false, placeholder: "Search connections"%>
               <%= f.button :submit, "Search", class: "btn btn-light spacer"%>
             <% end %>
@@ -28,8 +28,9 @@
           </div>
           
           <div style="width: 200px; display: table-cell;">
-            <%= simple_form_for :filter_list, :method => 'get' do |f| %>
-                <%= f.input :sort_by, label: false, collection: ["Name", "Date Connected: Latest", "Date Connected: Earliest"], selected: "Name" %>
+            <%= simple_form_for :filter_list, url: connections_path, :method => 'get' do |f|%>
+                <%= f.input :sort_by, label: false, collection: ["Name", "Date Connected: Latest", "Date Connected: Earliest"], selected: @sort_key %>
+                <%= f.button :submit, "Sort", class: "btn btn-light spacer"%>
             <% end %>
           </div>
           <br/>

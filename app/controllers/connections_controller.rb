@@ -2,6 +2,27 @@ class ConnectionsController < ApplicationController
     before_action :authenticate_account!
     def index
         @connections = current_account.friendships
+        
+        @sort_key = "Name"
+        
+        if params.has_key?("filter_list")
+            p = params["filter_list"] 
+            
+            if p.has_key?("sort_by")
+                sort_key = p["sort_by"]
+                if sort_key == "Date Connected: Latest"
+                    @connections = @connections.order("created_at DESC")
+                    @sort_key = "Date Connected: Latest"
+                elsif sort_key == "Date Connected: Earliest"
+                    @connections = @connections.order("created_at")
+                    @sort_key = "Date Connected: Earliest"
+                elsif sort_key == "Name"
+                    @connections = @connections.joins(:friend).group("first_name")
+                end
+            end
+            
+            
+        end
     end
     
     def create
