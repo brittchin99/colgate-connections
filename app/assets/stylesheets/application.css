@@ -51,7 +51,10 @@ p {
 
 .search {
   margin-top: 15px;
-  margin-left: 10px;
+}
+
+.pad-left {
+  margin-left: 25px;
 }
 
 .centered {
@@ -146,6 +149,12 @@ p {
 }
 
 .btn {
+  background-color: #E10028;
+  color: whitesmoke;
+  text-decoration: none;
+}
+
+.maroon-btn {
   background-color: #E10028;
   color: whitesmoke;
   text-decoration: none;
