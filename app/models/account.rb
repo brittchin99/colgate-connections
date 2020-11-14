@@ -1,6 +1,8 @@
 class Account < ApplicationRecord
   has_many :connections
   has_many :friends, through: :connections
+  has_many :friend_requests
+  has_many :admirers, through: :friend_requests
 
   def friendships
     self.connections
