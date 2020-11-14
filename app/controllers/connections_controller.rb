@@ -1,7 +1,7 @@
 class ConnectionsController < ApplicationController
     before_action :authenticate_account!
     def index
-        @connections = current_account.friendships
+        @connections = current_account.friendships.joins(:friend).group("first_name")
         
         @sort_key = "Name"
         
