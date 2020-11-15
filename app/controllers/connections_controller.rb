@@ -15,8 +15,4 @@ class ConnectionsController < ApplicationController
         end
     end
     
-    def destroy
-        Connection.destroy_reciprocal_for_ids(current_account.id,params[:friend_id])
-        redirect_to(request.referer)
-    end
 end

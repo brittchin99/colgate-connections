@@ -18,6 +18,16 @@ class Account < ApplicationRecord
     connected
   end
   
+  def pending_friend_request?(account)
+    pending = false
+    self.friend_requests.each do |f|
+      if (f.friend == account)
+        pending = true
+      end
+    end
+    pending
+  end
+  
   def toList(str)
     if str.blank?
       return []
