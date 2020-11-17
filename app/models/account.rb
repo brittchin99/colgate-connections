@@ -3,29 +3,13 @@ class Account < ApplicationRecord
   has_many :friends, through: :connections
   has_many :friend_requests
   has_many :admirers, through: :friend_requests
-
-  def friendships
-    self.connections
-  end
   
   def connected_to(account)
-    connected = false
-    self.connections.each do |c|
-      if (c.friend == account) 
-        connected = true
-      end
-    end
-    connected
+    nil != self.connections.find_by(friend_id: account.id)
   end
   
   def pending_friend_request?(account)
-    pending = false
-    self.friend_requests.each do |f|
-      if (f.friend == account)
-        pending = true
-      end
-    end
-    pending
+    nil != self.friend_requests.find_by(friend_id: account.id)
   end
   
   def toList(str)

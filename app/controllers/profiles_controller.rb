@@ -20,8 +20,6 @@ class ProfilesController < ApplicationController
   end 
 
   def index
-    @connections = current_account.friendships
-    
     @profiles = Account.all
     
     if !params.has_key?("reset")
