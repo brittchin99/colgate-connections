@@ -19,6 +19,14 @@
                         <div><%= link_to "Add Connection", connections_path(:friend_id => @profile), :method => :post, :class => "btn" %></div>
                     <% end %>
                   </div>
+                  <div>
+                    <% if current_account!=@profile && current_account.connected_to(@profile) %>
+                        <div>
+                        <%= link_to "Connected", connections_path(:friend_id => @profile), :method => :post, :class => "btn btn-success" %>
+                        <%= link_to "Message #{@profile.first_name}", conversations_path(:sender_id => current_account, :receiver_id => @profile), :method => :post, :class => "btn btn-primary" %>
+                        </div>
+                    <% end %>
+                  </div>
             </div>
       </div> 
       <div>
