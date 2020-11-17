@@ -11,12 +11,12 @@ class FriendRequestsController < ApplicationController
       if @friend_requests.save
           flash[:notice] = "Friend request sent."
       else
-          flash[:notice] = "Unable to add friend."
+          flash[:alert] = "Unable to add friend."
       end
     else
-      flash[:notice] = "You are already friends."
+      flash[:alert] = "You are already friends."
     end
-    redirect_to profile_path(params[:friend_id])
+    redirect_to profile_path(params[:friend_id]) 
   end
   
   def destroy
@@ -24,8 +24,8 @@ class FriendRequestsController < ApplicationController
     if @friend_request.destroy
       flash[:notice] = "Removed friend request."
     else
-      flash[:notice] = "Unable to delete friend request."
+      flash[:alert] = "Unable to delete friend request."
     end
-    redirect_to friend_requests_path
+    redirect_to profile_path(params[:friend_id])
   end
 end

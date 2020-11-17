@@ -20,7 +20,6 @@
                         <div>Friend Request Sent</div>
                       <% elsif !current_account.pending_friend_request?(@profile) %>
                         <div><%= link_to "Send Friend Request", friend_requests_path(:friend_id => @profile), :method => :post, :class => "btn" %></div>
-                        
                       <% else %>
                         <div><%= link_to "Accept", connections_path(:friend_id => @profile), :method => :post, :class => "btn" %></div>
                         <div><%= link_to "Deny", friend_request_path(:friend_id => @profile), :method => :delete, :class => "btn" %></div>
@@ -28,6 +27,16 @@
                     <% end %>
                   </div>
             </div>
+            <% if flash[:notice] && !@profile.pending_friend_request?(current_account) %>
+              <div class="alert alert-primary notice top-alert">
+                <%= "#{flash[:notice]}" %>
+              </div>
+            <% end %>
+            <% if flash[:alert] && !current_account.pending_friend_request?(@profile) %>
+              <div class="alert alert-warning alert top-alert">
+                <%= "#{flash[:alert]}" %>
+              </div>
+            <% end %>
       </div> 
       <div>
         <table class="profile-info">
