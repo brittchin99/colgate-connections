@@ -42,9 +42,9 @@
         <thead class="thead-light">
           <tr class="products_header">
             <th>Name</th>
-            <th>Year</th>
-            <th>Majors</th>
-            <th>Minors</th>
+            <th>Class Year</th>
+            <th>Major(s)</th>
+            <th>Minor(s)</th>
           </tr>
         </thead>
         <tbody>
@@ -73,7 +73,41 @@
       
       <div id="requests" class="tab-pane">
         <h3>Connection Requests</h3>
-        <p>No current connection requests.</p>
+        <div>
+          <% if @friend_requests.length() == 0 %>
+            <p class="center">Too bad, no secret admirers!</p>
+          <% else %>
+            <table class="table">
+            <thead class="thead-light">
+              <tr class="products_header">
+                <th>Name</th>
+                <th>Class Year</th>
+                <th>Major(s)</th>
+                <th>Minor(s)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @friend_requests.each do |c| %>
+                <tr><p>
+                  <td>
+                    <%= link_to "#{c.friend.first_name} #{c.friend.last_name}", profile_path(c.friend.id) %>
+                  </td>
+                  <td><%= c.friend.class_year %></td>
+                  <td>
+                    <% c.friend.toList(c.friend.majors).each do |m| %>
+                      <%= m %><br>
+                    <% end %>
+                  </td>
+                  <td>
+                    <% c.friend.toList(c.friend.minors).each do |m| %>
+                      <%= m %><br>
+                    <% end %>
+                  </td>
+                </p></tr>
+                <% end %>
+              </tbody>
+            </table>  
+          <% end %>
       </div>
     </div>
   </div>
