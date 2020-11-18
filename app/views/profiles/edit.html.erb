@@ -2,16 +2,16 @@
     <h1>Edit your profile</h1>
         <%= simple_form_for @profile, :url => url_for(:action => 'update', :controller => 'profiles'), :method => 'patch' do |f| %>
         
-            <!--<%= f.label "Profile photo"%><br>-->
-            <!--<%= f.file_field :avatar %>-->
-        
+            <%= f.label "Profile photo"%><br>
+            <%= f.file_field :avatar %>
+  
             <%= f.input :first_name, input_html: { required: false, size: 40 }%>
             
             <%= f.input :last_name, input_html: { required: false } %>
             
-            <!--<%= f.input :email, label: 'Colgate Email', placeholder: 'user@colgate.edu', input_html: { required: false } %>-->
+            <%= f.input :email, label: 'Colgate Email', placeholder: 'user@colgate.edu', input_html: { required: false } %>
             
-            <!--<%= f.input :password, input_html: { required: false } %>-->
+            <%= f.input :password, input_html: { required: false } %>
             
             <%= f.input :pronouns, as: :radio_buttons, collection: Account::PRONOUNS, input_html: { required: false }  %>
             

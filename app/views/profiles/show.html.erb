@@ -1,6 +1,5 @@
 <div class="profile-container">
       <!--check logged in to the right user -->
-      <!--<button onclick="f()" class="update-button">Update Profile</button>-->
       <% if current_account==@profile %>
         <%= link_to "Update Profile", edit_profile_path(@profile), :class => "btn btn-primary update-button" %>
       <% end %>
@@ -36,13 +35,13 @@
                 <th><%= "Class of #{@profile.class_year}" %></th>
               </tr>
               <tr>
-                <th>Major(s)</th>
+                <th>Major(s):</th>
                 <td> 
                    <%= @profile.majors.gsub(/[^,^\w\s]/, '') %>
                 </td>
               </tr>
               <tr>
-                <th>Minor(s)</th>
+                <th>Minor(s):</th>
                 <td> <%= @profile.minors %> </td>
               </tr>
               <tr>
@@ -51,11 +50,11 @@
               </tr>
         </table>
         
-      <!--check logged in to the right user -->
-      <% if current_account==@profile %>
-        <button onclick="f()" class="add-button">Upload profile photos</button>
-      <% end %>
 
+      <% if current_account==@profile && @profile.photos.attachments.length < 13 %>
+        <button onclick="f()" class="add-button">Upload up to 13 photos!</button>
+      <% end %>
+      
      <div class="photos">
             <% if @profile.photos.attached? %>
                 <% @profile.photos.each do |photo| %>
@@ -74,12 +73,7 @@
     
     
 <script>
-function toggle() {
-  var x = document.getElementById("status-box");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
+function f() {
+  alert("Not implemented yet");
 }
 </script>

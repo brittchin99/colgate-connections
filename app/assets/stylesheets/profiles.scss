@@ -15,6 +15,7 @@ th {
 
 .profile-text {
     text-align: center;
+    padding-top: 10px;
 }
 
 .profile-image-circle {
@@ -40,11 +41,9 @@ th {
 }
 
 .photos {
-    padding-top: 50px;
+    padding-top: 20px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-
-
 }
 
 .profile-container {
@@ -69,13 +68,12 @@ th {
   font-weight: normal;
   font-size: 20px; 
   cursor: pointer; 
-  
-
+  padding: 20px 10px 0px 0px;
 }
 
 
 #profile-status {
-    display: block;
+  display: block;
 }
 
 #status-box {

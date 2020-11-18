@@ -7,7 +7,7 @@ class ProfilesController < ApplicationController
   
   
   def edit
-      @profile = Account.find(params[:id])
+    @profile = Account.find(params[:id])
   end
 
   def update 
@@ -53,15 +53,10 @@ class ProfilesController < ApplicationController
         session["filter_list"] = params["filter_list"]
       end
     end
-    
   end
-  
   
   private
   def profile_params
     params.require(:account).permit(:first_name, :last_name, :pronouns, :class_year, :majors => [], :minors => [], :interests => [])
   end 
-  
-
-  
 end
