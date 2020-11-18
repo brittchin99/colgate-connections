@@ -44,11 +44,11 @@ class ConnectionsController < ApplicationController
         @friend_request = current_account.friend_requests.find_by(friend_id: params[:friend_id])
         if @friend_request.destroy && @connection.save && @inverse_connection.save
             flash[:notice] = "Added friend."
-            redirect_to connections_path 
         else
             flash[:alert] = "Unable to add friend."
-            redirect_to profile_path(params[:friend_id]) 
         end
+        redirect_to profile_path(params[:friend_id]) 
+
     end
     
 end

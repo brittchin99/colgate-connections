@@ -27,12 +27,12 @@
                     <% end %>
                   </div>
             </div>
-            <% if flash[:notice] && !@profile.pending_friend_request?(current_account) %>
+            <% if flash[:notice] %>
               <div class="alert alert-primary notice top-alert">
                 <%= "#{flash[:notice]}" %>
               </div>
             <% end %>
-            <% if flash[:alert] && !current_account.pending_friend_request?(@profile) %>
+            <% if flash[:alert] %>
               <div class="alert alert-warning alert top-alert">
                 <%= "#{flash[:alert]}" %>
               </div>
