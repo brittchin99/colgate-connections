@@ -1,8 +1,10 @@
 class ProfilesController < ApplicationController
   before_action :authenticate_account!
+
   def show
     @profile = Account.find(params[:id])
   end
+  
   
   def edit
       @profile = Account.find(params[:id])
@@ -10,15 +12,21 @@ class ProfilesController < ApplicationController
 
   def update 
     @profile = Account.find(params[:id])
-    if @profile.update(profile_params)
+    # @profile.avatar.attach(params[:avatar])
+    # @profile.photos.attach(params[:photos])
+    if @profile.update_without_password(profile_params)
+      flash[:success] = "Profile updated!"
       redirect_to profile_path(@profile)
     else 
+      # redirect_to profile_path(@profile)
+      flash[:alert] = "failed"
       respond_to do |format|
         format.html { render :edit }
       end
-    end 
+    end
   end 
-
+  
+  
   def index
     @connections = current_account.friendships
     
@@ -47,8 +55,13 @@ class ProfilesController < ApplicationController
     end
     
   end
+  
+  
   private
   def profile_params
-    params.require(:account).permit(:first_name, :last_name, :email, :password, :pronouns, :class_year, :majors => [], :minors => [], :interests => [])
+    params.require(:account).permit(:first_name, :last_name, :pronouns, :class_year, :majors => [], :minors => [], :interests => [])
   end 
+  
+
+  
 end

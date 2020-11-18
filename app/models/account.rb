@@ -1,6 +1,8 @@
 class Account < ApplicationRecord
   has_many :connections
   has_many :friends, through: :connections
+  has_one_attached :avatar
+  has_many_attached :photos
 
   def friendships
     self.connections

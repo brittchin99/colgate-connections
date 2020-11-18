@@ -34,12 +34,17 @@ th {
     box-sizing: border-box;
     border: 3px solid white;
     box-shadow: 0 0 0 2px rgba(0,0,0,.15);
-    background: maroon;
+    margin-right: 30px;
+    margin-bottom: 30px;
+
 }
 
 .photos {
-    display: flex;
     padding-top: 50px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+
+
 }
 
 .profile-container {
@@ -66,4 +71,13 @@ th {
   cursor: pointer; 
   
 
+}
+
+
+#profile-status {
+    display: block;
+}
+
+#status-box {
+    display: none;
 }
