@@ -1,17 +1,25 @@
 <div class="profile-container">
       <!--check logged in to the right user -->
-      <!--<button onclick="f()" class="update-button">Update Profile</button>-->
       <% if current_account==@profile %>
         <%= link_to "Update Profile", edit_profile_path(@profile), :class => "btn btn-primary update-button" %>
       <% end %>
       <div class="profile-basic">
-            <div class="profile-image-circle"></div>
+            <% if @profile.avatar.attached? %>
+              <img class="profile-image-circle" src="<%= (url_for(@profile.avatar)) %>">
+            <% else %>
+              <div class="profile-image-circle"></div>
+            <% end %>
             <div class="profile-text">
                  <h4><%= "#{@profile.first_name} #{@profile.last_name}" %> </h4>
                  <p> <%= "#{@profile.pronouns}"%></p>   
                   <!--check logged in to the right user -->
+                  <% if @profile.status %>
+                      <%= "#{@profile.status}"%>
+                  <% end %>
                   <% if current_account==@profile %>
-                    <button onclick="f()" class="add-button">Add a status</button>
+                     <% if !@profile.status %>
+                        <button onclick="toggle()" class="add-button" id="profile-status">Add a status</button>                      
+                      <% end %>
                   <% end %>
                   <!--connected & message button -->
                   <div>
@@ -65,15 +73,22 @@
               </tr>
         </table>
         
-      <!--check logged in to the right user -->
-      <% if current_account==@profile %>
-        <button onclick="f()" class="add-button">Upload profile photos</button>
-      <% end %>
 
+      <% if current_account==@profile && @profile.photos.attachments.length < 13 %>
+        <button onclick="f()" class="add-button">Upload up to 13 photos!</button>
+      <% end %>
+      
      <div class="photos">
-            <div class="profile-image-square"></div> 
-            <div class="profile-image-square"></div> 
-            <div class="profile-image-square"></div> 
+            <% if @profile.photos.attached? %>
+                <% @profile.photos.each do |photo| %>
+                    <img class="profile-image-square" src="<%= (url_for(photo)) %>">
+                <%end %>
+            <% else %>
+                <div class="profile-image-square"></div> 
+                <div class="profile-image-square"></div> 
+                <div class="profile-image-square"></div> 
+            <% end %>
+        
      </div>
      </div>
 
@@ -85,4 +100,3 @@ function f() {
   alert("Not implemented yet");
 }
 </script>
-
