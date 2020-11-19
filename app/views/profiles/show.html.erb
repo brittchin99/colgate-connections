@@ -17,13 +17,15 @@
                   <div>
                     <% if current_account!=@profile && !current_account.connected_to(@profile) %>
                       <% if @profile.pending_friend_request?(current_account) %>
-                        <div>Friend Request Sent</div>
+                        <div><%= link_to "Unsend Friend Request", friend_request_path(:friend_id => @profile), :method => :delete, :class => "btn" %></div>
                       <% elsif !current_account.pending_friend_request?(@profile) %>
                         <div><%= link_to "Send Friend Request", friend_requests_path(:friend_id => @profile), :method => :post, :class => "btn" %></div>
                       <% else %>
                         <div><%= link_to "Accept", connections_path(:friend_id => @profile), :method => :post, :class => "btn" %></div>
                         <div><%= link_to "Deny", friend_request_path(:friend_id => @profile), :method => :delete, :class => "btn" %></div>
                       <% end %>
+                    <% elsif current_account.connected_to(@profile) %>
+                      <div><%= link_to "Disconnect", connection_path(:friend_id => @profile), :method => :delete, :class => "btn" %></div>
                     <% end %>
                   </div>
             </div>
@@ -45,16 +47,21 @@
               </tr>
               <tr>
                 <th>Major(s)</th>
-                <td> <%= @profile.majors %> </td>
-                 <!-- need to loop through them to list it -->
+                <td> 
+                  <%= @profile.toList(@profile.majors).join(", ")%>
+                </td>
               </tr>
               <tr>
                 <th>Minor(s)</th>
-                <td> <%= @profile.minors %> </td>
+                <td> 
+                  <%= @profile.toList(@profile.minors).join(", ")%>
+                </td>
               </tr>
               <tr>
-                <th>Interested in:</th>
-                <td> <%= @profile.interests %> </td>
+                <th>Interest(s):</th>
+                <td>
+                  <%= @profile.toList(@profile.interests).join(", ")%>
+                </td>
               </tr>
         </table>
         
