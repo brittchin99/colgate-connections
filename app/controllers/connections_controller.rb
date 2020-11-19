@@ -1,7 +1,8 @@
 class ConnectionsController < ApplicationController
     before_action :authenticate_account!
     def index
-        @connections = current_account.friendships.joins(:friend).group("first_name")
+        @friend_requests = current_account.friend_requests
+        @connections = current_account.connections.joins(:friend).group("first_name")
         
         @sort_key = "Name"
         
@@ -37,18 +38,17 @@ class ConnectionsController < ApplicationController
     end
     
     def create
+        @friend_account = Account.find(params[:friend_id])
         @connection = current_account.connections.build(:friend_id => params[:friend_id])
-        if @connection.save
+        @inverse_connection = @friend_account.connections.build(:friend_id => current_account.id)
+        @friend_request = current_account.friend_requests.find_by(friend_id: params[:friend_id])
+        if @friend_request.destroy && @connection.save && @inverse_connection.save
             flash[:notice] = "Added friend."
-            redirect_to connections_path
         else
-            flash[:notice] = "Unable to add friend."
-            redirect_to profile_path(params[:friend_id])
+            flash[:alert] = "Unable to add friend."
         end
+        redirect_to profile_path(params[:friend_id]) 
+
     end
     
-    def destroy
-        Connection.destroy_reciprocal_for_ids(current_account.id,params[:friend_id])
-        redirect_to(request.referer)
-    end
 end
