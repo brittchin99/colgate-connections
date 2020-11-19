@@ -15,6 +15,7 @@ th {
 
 .profile-text {
     text-align: center;
+    padding-top: 10px;
 }
 
 .profile-image-circle {
@@ -34,12 +35,15 @@ th {
     box-sizing: border-box;
     border: 3px solid white;
     box-shadow: 0 0 0 2px rgba(0,0,0,.15);
-    background: maroon;
+    margin-right: 30px;
+    margin-bottom: 30px;
+
 }
 
 .photos {
-    display: flex;
-    padding-top: 50px;
+    padding-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 
 .profile-container {
@@ -64,4 +68,5 @@ th {
   font-weight: normal;
   font-size: 20px; 
   cursor: pointer; 
+  padding: 20px 10px 0px 0px;
 }

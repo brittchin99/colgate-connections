@@ -7,5 +7,6 @@ class AddFirstNameToAccounts < ActiveRecord::Migration[6.0]
     add_column :accounts, :majors, :text
     add_column :accounts, :minors, :text
     add_column :accounts, :interests, :text
+    add_column :accounts, :status, :text
   end
 end

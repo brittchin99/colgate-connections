@@ -3,6 +3,12 @@ class Account < ApplicationRecord
   has_many :friends, through: :connections
   has_many :friend_requests
   has_many :admirers, through: :friend_requests
+  has_one_attached :avatar
+  has_many_attached :photos
+
+  def friendships
+    self.connections
+  end
   
   def connected_to(account)
     nil != self.connections.find_by(friend_id: account.id)
