@@ -1,8 +1,0 @@
-<div class="main">
-    <p>My Secret Admirers</p>
-    <div>
-        <% @friend_requests.each do |c| %>
-            <p><%= link_to "#{c.friend.first_name} #{c.friend.last_name}", profile_path(c.friend.id), :method => :get %></p>
-        <% end %>
-    </div>
-</div>

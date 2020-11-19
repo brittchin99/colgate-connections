@@ -21,8 +21,12 @@ class FriendRequestsController < ApplicationController
   
   def destroy
     @friend_request = current_account.friend_requests.find_by(friend_id: params[:friend_id])
+    if @friend_request == nil
+      @friend_account = Account.find_by_id(params[:friend_id])
+      @friend_request = @friend_account.friend_requests.find_by(friend_id: current_account.id)
+    end
     if @friend_request.destroy
-      flash[:notice] = "Removed friend request."
+      flash[:notice] = "Deleted friend request."
     else
       flash[:alert] = "Unable to delete friend request."
     end
