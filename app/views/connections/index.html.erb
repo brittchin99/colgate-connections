@@ -13,8 +13,8 @@
         <a data-toggle="tab" href="#requests">Connection Requests
         
         <% if @friend_requests.length() != 0 %>
-            <span class="notification"/>
-      <% end %>
+            <span class="notif"/>
+        <% end %>
   </a>
         
       </li>
@@ -35,8 +35,8 @@
             <p>Sort By </p>
           </div>
           
-          <div style="width: 200px; display: table-cell;">
-            <%= simple_form_for :filter_list, url: connections_path, :method => 'get' do |f|%>
+          <div style="display: table-cell;">
+            <%= simple_form_for :filter_list, url: connections_path, :method => 'get',  html: {:class => "form-inline"} do |f|%>
                 <%= f.input :sort_by, label: false, collection: ["Name", "Date Connected: Latest", "Date Connected: Earliest"], selected: @sort_key %>
                 <%= f.button :submit, "Sort", class: "btn btn-light spacer"%>
             <% end %>

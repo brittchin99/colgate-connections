@@ -104,7 +104,7 @@ p {
 }
 
 .sidenav a {
-  padding: 6px 8px 6px 16px;
+  padding: 6px 8px 6px 6px;
   text-decoration: none;
   font-size: 18px;
   display: block;
@@ -171,11 +171,17 @@ max-height: 60px;
 padding: 5px;
 }
 
-.notification {
+.notif {
   height: 10px;
   width: 10px;
   background-color: red;
   border-radius: 50%;
   display: inline-block;
   margin-left: 5px;
+}
+
+.side-notif {
+  float:right;
+  margin-top: -25px;
+  margin-right: 8px;
 }
