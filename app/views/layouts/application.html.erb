@@ -4,11 +4,10 @@
     <title>ColgateConnections</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    
   </head>
   <body>
     <% if account_signed_in? %>
@@ -47,7 +46,16 @@
         <ul class="navbar-nav ml-auto navbar-right">
           <li class="nav-item">
             <% if account_signed_in? %>
-              <%= link_to (current_account.first_name + " " + current_account.last_name), profile_path(current_account), :class => "nav-link subtext heading" %>
+              <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <%= current_account.first_name + " " + current_account.last_name %>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+              </div>
             <% else %>
               <%= link_to "Log In / Sign Up", new_account_session_path, :class => "nav-link subtext heading" %>
             <% end %>
