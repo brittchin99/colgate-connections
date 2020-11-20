@@ -11,16 +11,8 @@
             <% end %>
             <div class="profile-text">
                  <h4><%= "#{@profile.first_name} #{@profile.last_name}" %> </h4>
-                 <p> <%= "#{@profile.pronouns}"%></p>   
-                  <!--check logged in to the right user -->
-                  <% if @profile.status %>
-                      <%= "#{@profile.status}"%>
-                  <% end %>
-                  <% if current_account==@profile %>
-                     <% if !@profile.status %>
-                        <button onclick="toggle()" class="add-button" id="profile-status">Add a status</button>                      
-                      <% end %>
-                  <% end %>
+                 <p> <%= "#{@profile.pronouns}"%></p>
+                 
                   <!--connected & message button -->
                   <div>
                     <% if current_account!=@profile && !current_account.connected_to(@profile) %>
@@ -35,7 +27,21 @@
                     <% elsif current_account.connected_to(@profile) %>
                       <div><%= link_to "Connected", connection_path(:friend_id => @profile), :method => :delete, :class => "btn btn-success" %></div>
                     <% end %>
+                    
                   </div>
+                  <br/>
+                  
+                  <!--check logged in to the right user -->
+                  <% if @profile.status %>
+                      <%= "#{@profile.status}"%>
+                  <% end %>
+                
+                  <% if current_account==@profile %>
+                     <% if !@profile.status %>
+                        <button onclick="toggle()" class="add-button" id="profile-status">Add a status</button>                      
+                      <% end %>
+                  <% end %>
+                 
             </div>
             <% if flash[:notice] %>
               <div class="alert alert-primary notice top-alert">
@@ -78,18 +84,18 @@
         <button onclick="f()" class="add-button">Upload up to 13 photos!</button>
       <% end %>
       
-     <div class="photos">
             <% if @profile.photos.attached? %>
+            <div class="photos">
                 <% @profile.photos.each do |photo| %>
                     <img class="profile-image-square" src="<%= (url_for(photo)) %>">
+            
                 <%end %>
-            <% else %>
-                <div class="profile-image-square"></div> 
-                <div class="profile-image-square"></div> 
-                <div class="profile-image-square"></div> 
-            <% end %>
-        
-     </div>
+             </div>
+             <% else %>
+             <br/>
+               <h4 class="center">No photos yet.</h4>
+             <% end %>
+          
      </div>
 
 </div>
