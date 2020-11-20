@@ -1,8 +1,8 @@
 class ConnectionsController < ApplicationController
     before_action :authenticate_account!
     def index
-        @friend_requests = current_account.friend_requests
-        @connections = current_account.connections.joins(:friend).group("first_name")
+        @friend_requests = current_account.profile.friend_requests
+        @connections = current_account.profile.connections.joins(:friend).group("first_name")
         
         @sort_key = "Name"
         
@@ -38,10 +38,10 @@ class ConnectionsController < ApplicationController
     end
     
     def create
-        @friend_account = Account.find(params[:friend_id])
-        @connection = current_account.connections.build(:friend_id => params[:friend_id])
+        @friend_account = Profile.find(params[:friend_id])
+        @connection = current_account.profile.connections.build(:friend_id => params[:friend_id])
         @inverse_connection = @friend_account.connections.build(:friend_id => current_account.id)
-        @friend_request = current_account.friend_requests.find_by(friend_id: params[:friend_id])
+        @friend_request = current_account.profile.friend_requests.find_by(friend_id: params[:friend_id])
         if @friend_request.destroy && @connection.save && @inverse_connection.save
             flash[:notice] = "Added friend."
         else
@@ -52,8 +52,8 @@ class ConnectionsController < ApplicationController
     end
     
     def destroy
-        @connection1 = current_account.connections.find_by(friend_id: params[:friend_id])
-        @friend_account = Account.find_by_id(params[:friend_id])
+        @connection1 = current_account.profile.connections.find_by(friend_id: params[:friend_id])
+        @friend_account = Profile.find_by_id(params[:friend_id])
         if @friend_account
             @connection2 = @friend_account.connections.find_by(friend_id: current_account.id)
             if @connection1.destroy && @connection2.destroy

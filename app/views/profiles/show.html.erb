@@ -1,6 +1,6 @@
 <div class="profile-container">
       <!--check logged in to the right user -->
-      <% if current_account==@profile %>
+      <% if current_account.profile == @profile %>
         <%= link_to "Update Profile", edit_profile_path(@profile), :class => "btn btn-primary update-button" %>
       <% end %>
       <div class="profile-basic">
@@ -16,23 +16,23 @@
                   <% if @profile.status %>
                       <%= "#{@profile.status}"%>
                   <% end %>
-                  <% if current_account==@profile %>
+                  <% if current_account.profile==@profile %>
                      <% if !@profile.status %>
                         <button onclick="toggle()" class="add-button" id="profile-status">Add a status</button>                      
                       <% end %>
                   <% end %>
                   <!--connected & message button -->
                   <div>
-                    <% if current_account!=@profile && !current_account.connected_to(@profile) %>
-                      <% if @profile.pending_friend_request?(current_account) %>
+                    <% if current_account.profile!=@profile && !current_account.profile.connected_to(@profile) %>
+                      <% if @profile.pending_friend_request?(current_account.profile) %>
                         <div><%= link_to "Unsend Friend Request", friend_request_path(:friend_id => @profile), :method => :delete, :class => "btn" %></div>
-                      <% elsif !current_account.pending_friend_request?(@profile) %>
+                      <% elsif !current_account.profile.pending_friend_request?(@profile) %>
                         <div><%= link_to "Send Friend Request", friend_requests_path(:friend_id => @profile), :method => :post, :class => "btn" %></div>
                       <% else %>
                         <div><%= link_to "Accept", connections_path(:friend_id => @profile), :method => :post, :class => "btn" %></div>
                         <div><%= link_to "Deny", friend_request_path(:friend_id => @profile), :method => :delete, :class => "btn" %></div>
                       <% end %>
-                    <% elsif current_account.connected_to(@profile) %>
+                    <% elsif current_account.profile.connected_to(@profile) %>
                       <div><%= link_to "Disconnect", connection_path(:friend_id => @profile), :method => :delete, :class => "btn" %></div>
                     <% end %>
                   </div>
@@ -74,7 +74,7 @@
         </table>
         
 
-      <% if current_account==@profile && @profile.photos.attachments.length < 13 %>
+      <% if current_account.profile ==@profile && @profile.photos.attachments.length < 13 %>
         <button onclick="f()" class="add-button">Upload up to 13 photos!</button>
       <% end %>
       

@@ -1,49 +1,12 @@
 class Account < ApplicationRecord
-  has_many :connections
-  has_many :friends, through: :connections
-  has_many :friend_requests
-  has_many :admirers, through: :friend_requests
-  has_one_attached :avatar
-  has_many_attached :photos
-
-  def friendships
-    self.connections
-  end
-  
-  def connected_to(account)
-    nil != self.connections.find_by(friend_id: account.id)
-  end
-  
-  def pending_friend_request?(account)
-    nil != self.friend_requests.find_by(friend_id: account.id)
-  end
-  
-  def toList(str)
-    if str.blank?
-      return []
-    end
-    contents = []
-    str.scan(/"([^"]*)"/) { |match| 
-      contents.append(match[0])
-    }
-    if contents.length() == 0
-      contents.append(str)
-    end
-    contents
-  end
-
+  has_one :profile
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
          
-  validates :first_name, :last_name, :email, :password, :pronouns, :class_year, :majors, :interests, presence: true
+  validates  :email, :password, presence: true
   validates :email, format: { with: /\A(.+)@colgate\.edu\z/i, message: "must contain @colgate.edu"},
             uniqueness: { case_sensitive: false },
             length: { minimum: 6, maximum: 254 }      
-
-  PRONOUNS = ['she/her/hers', 'he/him/his', 'they/them/theirs', 'Other']
-  MAJORS = ["Africana and Latin American Studies","Anthropology","Applied Mathematics","Art and Art History","Asian Studies","Astrogeophysics","Astronomy/Physics","Biochemistry","Biology","Chemistry","Chinese","Classical Studies","Computer Science","Computer Science/Mathematics","Creative Writing","Economics","Educational Studies","English","Environmental Biology","Environmental Economics","Environmental Geography","Environmental Geology","Environmental Studies","Film and Media Studies","French","Geography","Geology","German","Greek","History","International Relations","Japanese","Jewish Studies","Latin","LGBTQ Studies","Linguistics","Mathematical Economics","Mathematical Systems Biology","Mathematics","Medieval and Renaissance Studies","Middle Eastern and Islamic Studies","Molecular Biology","Museum Studies","Music","Native American Studies","Neuroscience","Peace and Conflict Studies","Philosophy","Philosophy and Religion","Physical Science","Physics","Political Science","Psychological Science","Religion","Russian and Eurasian Studies","Sociology","Spanish","Theater","Women's Studies","Writing and Rhetoric"]
-  CLASS_YEARS = ["2021", "2022", "2023", "2024"]
-  INTERESTS = ["Sports and Athletics", "Community Service", "Performing Arts", "Dance", "Anime", "Video Games"]
 end

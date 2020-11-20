@@ -6,20 +6,30 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 Account.delete_all
-
+Profile.delete_all
     
-Account.create!(:email => 'ptnguyen@colgate.edu', :admin => false, :password => "colgate13", :first_name => "Amber", :last_name => "Nguyen",
+amber = Account.create!(:email => 'ptnguyen@colgate.edu', :admin => false, :password => "colgate13")
+amber.profile = Profile.new(:first_name => "Amber", :last_name => "Nguyen",
     :pronouns => "she/her/hers", :class_year => 2021, :majors => ["Computer Science", "Economics"], :minors => "Japanese", :interests => "Anime")
-Account.create!(:email => 'ecruzgonzalez@colgate.edu', :admin => false, :password => "colgate13", :first_name => "Emily", :last_name => "Cruz Gonzalez",
+
+emily = Account.create!(:email => 'ecruzgonzalez@colgate.edu', :admin => false, :password => "colgate13")
+emily.profile = Profile.new(:first_name => "Emily", :last_name => "Cruz Gonzalez",
     :pronouns => "she/her/hers", :class_year => 2021, :majors => ["Computer Science", "English"], :minors => "Anthropology", :interests => "Anime")
-Account.create!(:email => 'bchin@colgate.edu', :admin => false, :password => "colgate13", :first_name => "Brittney", :last_name => "Chin",
+
+britt = Account.create!(:email => 'bchin@colgate.edu', :admin => false, :password => "colgate13")
+britt.profile = Profile.new(:first_name => "Brittney", :last_name => "Chin",
     :pronouns => "she/her/hers", :class_year => 2021, :majors => "Computer Science", :minors => ["LGBTQ Studies", "Educational Studies"], :interests => "Performing Arts")
-    
-    
-admin = Account.create!(:email => 'admin@colgate.edu', :admin => true, :password => "colgate13", :first_name => "Admin", :last_name => "Colgate",
+
+si = Account.create!(:email => 'swei@colgate.edu', :admin => false, :password => "colgate13")
+si.profile = Profile.new(:first_name => "Si", :last_name => "Wei",
+    :pronouns => "she/her/hers", :class_year => 2021, :majors => ["Computer Science", "International Relations"], :interests => "Sports and Athletics")
+
+admin = Account.create!(:email => 'admin@colgate.edu', :admin => true, :password => "colgate13")
+admin.profile = Profile.new(:first_name => "Admin", :last_name => "Colgate",
     :pronouns => "they/them/theirs", :class_year => 2021, :majors => "Computer Science", :minors => "English", :interests => "Dance", :status => "No status to share")
-admin.avatar.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'raider.jpg')), filename: 'raider.jpg')
-admin.photos.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'raider1.png')), filename: 'raider1.png')
-admin.photos.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'raider2.png')), filename: 'raider2.png')
-admin.photos.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'raider3.png')), filename: 'raider3.png')
-admin.photos.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'raider4.png')), filename: 'raider4.png')
+
+admin.profile.avatar.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'raider.jpg')), filename: 'raider.jpg')
+admin.profile.photos.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'raider1.png')), filename: 'raider1.png')
+admin.profile.photos.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'raider2.png')), filename: 'raider2.png')
+admin.profile.photos.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'raider3.png')), filename: 'raider3.png')
+admin.profile.photos.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'raider4.png')), filename: 'raider4.png')
