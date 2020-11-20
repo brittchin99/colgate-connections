@@ -9,7 +9,15 @@
   <div class="main">
     <ul class="nav nav-tabs">
       <li class="active"><a data-toggle="tab" href="#connections">Connections</a></li>
-      <li><a data-toggle="tab" href="#requests">Connection Requests</a></li>
+      <li>
+        <a data-toggle="tab" href="#requests">Connection Requests
+        
+        <% if @friend_requests.length() != 0 %>
+            <span class="notification"/>
+      <% end %>
+  </a>
+        
+      </li>
     </ul>
 
     <div class="tab-content">
