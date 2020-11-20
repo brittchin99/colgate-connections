@@ -9,14 +9,15 @@ class FriendRequestsController < ApplicationController
     if !current_account.connected_to(@friend_account)
       @friend_requests = @friend_account.friend_requests.build(:friend_id => current_account.id)
       if @friend_requests.save
-          flash[:notice] = "Friend request sent."
+          # flash[:notice] = "Friend request sent."
       else
-          flash[:alert] = "Unable to add friend."
+          # flash[:alert] = "Unable to add friend."
       end
     else
       flash[:alert] = "You are already friends."
     end
-    redirect_to profile_path(params[:friend_id]) 
+    # redirect_to profile_path(params[:friend_id]) 
+    redirect_back(fallback_location: profile_path(params[:friend_id]))
   end
   
   def destroy
@@ -26,10 +27,11 @@ class FriendRequestsController < ApplicationController
       @friend_request = @friend_account.friend_requests.find_by(friend_id: current_account.id)
     end
     if @friend_request.destroy
-      flash[:notice] = "Deleted friend request."
+      # flash[:notice] = "Deleted friend request."
     else
-      flash[:alert] = "Unable to delete friend request."
+      # flash[:alert] = "Unable to delete friend request."
     end
-    redirect_to profile_path(params[:friend_id])
+    # redirect_to profile_path(params[:friend_id])
+    redirect_back(fallback_location: profile_path(params[:friend_id]))
   end
 end

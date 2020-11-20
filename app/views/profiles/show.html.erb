@@ -25,15 +25,15 @@
                   <div>
                     <% if current_account!=@profile && !current_account.connected_to(@profile) %>
                       <% if @profile.pending_friend_request?(current_account) %>
-                        <div><%= link_to "Unsend Friend Request", friend_request_path(:friend_id => @profile), :method => :delete, :class => "btn" %></div>
+                        <div><%= link_to "Unsend Connection Request", friend_request_path(:friend_id => @profile), :method => :delete, :class => "btn btn-secondary" %></div>
                       <% elsif !current_account.pending_friend_request?(@profile) %>
-                        <div><%= link_to "Send Friend Request", friend_requests_path(:friend_id => @profile), :method => :post, :class => "btn" %></div>
+                        <div><%= link_to "Send Connection Request", friend_requests_path(:friend_id => @profile), :method => :post, :class => "btn btn-primary" %></div>
                       <% else %>
-                        <div><%= link_to "Accept", connections_path(:friend_id => @profile), :method => :post, :class => "btn" %></div>
-                        <div><%= link_to "Deny", friend_request_path(:friend_id => @profile), :method => :delete, :class => "btn" %></div>
+                        <div><%= link_to "Accept", connections_path(:friend_id => @profile), :method => :post, :class => "btn btn-primary" %></div>
+                        <div><%= link_to "Delete", friend_request_path(:friend_id => @profile), :method => :delete, :class => "btn btn-light" %></div>
                       <% end %>
                     <% elsif current_account.connected_to(@profile) %>
-                      <div><%= link_to "Disconnect", connection_path(:friend_id => @profile), :method => :delete, :class => "btn" %></div>
+                      <div><%= link_to "Connected", connection_path(:friend_id => @profile), :method => :delete, :class => "btn btn-success" %></div>
                     <% end %>
                   </div>
             </div>

@@ -36,38 +36,26 @@
           <br/>
           
       <% if @connections.length() == 0 %>
-        <p class="center">No connections found. Add some?</p>
+        <p class="center">No connections found. <%= link_to "Add some?", profiles_path() %></p>
       <% else %>
         <table class="table">
-        <thead class="thead-light">
-          <tr class="products_header">
-            <th>Name</th>
-            <th>Class Year</th>
-            <th>Major(s)</th>
-            <th>Minor(s)</th>
-          </tr>
-        </thead>
         <tbody>
           <% @connections.each do |c| %>
             <tr><p>
               <td>
+                Photo
+              </td>
+              <td>
                 <%= link_to "#{c.friend.first_name} #{c.friend.last_name}", profile_path(c.friend.id) %>
               </td>
-              <td><%= c.friend.class_year %></td>
               <td>
-                <% c.friend.toList(c.friend.majors).each do |m| %>
-                  <%= m %><br>
-                <% end %>
-              </td>
-              <td>
-                <% c.friend.toList(c.friend.minors).each do |m| %>
-                  <%= m %><br>
-                <% end %>
+                <div><%= link_to "Connected", connection_path(:id => current_account.id, :friend_id => c.friend.id), :method => :delete, :class => "btn btn-success" %></div>
               </td>
             </p></tr>
             <% end %>
           </tbody>
-        </table>  
+        </table>
+        
       <% end %>
       </div>
       
@@ -78,30 +66,20 @@
             <p class="center">Too bad, no secret admirers!</p>
           <% else %>
             <table class="table">
-            <thead class="thead-light">
-              <tr class="products_header">
-                <th>Name</th>
-                <th>Class Year</th>
-                <th>Major(s)</th>
-                <th>Minor(s)</th>
-              </tr>
-            </thead>
             <tbody>
               <% @friend_requests.each do |c| %>
                 <tr><p>
                   <td>
-                    <%= link_to "#{c.friend.first_name} #{c.friend.last_name}", profile_path(c.friend.id) %>
-                  </td>
-                  <td><%= c.friend.class_year %></td>
-                  <td>
-                    <% c.friend.toList(c.friend.majors).each do |m| %>
-                      <%= m %><br>
-                    <% end %>
+                    Photo
                   </td>
                   <td>
-                    <% c.friend.toList(c.friend.minors).each do |m| %>
-                      <%= m %><br>
-                    <% end %>
+                    <h5><%= link_to "#{c.friend.first_name} #{c.friend.last_name}", profile_path(c.friend.id) %></h5>
+                  </td>
+                  <td>
+                    <div><%= link_to "Accept", connections_path(:id => current_account, :friend_id => c.friend.id), :method => :post, :class => "btn btn-primary" %></div>
+                  </td>
+                  <td>
+                    <div><%= link_to "Delete", friend_request_path(:id => current_account, :friend_id => c.friend.id), :method => :delete, :class => "btn btn-light" %></div>
                   </td>
                 </p></tr>
                 <% end %>
