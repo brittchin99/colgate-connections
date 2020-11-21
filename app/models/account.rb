@@ -16,6 +16,14 @@ class Account < ApplicationRecord
     connected
   end
   
+  def has_conversation_with(account_id)
+    true
+    # c = Conversation.where("sender_id = ? AND receiver_id = ?
+    # OR receiver_id = ? AND sender_id = ?", self.id, account_id, account_id, self.id)
+    
+    # c.nil?
+  end
+  
   def toList(str)
     if str.blank?
       return []

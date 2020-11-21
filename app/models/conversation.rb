@@ -10,5 +10,17 @@ class Conversation < ApplicationRecord
     OR (conversations.sender_id = ?
     AND conversations.receiver_id =?)", sender_id,receiver_id, receiver_id, sender_id)
     end
-
+    
+    def has_messages?
+        self.messages.length > 0
+    end
+    
+    def has_unread_messages?
+        true
+    end
+    
+    def last_message
+        len = self.messages.length
+        self.messages[len - 1]
+    end
 end

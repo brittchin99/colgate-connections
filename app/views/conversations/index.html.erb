@@ -1,42 +1,48 @@
 <div class="main">
-    <div
-    style="text-align:left; padding:10px;" class="container">
-        <h3>Messages</h3>
-          <hr />
-            <Container style="height:360px;">
-              <Row>
-                <Col sm={4} style="background:#f8f9fa; height:360px;">
-                  <div class="overflow-auto" style="height:360px;">
-                   <% @conversations.each do |conversation| %>
-                       <% if conversation.sender_id == current_account.id || conversation.receiver_id == current_account.id %>
-                            <% if conversation.sender_id == current_account.id %>
-                              <% receiver = Account.find(conversation.receiver_id) %>
-                            <% else %>
-                              <% receiver = Account.find(conversation.sender_id) %>
-                            <% end %>
-                        <%= link_to receiver.first_name, conversation_messages_path(conversation)%>
-                        
-                       <% end %>
-                    <% end %>
-                  </div>
-                  </div>
-                </Col>
-
-                <Col sm={8}>
-                  <div class="overflow-auto" style="maxHeight:320px">
-                    
-                  </div>
-
-                  <div style="bottom: 0; position: absolute'">
-                    <% if account_signed_in? %>
-              <%= simple_form_for :filter_list, url: profiles_path, :method => 'get', html: {:class => "form-inline"} do |f| %>
-                <%= f.input :general_search_term, label: false%>
-                <%= f.button :submit, "Send Message", class: "btn btn-primary spacer"%>
-              <% end %>
-            <% end %>
-                  </div>
-                </Col>
-              </Row>
-            </Container>
+  <div style="text-align:left; padding:10px;" class="container">
+  <h3 style="display: inline-block;">Messages</h3>
+  <span class="btn btn-primary" style="display: inline-block; float:right;">+</span>
+  
+  <% @conversations.each do |conversation| %>
+  
+  <% if conversation.has_messages? %>
+     <% if conversation.sender_id == current_account.id ||      conversation.receiver_id == current_account.id %>
+      <% if conversation.sender_id == current_account.id %>
+        <% receiver = Account.find(conversation.receiver_id) %>
+      <% else %>
+        <% receiver = Account.find(conversation.sender_id) %>
+      <% end %>
+      <%= link_to conversation_messages_path(conversation) do %>
+            <div class="btn btn-light contact">
+          <div class="row">
+              <div class="column contact-left">
+                  <img class="contact-img" src="avatar.jpeg" alt="Avatar">
+              </div>
+              <div class="column contact-right">
+                  <h6><%= receiver.first_name + " " + receiver.last_name %></h6>
+    
+                  <p class="time"><%= conversation.last_message.body.truncate(50) %>&middot; <%= conversation.last_message.message_time %></p>
+              </div>
+          </div>
+        
+          
         </div>
+          <% end %>
+     <% end %>
+    <% end %>
+  <% end %>
+  
+  <div class="ui segment">
+ <h3>All Accounts</h3>
+  <div class="ui list">
+   <% @accounts.each do |account| %>
+    <% if account.id != current_account.id && current_account.has_conversation_with(account_id: account.id)%>
+     <div class=
+     "item">
+   <%= account.first_name %> <%= link_to "Message me!", conversations_path(sender_id: current_account.id, receiver_id: account.id), method: "post"%>
+ </div>
+  <% end %>
+ <% end %>
+ </div>
+</div>
 </div>
