@@ -16,7 +16,7 @@
         <%= link_to "My Profile", profile_path(current_account) %>
         <div>
           <%= link_to "My Connections", connections_path%>
-          <% if current_account.friend_requests.length() != 0 %>
+          <% if current_account.profile.friend_requests.length() != 0 %>
             <span class="notif side-notif"/>
           <% end %>
         </div>
@@ -46,8 +46,9 @@
       <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto navbar-right">
           <li class="nav-item">
-            <% if account_signed_in? %>
-              <%= link_to (current_account.first_name + " " + current_account.last_name), profile_path(current_account), :class => "nav-link subtext heading" %>
+            <% if account_signed_in? && current_account.profile.first_name %>
+              <%= link_to (current_account.profile.first_name + " " + current_account.profile.last_name), profile_path(current_account.profile), :class => "nav-link subtext heading" %>
+            <% elsif account_signed_in? %>
             <% else %>
               <%= link_to "Log In / Sign Up", new_account_session_path, :class => "nav-link subtext heading" %>
             <% end %>

@@ -1,12 +1,14 @@
 class FriendRequestsController < ApplicationController
   before_action :authenticate_account!
+  before_action :populate_info!  
+  
   def index
-    @friend_requests = current_account.friend_requests
+    @friend_requests = current_account.profile.friend_requests
   end
   
   def create
-    @friend_account = Account.find(params[:friend_id])
-    if !current_account.connected_to(@friend_account)
+    @friend_account = Profile.find(params[:friend_id])
+    if !current_account.profile.connected_to(@friend_account)
       @friend_requests = @friend_account.friend_requests.build(:friend_id => current_account.id)
       if @friend_requests.save
           # flash[:notice] = "Friend request sent."
@@ -21,9 +23,9 @@ class FriendRequestsController < ApplicationController
   end
   
   def destroy
-    @friend_request = current_account.friend_requests.find_by(friend_id: params[:friend_id])
+    @friend_request = current_account.profile.friend_requests.find_by(friend_id: params[:friend_id])
     if @friend_request == nil
-      @friend_account = Account.find_by_id(params[:friend_id])
+      @friend_account = Profile.find_by_id(params[:friend_id])
       @friend_request = @friend_account.friend_requests.find_by(friend_id: current_account.id)
     end
     if @friend_request.destroy

@@ -1,6 +1,6 @@
 class FriendRequest < ApplicationRecord
-    belongs_to :account, class_name: "Account"
-    belongs_to :friend, class_name: "Account"
+    belongs_to :profile, class_name: "Profile"
+    belongs_to :friend, class_name: "Profile"
     
-    validates :account, uniqueness: {scope: :friend, message: "You can only send a friend request once for now"}
+    validates :profile, uniqueness: {scope: :friend, message: "You can only send a friend request once for now"}
 end
