@@ -46,7 +46,8 @@ class ProfilesController < ApplicationController
           @profiles = @profiles.where("first_name LIKE ? 
                                       OR last_name LIKE ?
                                       OR pronouns LIKE ? 
-                                      OR cast(class_year as text) LIKE ?", p["general_search_term"], p["general_search_term"], p["general_search_term"], p["general_search_term"])
+                                      OR first_name || ' ' || last_name LIKE ? 
+                                      OR cast(class_year as text) LIKE ?", p["general_search_term"], p["general_search_term"], p["general_search_term"], p["general_search_term"], p["general_search_term"])
         end
         session["filter_list"] = params["filter_list"]
       end
