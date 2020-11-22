@@ -17,13 +17,10 @@ class ProfilesController < ApplicationController
 
   def update 
     @profile = Profile.find(params[:id])
-    # @profile.avatar.attach(params[:avatar])
-    # @profile.photos.attach(params[:photos])
     if @profile.update(profile_params)
       flash[:success] = "Profile updated!"
       redirect_to profile_path(@profile)
     else 
-      # redirect_to profile_path(@profile)
       flash[:alert] = "Failed to update profile"
       respond_to do |format|
         format.html { render :edit }
