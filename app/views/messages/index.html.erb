@@ -26,10 +26,11 @@
       <div class="msg-inbox">
         <div class="chats">
           <div class="msg-page">
-            <!-- don't think over ten is working rn? -->
-            <% if @over_ten %>
-              <%= link_to 'Show Previous', '?m=all' %>
-            <% end %>
+            <div class="center">
+              <% if @over_ten %>
+                <%= link_to 'Show More', '?m=all'%>
+              <% end %>
+            </div>
             
             <div class="ui segment">
               <% @messages.each do |message| %>
