@@ -16,7 +16,7 @@
         <%= link_to "My Profile", profile_path(current_account) %>
         <div>
           <%= link_to "My Connections", connections_path%>
-          <% if current_account.friend_requests.length() != 0 %>
+          <% if current_account.profile.friend_requests.length() != 0 %>
             <span class="notif side-notif"/>
           <% end %>
         </div>
