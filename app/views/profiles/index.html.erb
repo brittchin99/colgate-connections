@@ -2,10 +2,9 @@
 <html>
   <body>
     <div class = "main">
-
       <div class="center form">
-        <h1>Filter users</h1>
-        <%= simple_form_for profiles_path, :method => 'get' do |f| %>
+        <h1>Advanced search</h1>
+        <%= simple_form_for :filter_list, :method => 'get' do |f| %>
         
           <p><%= f.input :first_name, input_html: { size: 40 }%></p>
           
@@ -13,25 +12,31 @@
           
           <p><%= f.input :email, label: 'Colgate Email', placeholder: 'user@colgate.edu' %></p>
           
-          <p><%= f.input :pronouns, as: :radio_buttons, collection: Account::PRONOUNS %></p>
+          <p><%= f.input :pronouns, as: :radio_buttons, collection: Profile::PRONOUNS %></p>
           
-          <p><%= f.input :class_year, as: :radio_buttons, collection: Account::CLASS_YEARS %></p>
+          <p><%= f.input :class_year, as: :radio_buttons, collection: Profile::CLASS_YEARS %></p>
           
-          <p><%= f.input :majors, label: "Major(s)", collection: Account::MAJORS, input_html: { multiple: true }, include_hidden: false %></p>
+          <p><%= f.input :majors, label: "Major(s)", collection: Profile::MAJORS, input_html: { multiple: true }, include_hidden: false %></p>
           
-          <p><%= f.input :minors, label: "Minor(s)", collection: Account::MAJORS, input_html: { multiple: true }, include_hidden: false %></p>
+          <p><%= f.input :minors, label: "Minor(s)", collection: Profile::MAJORS, input_html: { multiple: true }, include_hidden: false %></p>
           
-          <p><%= f.input :interests, as: :check_boxes, collection: Account::INTERESTS, wrapper: :vertical_collection_inline, include_hidden: false %></p>
+          <p><%= f.input :interests, as: :check_boxes, collection: Profile::INTERESTS, wrapper: :vertical_collection_inline, include_hidden: false %></p>
           
-          <p><%= f.button :submit, "Filter", class: "btn-primary" %></p>
+          <p><%= f.button :submit, "Search", class: "btn-primary" %></p>
+          
+          <p><%= link_to "Reset filter", profiles_path(:reset => true) %></p>
         <% end %>
       </div>
       
-      <table class="table">
+      <% if @profiles.length() == 0 %>
+        <p class="center">No match found</p>
+      <% else %>
+        <p class="center">Filter results</p>
+        <table class="table">
         <thead class="thead-light">
           <tr class="products_header">
             <th>Name</th>
-            <th>Pronouns</th>
+            <th>Year</th>
             <th>Majors</th>
             <th>Minors</th>
             <th>Connection Status</th>
@@ -39,26 +44,35 @@
         </thead>
         <tbody>
           <% @profiles.each do |p| %>
-            <tr>
+            <tr><p>
               <td>
                 <%= link_to "#{p.first_name + " " + p.last_name}", profile_path(p) %>
               </td>
-              <td><%= p.pronouns %></td>
-              <td><%= p.majors %></td>
-              <td><%= p.minors %></td>
+              <td><%= p.class_year %></td>
               <td>
-                <% if current_account!=p && !current_account.connected_to(p) %>
+                <% p.toList(p.majors).each do |m| %>
+                  <%= m %><br>
+                <% end %>
+              </td>
+              <td>
+                <% p.toList(p.minors).each do |m| %>
+                  <%= m %><br>
+                <% end %>
+              </td>
+              <td>
+                <% if current_account.profile !=p && !current_account.profile.connected_to(p) %>
                   Not yet connected
-                <% elsif current_account.connected_to(p) %>
+                <% elsif current_account.profile.connected_to(p) %>
                   Connected
                 <% else %>
                   Me!
                 <% end %>
               </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+            </p></tr>
+            <% end %>
+          </tbody>
+        </table>  
+      <% end %>
     </div>
   </body>
 </html>

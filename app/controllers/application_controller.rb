@@ -17,7 +17,11 @@ class ApplicationController < ActionController::Base
     end
     
     def after_sign_in_path_for(resource)
-      profile_path(current_account)
+      if current_account.profile.first_name
+        return profile_path(current_account)
+      else
+        return edit_profile_path(current_account)
+      end
     end
     
     protected
@@ -28,6 +32,12 @@ class ApplicationController < ActionController::Base
         if request.path!=homes_path && request.path!=new_account_session_path && request.path!=new_account_registration_path
           redirect_to new_account_session_path
         end
+      end
+    end
+    
+    def populate_info!
+      if account_signed_in? && current_account.profile.first_name.nil?
+        redirect_to edit_profile_path(current_account)
       end
     end
 end

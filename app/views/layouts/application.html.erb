@@ -6,31 +6,37 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   <body>
     <% if account_signed_in? %>
         <div class="sidenav">
         <%= link_to "My Profile", profile_path(current_account) %>
-        <%= link_to "My Connections", connections_path %>
+        <div>
+          <%= link_to "My Connections", connections_path%>
+          <% if current_account.profile.friend_requests.length() != 0 %>
+            <span class="notif side-notif"/>
+          <% end %>
+        </div>
         <%= link_to "All Users", profiles_path %>
         <%= link_to "Log Out", destroy_account_session_path, method: :delete %>
         </div>
     <% end %>
-    
-    <nav class="navbar navbar-expand-md navbar-static-top">
+   
+    <nav class="navbar navbar-expand-lg sticky-top navbar-static-top">
       <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
           <div class="navbar-header">
             <%= link_to image_tag("logo_white2.png", height:60, alt:"Colgate Connections"), root_path %>
           </div>
           
-          <div class="search">
+          <div class="search pad-left">
             <% if account_signed_in? %>
-              <%= form_with url: profiles_path, html: {:class => "form-inline"}, method: :get, local: true do |f| %>
-                <p><%= f.text_field "query", class: "form-control" %></p>
-                <p><%= f.submit "Search profiles", class: "btn btn-light spacer" %></p>
+              <%= simple_form_for :filter_list, url: profiles_path, :method => 'get', html: {:class => "form-inline"} do |f| %>
+                <%= f.input :general_search_term, label: false, placeholder: "Name, year, email..."%>
+                <%= f.button :submit, "Search", class: "btn btn-light spacer"%>
               <% end %>
             <% end %>
           </div>
@@ -40,8 +46,9 @@
       <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto navbar-right">
           <li class="nav-item">
-            <% if account_signed_in? %>
-              <%= link_to (current_account.first_name + " " + current_account.last_name), profile_path(current_account), :class => "nav-link subtext heading" %>
+            <% if account_signed_in? && current_account.profile.first_name %>
+              <%= link_to (current_account.profile.first_name + " " + current_account.profile.last_name), profile_path(current_account.profile), :class => "nav-link subtext heading" %>
+            <% elsif account_signed_in? %>
             <% else %>
               <%= link_to "Log In / Sign Up", new_account_session_path, :class => "nav-link subtext heading" %>
             <% end %>

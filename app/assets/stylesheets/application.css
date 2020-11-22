@@ -51,7 +51,10 @@ p {
 
 .search {
   margin-top: 15px;
-  margin-left: 10px;
+}
+
+.pad-left {
+  margin-left: 25px;
 }
 
 .centered {
@@ -77,11 +80,14 @@ p {
 
 .navbar {
   background-color: #821019;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
 }
 
 .top-alert {
   width: 100%;
-  top: -25px;
+  top: 0px;
   padding-bottom: 50px;
 }
 
@@ -98,7 +104,7 @@ p {
 }
 
 .sidenav a {
-  padding: 6px 8px 6px 16px;
+  padding: 6px 8px 6px 6px;
   text-decoration: none;
   font-size: 18px;
   display: block;
@@ -148,7 +154,34 @@ p {
   text-decoration: none;
 }
 
+.maroon-btn {
+  background-color: #E10028;
+  color: whitesmoke;
+  text-decoration: none;
+}
+
 .spacer {
   margin-left: 5px;
   margin-right: 5px;
+}
+
+.contact-img {
+border-radius: 50%;
+max-height: 60px;
+padding: 5px;
+}
+
+.notif {
+  height: 10px;
+  width: 10px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.side-notif {
+  float:right;
+  margin-top: -25px;
+  margin-right: 8px;
 }
