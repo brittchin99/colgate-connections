@@ -1,5 +1,7 @@
 class FriendRequestsController < ApplicationController
   before_action :authenticate_account!
+  before_action :populate_info!  
+  
   def index
     @friend_requests = current_account.profile.friend_requests
   end

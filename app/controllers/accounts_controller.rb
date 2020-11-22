@@ -1,5 +1,6 @@
 class AccountsController < Devise::RegistrationsController
   before_action :authenticate_account!, except: [:create, :new]
+  before_action :populate_info!, except: [:create, :new]
   
   def new
     super

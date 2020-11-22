@@ -3,7 +3,6 @@ class CreateProfiles < ActiveRecord::Migration[6.0]
     create_table :profiles do |t|
       t.string :first_name
       t.string :last_name
-      t.string :string
       t.string :pronouns
       t.integer :class_year
       t.text :majors

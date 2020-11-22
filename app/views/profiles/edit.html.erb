@@ -1,16 +1,6 @@
 <div class="profile-container">
     <h1>Edit your profile</h1>
-            <% if flash[:notice] %>
-              <div class="alert alert-primary notice top-alert">
-                <%= "#{flash[:notice]}" %>
-              </div>
-            <% end %>
-            <% if flash[:alert] %>
-              <div class="alert alert-warning alert top-alert">
-                <%= "#{flash[:alert]}" %>
-              </div>
-            <% end %>
-            
+ 
         <%= simple_form_for @profile, :url => url_for(:action => 'update', :controller => 'profiles'), :method => 'patch' do |f| %>
         
             <%= f.label "Profile photo"%><br>

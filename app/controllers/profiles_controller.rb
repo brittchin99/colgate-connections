@@ -1,9 +1,6 @@
 class ProfilesController < ApplicationController
   before_action :authenticate_account!
-
-  def new 
-    @profile = Profile.new
-  end 
+  before_action :populate_info!, except: [:edit, :update]
   
   def show
     @account = Account.find(params[:id])
@@ -18,30 +15,16 @@ class ProfilesController < ApplicationController
     @profile = Profile.find(params[:id])
   end
 
-  def create 
-    @profile = Profile.new(profile_params)
-    @profile.account = current_account
-    
-    if @profile.save
-      current_account.profile = @profile
-      flash[:notice] = "Profile successfully created."
-        redirect_to profile_path(@profile) and return
-    else
-      flash[:alert] = "Failed to create profile."
-        render new_profile_path and return
-    end
-  end 
-
   def update 
     @profile = Profile.find(params[:id])
     # @profile.avatar.attach(params[:avatar])
     # @profile.photos.attach(params[:photos])
-    if @profile.update!(profile_params)
+    if @profile.update(profile_params)
       flash[:success] = "Profile updated!"
       redirect_to profile_path(@profile)
     else 
       # redirect_to profile_path(@profile)
-      flash[:alert] = "failed"
+      flash[:alert] = "Failed to update profile"
       respond_to do |format|
         format.html { render :edit }
       end

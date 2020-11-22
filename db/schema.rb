@@ -64,7 +64,6 @@ ActiveRecord::Schema.define(version: 2020_11_20_215514) do
   create_table "profiles", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
-    t.string "string"
     t.string "pronouns"
     t.integer "class_year"
     t.text "majors"
