@@ -45,11 +45,12 @@ class ConnectionsController < ApplicationController
         @inverse_connection = @friend_account.connections.build(:friend_id => current_account.id)
         @friend_request = current_account.profile.friend_requests.find_by(friend_id: params[:friend_id])
         if @friend_request.destroy && @connection.save && @inverse_connection.save
-            flash[:notice] = "Added friend."
+            # flash[:notice] = "Added connection."
         else
-            flash[:alert] = "Unable to add friend."
+            # flash[:alert] = "Unable to add connection."
         end
-        redirect_to profile_path(params[:friend_id]) 
+        # redirect_to profile_path(params[:friend_id]) 
+        redirect_back(fallback_location: profile_path(params[:friend_id]))
 
     end
     
@@ -59,14 +60,15 @@ class ConnectionsController < ApplicationController
         if @friend_account
             @connection2 = @friend_account.connections.find_by(friend_id: current_account.id)
             if @connection1.destroy && @connection2.destroy
-              flash[:notice] = "Removed connection."
+            #   flash[:notice] = "Removed connection."
             else
-              flash[:alert] = "Unable to delete friend request."
+            #   flash[:alert] = "Unable to delete friend request."
             end
         else
-            flash[:alert] = "Friend not found."
+            # flash[:alert] = "Friend not found."
         end
-        redirect_to profile_path(params[:friend_id])
+        # redirect_to profile_path(params[:friend_id])
+        redirect_back(fallback_location: profile_path(params[:friend_id]))
     end
     
 end

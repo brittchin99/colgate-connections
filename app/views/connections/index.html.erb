@@ -9,9 +9,17 @@
   <div class="main">
     <ul class="nav nav-tabs">
       <li class="active"><a data-toggle="tab" href="#connections">Connections</a></li>
-      <li><a data-toggle="tab" href="#requests">Connection Requests</a></li>
+      <li>
+        <a data-toggle="tab" href="#requests">Connection Requests
+        
+        <% if @friend_requests.length() != 0 %>
+            <span class="notif"/>
+        <% end %>
+  </a>
+        
+      </li>
     </ul>
-
+    
     <div class="tab-content">
       <div id="connections" class="tab-pane active">
         <h4>Suggested Connections</h4>
@@ -27,8 +35,8 @@
             <p>Sort By </p>
           </div>
           
-          <div style="width: 200px; display: table-cell;">
-            <%= simple_form_for :filter_list, url: connections_path, :method => 'get' do |f|%>
+          <div style="display: table-cell;">
+            <%= simple_form_for :filter_list, url: connections_path, :method => 'get',  html: {:class => "form-inline"} do |f|%>
                 <%= f.input :sort_by, label: false, collection: ["Name", "Date Connected: Latest", "Date Connected: Earliest"], selected: @sort_key %>
                 <%= f.button :submit, "Sort", class: "btn btn-light spacer"%>
             <% end %>
@@ -36,38 +44,26 @@
           <br/>
           
       <% if @connections.length() == 0 %>
-        <p class="center">No connections found. Add some?</p>
+        <p class="center">No connections found. <%= link_to "Add some?", profiles_path() %></p>
       <% else %>
         <table class="table">
-        <thead class="thead-light">
-          <tr class="products_header">
-            <th>Name</th>
-            <th>Class Year</th>
-            <th>Major(s)</th>
-            <th>Minor(s)</th>
-          </tr>
-        </thead>
         <tbody>
           <% @connections.each do |c| %>
             <tr><p>
               <td>
+                Photo
+              </td>
+              <td>
                 <%= link_to "#{c.friend.first_name} #{c.friend.last_name}", profile_path(c.friend.id) %>
               </td>
-              <td><%= c.friend.class_year %></td>
               <td>
-                <% c.friend.toList(c.friend.majors).each do |m| %>
-                  <%= m %><br>
-                <% end %>
-              </td>
-              <td>
-                <% c.friend.toList(c.friend.minors).each do |m| %>
-                  <%= m %><br>
-                <% end %>
+                <div><%= link_to "Connected", connection_path(:id => current_account.id, :friend_id => c.friend.id), :method => :delete, :class => "btn btn-success" %></div>
               </td>
             </p></tr>
             <% end %>
           </tbody>
-        </table>  
+        </table>
+        
       <% end %>
       </div>
       
@@ -78,30 +74,20 @@
             <p class="center">Too bad, no secret admirers!</p>
           <% else %>
             <table class="table">
-            <thead class="thead-light">
-              <tr class="products_header">
-                <th>Name</th>
-                <th>Class Year</th>
-                <th>Major(s)</th>
-                <th>Minor(s)</th>
-              </tr>
-            </thead>
             <tbody>
               <% @friend_requests.each do |c| %>
                 <tr><p>
                   <td>
-                    <%= link_to "#{c.friend.first_name} #{c.friend.last_name}", profile_path(c.friend.id) %>
-                  </td>
-                  <td><%= c.friend.class_year %></td>
-                  <td>
-                    <% c.friend.toList(c.friend.majors).each do |m| %>
-                      <%= m %><br>
-                    <% end %>
+                    Photo
                   </td>
                   <td>
-                    <% c.friend.toList(c.friend.minors).each do |m| %>
-                      <%= m %><br>
-                    <% end %>
+                    <h5><%= link_to "#{c.friend.first_name} #{c.friend.last_name}", profile_path(c.friend.id) %></h5>
+                  </td>
+                  <td>
+                    <div><%= link_to "Accept", connections_path(:id => current_account, :friend_id => c.friend.id), :method => :post, :class => "btn btn-primary" %></div>
+                  </td>
+                  <td>
+                    <div><%= link_to "Delete", friend_request_path(:id => current_account, :friend_id => c.friend.id), :method => :delete, :class => "btn btn-light" %></div>
                   </td>
                 </p></tr>
                 <% end %>
@@ -112,5 +98,36 @@
     </div>
   </div>
 </body>
+
+<script>
+  if (location.hash) {
+    $('a[href=\'' + location.hash + '\']').tab('show');
+  }
+  var activeTab = localStorage.getItem('activeTab');
+  if (activeTab) {
+    $('a[href="' + activeTab + '"]').tab('show');
+  }
+  
+  $('body').on('click', 'a[data-toggle=\'tab\']', function (e) {
+    e.preventDefault()
+    var tab_name = this.getAttribute('href')
+    if (history.pushState) {
+      history.pushState(null, null, tab_name)
+    }
+    else {
+      location.hash = tab_name
+    }
+    localStorage.setItem('activeTab', tab_name)
+  
+    $(this).tab('show');
+    return false;
+  });
+  $(window).on('popstate', function () {
+    var anchor = location.hash ||
+      $('a[data-toggle=\'tab\']').first().attr('href');
+    $('a[href=\'' + anchor + '\']').tab('show');
+  });
+</script>
+  
 </html>
 
