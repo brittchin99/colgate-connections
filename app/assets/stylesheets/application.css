@@ -186,7 +186,7 @@ p {
 
 .contact-img {
 border-radius: 50%;
-max-height: 60px;
+max-height: 50px;
 padding: 5px;
 }
 
@@ -206,11 +206,6 @@ padding: 5px;
   margin: auto;
   /* letter-spacing: 0.5px; */
 }
-
-/*img {*/
-/*  max-width: 100%;*/
-/*  border-radius: 50%;*/
-/*}*/
 
 .msg-header {
   width: 100%;
@@ -289,8 +284,8 @@ padding: 5px;
 }
 
 .outgoing-chats-msg p {
-  background: #007bff none repeat scroll 0 0;
-  color: #fff;
+  background: #0096C8 none repeat scroll 0 0;
+  color: white;
   border-radius: 10px;
   margin: 0;
   padding: 5px 10px 5px 12px;
@@ -304,10 +299,20 @@ padding: 5px;
 }
 
 .msg-box {
-  width: 200px;
+  width: 85%;
+  height: 40px;
+  padding: 5px 10px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  resize: none;
 }
 
 .msg-bottom {
   position: relative;
   height: 10%;
+}
+
+.msg-button {
+  display: inline-block;
 }

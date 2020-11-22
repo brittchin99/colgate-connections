@@ -1,7 +1,9 @@
 <div class="main">
   <div style="text-align:left; padding:10px;" class="container">
   <h3 style="display: inline-block;">Messages</h3>
-  <span class="btn btn-primary" style="display: inline-block; float:right;">+</span>
+  <%= link_to new_conversation_path do %>
+    <span class="btn btn-primary" style="display: inline-block; float:right;">+</span>
+  <% end %>
   
   <% @conversations.each do |conversation| %>
   
@@ -16,7 +18,7 @@
             <div class="btn btn-light contact">
           <div class="row">
               <div class="column contact-left">
-                  <img class="contact-img" src="avatar.jpeg" alt="Avatar">
+                <%= image_tag("avatar.jpeg", class: "contact-img", alt:"photo") %>
               </div>
               <div class="column contact-right">
                   <h6><%= receiver.first_name + " " + receiver.last_name %></h6>
@@ -24,25 +26,9 @@
                   <p class="time"><%= conversation.last_message.body.truncate(50) %>&middot; <%= conversation.last_message.message_time %></p>
               </div>
           </div>
-        
-          
         </div>
-          <% end %>
+        <% end %>
      <% end %>
     <% end %>
   <% end %>
-  
-  <div class="ui segment">
- <h3>All Accounts</h3>
-  <div class="ui list">
-   <% @accounts.each do |account| %>
-    <% if account.id != current_account.id && current_account.has_conversation_with(account_id: account.id)%>
-     <div class=
-     "item">
-   <%= account.first_name %> <%= link_to "Message me!", conversations_path(sender_id: current_account.id, receiver_id: account.id), method: "post"%>
- </div>
-  <% end %>
- <% end %>
- </div>
-</div>
 </div>

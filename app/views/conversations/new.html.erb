@@ -1,0 +1,18 @@
+<div class="main">
+  <div style="text-align:left; padding:10px;" class="container">
+    <%= link_to conversations_path do %>
+      <span class="btn btn-primary">Back to Messages</span>
+    <% end %>
+    
+    <h3>All Accounts</h3>
+    <div class="ui list">
+      <% @accounts.each do |account| %>
+        <% if account.id != current_account.id && current_account.has_conversation_with(account_id: account.id)%>
+        <div class="item">
+          <%= account.first_name %> <%= link_to "Message me!", conversations_path(sender_id: current_account.id, receiver_id: account.id), method: "post"%>
+        </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

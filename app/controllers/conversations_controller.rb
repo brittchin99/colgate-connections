@@ -5,6 +5,10 @@ class ConversationsController < ApplicationController
         @accounts = Account.all
         @conversations = Conversation.all
     end
+    
+    def new
+        @accounts = Account.all
+    end
 
 
     def create
