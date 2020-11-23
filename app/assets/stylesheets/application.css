@@ -194,6 +194,8 @@ padding: 5px;
   float:right;
   margin-top: -25px;
   margin-right: 8px;
+}
+
 .contact {
   width: 100%;
   background-color: white;
@@ -201,12 +203,6 @@ padding: 5px;
   -webkit-border-radius: 0 !important;
      -moz-border-radius: 0 !important;
           border-radius: 0 !important;
-}
-
-.contact-img {
-border-radius: 50%;
-max-height: 50px;
-padding: 5px;
 }
 
 .contact-bar {
