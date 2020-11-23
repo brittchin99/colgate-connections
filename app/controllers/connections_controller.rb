@@ -4,7 +4,7 @@ class ConnectionsController < ApplicationController
     
     def index
         @friend_requests = current_account.profile.friend_requests
-        @connections = current_account.profile.connections.joins(:friend).order("first_name")
+        @connections = current_account.profile.connections.joins(:friend).group("first_name")
         
         @sort_key = "Name"
         
@@ -31,7 +31,7 @@ class ConnectionsController < ApplicationController
                     @connections = @connections.order("created_at")
                     @sort_key = "Date Connected: Earliest"
                 elsif sort_key == "Name"
-                    @connections = @connections.joins(:friend).order("first_name")
+                    @connections = @connections.joins(:friend).group("first_name")
                 end
             end
             
