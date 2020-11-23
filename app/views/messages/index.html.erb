@@ -1,0 +1,79 @@
+<div class="main">
+  <div class="msg-header">
+    <%= link_to conversations_path, :class => "button" do %>
+      <div class="btn btn-primary" style="float: left; background-color: #E10028; border-color: #E10028;"><h3>&lt;</h3></div>
+    <% end %>
+    
+    <% if @conversation.sender_id == current_account.profile.id || @conversation.receiver_id == current_account.profile.id %>
+      <% if @conversation.sender_id == current_account.profile.id %>
+        <% receiver = Profile.find(@conversation.receiver_id) %>
+      <% else %>
+        <% receiver = Profile.find(@conversation.sender_id) %>
+      <% end %>
+    <% end %>
+
+    <%= image_tag("avatar.jpeg", class: "msg-header-img", alt:"photo") %>
+    
+    <%= link_to profile_path(receiver.id) do %>
+      <div class="active">
+        <h4><%= receiver.first_name + " " + receiver.last_name %></h4>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="container">
+    <div class="chat-page">
+      <div class="msg-inbox">
+        <div class="chats">
+          <div class="msg-page">
+            <div class="center">
+              <% if @over_ten %>
+                <%= link_to 'Show More', '?m=all'%>
+              <% end %>
+            </div>
+            
+            <div class="ui segment">
+              <% @messages.each do |message| %>
+                <% if message.body %>
+                  <% profile = Profile.find(message.profile_id) %>
+                  
+                  <% if profile.id != current_account.profile.id %>
+                    <div class="received-chats">
+                      <div class="received-msg">
+                        <div class="received-msg-inbox">
+                          <p><%= message.body %></p>
+                          <span class="time"><%= message.message_time %></span>
+                        </div>
+                     </div>
+                    </div>
+                  
+                  <% else %>
+                    <div class="outgoing-chats">
+                      <div class="outgoing-chats-msg">
+                        <div class="outgoing-msg-inbox">
+                          <p><%= message.body %></p>
+                          <span class="time"><%= message.message_time %></span>
+                        </div>
+                      </div>
+                    </div>
+                  <% end %>
+                <% end %>
+              <% end %>
+              </div>
+            </div>
+
+          </div>
+          <div class="msg-bottom">
+              <%= form_for [@conversation, @message], html: {:class => "form-inline"} do |f| %>
+              
+                  <%= f.text_area :body, class: "msg-box" %>
+                  <%= f.text_field :profile_id, value: current_account.profile.id, type: "hidden" %>
+                  
+                  <%= f.submit "Send Message", class: "btn btn-primary msg-button" %>
+              
+              <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

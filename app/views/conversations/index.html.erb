@@ -1,0 +1,34 @@
+<div class="main">
+  <div style="text-align:left; padding:10px;" class="container">
+  <h3 style="display: inline-block;">Messages</h3>
+  <%= link_to new_conversation_path do %>
+    <span class="btn btn-primary" style="display: inline-block; float:right;">+</span>
+  <% end %>
+  
+  <% @conversations.each do |conversation| %>
+  
+  <% if conversation.has_messages? %>
+     <% if conversation.sender_id == current_account.profile.id ||      conversation.receiver_id == current_account.profile.id %>
+      <% if conversation.sender_id == current_account.profile.id %>
+        <% receiver = Profile.find(conversation.receiver_id) %>
+      <% else %>
+        <% receiver = Profile.find(conversation.sender_id) %>
+      <% end %>
+      <%= link_to conversation_messages_path(conversation) do %>
+            <div class="btn btn-light contact">
+          <div class="row">
+              <div class="column contact-left">
+                <%= image_tag("avatar.jpeg", class: "contact-img", alt:"photo") %>
+              </div>
+              <div class="column contact-right">
+                  <h6><%= receiver.first_name + " " + receiver.last_name %></h6>
+    
+                  <p class="time"><%= conversation.last_message.body.truncate(50) %>&middot; <%= conversation.last_message.message_time %></p>
+              </div>
+          </div>
+        </div>
+        <% end %>
+     <% end %>
+    <% end %>
+  <% end %>
+</div>

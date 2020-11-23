@@ -65,4 +65,17 @@ RSpec.describe Profile, type: :model do
             expect(p.toList(s).length).to eq(2)
         end
     end
+    
+    context "has_conversation_with method" do
+        it "should be defined" do
+            a = FactoryBot.build(:profile)  
+            expect(a).to respond_to(:has_conversation_with)
+        end
+        # This test needs to be changed when implementing private conversations later
+        it "should return true for now" do
+            a = FactoryBot.build(:profile) 
+            b = FactoryBot.build(:profile, :id => 2)
+            expect(a.has_conversation_with(b)).to eq(true)
+        end
+    end
 end
