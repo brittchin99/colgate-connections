@@ -16,7 +16,7 @@ class MessagesController < ApplicationController
         end
         
         if @messages.last
-            if @messages.last.account_id != current_account.id
+            if @messages.last.profile_id != current_account.profile.id
                 @messages.last.read = true;
             end
         end
@@ -38,6 +38,6 @@ class MessagesController < ApplicationController
     
     private
     def message_params
-        params.require(:message).permit(:body, :account_id)
+        params.require(:message).permit(:body, :profile_id)
     end
 end

@@ -1,13 +1,14 @@
 class ConversationsController < ApplicationController
     before_action :authenticate_account!
+    before_action :populate_info!
 
     def index
-        @accounts = Account.all
+        @profiles = Profile.all
         @conversations = Conversation.all
     end
     
     def new
-        @accounts = Account.all
+        @profiles = Profile.all
     end
 
 

@@ -6,10 +6,10 @@
     
     <h3>All Accounts</h3>
     <div class="ui list">
-      <% @accounts.each do |account| %>
-        <% if account.id != current_account.id && current_account.has_conversation_with(account_id: account.id)%>
+      <% @profiles.each do |profile| %>
+        <% if profile.id != current_account.profile.id && current_account..profile.has_conversation_with(profile_id: profile.id)%>
         <div class="item">
-          <%= account.first_name %> <%= link_to "Message me!", conversations_path(sender_id: current_account.id, receiver_id: account.id), method: "post"%>
+          <%= profile.first_name %> <%= link_to "Message me!", conversations_path(sender_id: current_account.profile.id, receiver_id: profile.id), method: "post"%>
         </div>
         <% end %>
       <% end %>

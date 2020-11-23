@@ -8,11 +8,11 @@
   <% @conversations.each do |conversation| %>
   
   <% if conversation.has_messages? %>
-     <% if conversation.sender_id == current_account.id ||      conversation.receiver_id == current_account.id %>
-      <% if conversation.sender_id == current_account.id %>
-        <% receiver = Account.find(conversation.receiver_id) %>
+     <% if conversation.sender_id == current_account.profile.id ||      conversation.receiver_id == current_account.profile.id %>
+      <% if conversation.sender_id == current_account.profile.id %>
+        <% receiver = Profile.find(conversation.receiver_id) %>
       <% else %>
-        <% receiver = Account.find(conversation.sender_id) %>
+        <% receiver = Profile.find(conversation.sender_id) %>
       <% end %>
       <%= link_to conversation_messages_path(conversation) do %>
             <div class="btn btn-light contact">

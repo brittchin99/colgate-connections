@@ -1,7 +1,10 @@
 class ConnectionsController < ApplicationController
     before_action :authenticate_account!
+    before_action :populate_info!
+    
     def index
-        @connections = current_account.friendships.joins(:friend).group("first_name")
+        @friend_requests = current_account.profile.friend_requests
+        @connections = current_account.profile.connections.joins(:friend).group("first_name")
         
         @sort_key = "Name"
         
@@ -37,18 +40,35 @@ class ConnectionsController < ApplicationController
     end
     
     def create
-        @connection = current_account.connections.build(:friend_id => params[:friend_id])
-        if @connection.save
-            flash[:notice] = "Added friend."
-            redirect_to connections_path
+        @friend_account = Profile.find(params[:friend_id])
+        @connection = current_account.profile.connections.build(:friend_id => params[:friend_id])
+        @inverse_connection = @friend_account.connections.build(:friend_id => current_account.id)
+        @friend_request = current_account.profile.friend_requests.find_by(friend_id: params[:friend_id])
+        if @friend_request.destroy && @connection.save && @inverse_connection.save
+            # flash[:notice] = "Added connection."
         else
-            flash[:notice] = "Unable to add friend."
-            redirect_to profile_path(params[:friend_id])
+            # flash[:alert] = "Unable to add connection."
         end
+        # redirect_to profile_path(params[:friend_id]) 
+        redirect_back(fallback_location: profile_path(params[:friend_id]))
+
     end
     
     def destroy
-        Connection.destroy_reciprocal_for_ids(current_account.id,params[:friend_id])
-        redirect_to(request.referer)
+        @connection1 = current_account.profile.connections.find_by(friend_id: params[:friend_id])
+        @friend_account = Profile.find_by_id(params[:friend_id])
+        if @friend_account
+            @connection2 = @friend_account.connections.find_by(friend_id: current_account.id)
+            if @connection1.destroy && @connection2.destroy
+            #   flash[:notice] = "Removed connection."
+            else
+            #   flash[:alert] = "Unable to delete friend request."
+            end
+        else
+            # flash[:alert] = "Friend not found."
+        end
+        # redirect_to profile_path(params[:friend_id])
+        redirect_back(fallback_location: profile_path(params[:friend_id]))
     end
+    
 end

@@ -1,6 +1,6 @@
 class Conversation < ApplicationRecord
-    belongs_to :sender, :foreign_key => :sender_id, class_name: 'Account'
-    belongs_to :receiver, :foreign_key => :receiver_id, class_name: 'Account'
+    belongs_to :sender, :foreign_key => :sender_id, class_name: 'Profile'
+    belongs_to :receiver, :foreign_key => :receiver_id, class_name: 'Profile'
 
     has_many :messages, dependent: :destroy
     validates_uniqueness_of :sender_id, :scope => :receiver_id

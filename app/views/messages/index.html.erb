@@ -4,11 +4,11 @@
       <div class="btn btn-primary" style="float: left; background-color: #E10028; border-color: #E10028;"><h3>&lt;</h3></div>
     <% end %>
     
-    <% if @conversation.sender_id == current_account.id || @conversation.receiver_id == current_account.id %>
-      <% if @conversation.sender_id == current_account.id %>
-        <% receiver = Account.find(@conversation.receiver_id) %>
+    <% if @conversation.sender_id == current_account.profile.id || @conversation.receiver_id == current_account.profile.id %>
+      <% if @conversation.sender_id == current_account.profile.id %>
+        <% receiver = Profile.find(@conversation.receiver_id) %>
       <% else %>
-        <% receiver = Account.find(@conversation.sender_id) %>
+        <% receiver = Profile.find(@conversation.sender_id) %>
       <% end %>
     <% end %>
 
@@ -35,9 +35,9 @@
             <div class="ui segment">
               <% @messages.each do |message| %>
                 <% if message.body %>
-                  <% account = Account.find(message.account_id) %>
+                  <% profile = Profile.find(message.profile_id) %>
                   
-                  <% if account.id != current_account.id %>
+                  <% if profile.id != current_account.profile.id %>
                     <div class="received-chats">
                       <div class="received-msg">
                         <div class="received-msg-inbox">
@@ -67,7 +67,7 @@
               <%= form_for [@conversation, @message], html: {:class => "form-inline"} do |f| %>
               
                   <%= f.text_area :body, class: "msg-box" %>
-                  <%= f.text_field :account_id, value: current_account.id, type: "hidden" %>
+                  <%= f.text_field :profile_id, value: current_account.profile.id, type: "hidden" %>
                   
                   <%= f.submit "Send Message", class: "btn btn-primary msg-button" %>
               
