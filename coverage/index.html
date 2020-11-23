@@ -14,7 +14,7 @@
       <img src="./assets/0.12.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2020-11-23T04:40:42+00:00">2020-11-23T04:40:42+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2020-11-23T22:09:43+00:00">2020-11-23T22:09:43+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -535,7 +535,7 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#85cefddaf7ed4e577a097c95f2481b5fa28ce164" class="src_link" title="spec/models/profile_spec.rb">spec/models/profile_spec.rb</a></td>
             <td class="green strong cell--number t-file__coverage">100.00 %</td>
-            <td class="cell--number">80</td>
+            <td class="cell--number">81</td>
             <td class="cell--number">55</td>
             <td class="cell--number">55</td>
             <td class="cell--number">0</td>
@@ -2161,7 +2161,7 @@
 
             
 
-            <code class="ruby">    where(&quot;(conversations.sender_id = ?</code>
+            <code class="ruby">        where(&quot;(conversations.sender_id = ?</code>
           </li>
         </div>
       
@@ -2172,7 +2172,7 @@
 
             
 
-            <code class="ruby">    AND conversations.receiver_id =?)</code>
+            <code class="ruby">        AND conversations.receiver_id =?)</code>
           </li>
         </div>
       
@@ -2183,7 +2183,7 @@
 
             
 
-            <code class="ruby">    OR (conversations.sender_id = ?</code>
+            <code class="ruby">        OR (conversations.sender_id = ?</code>
           </li>
         </div>
       
@@ -2194,7 +2194,7 @@
 
             
 
-            <code class="ruby">    AND conversations.receiver_id =?)&quot;, sender_id,receiver_id, receiver_id, sender_id)</code>
+            <code class="ruby">        AND conversations.receiver_id =?)&quot;, sender_id,receiver_id, receiver_id, sender_id)</code>
           </li>
         </div>
       
@@ -19225,13 +19225,13 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="74">
-            <span class="hits">1</span>
+          <li class="never" data-hits="" data-linenumber="74">
+            
             
 
             
 
-            <code class="ruby">        it &quot;should return true for now&quot; do</code>
+            <code class="ruby">        # This test needs to be changed when implementing private conversations later</code>
           </li>
         </div>
       
@@ -19242,7 +19242,7 @@
 
             
 
-            <code class="ruby">            a = FactoryBot.build(:profile) </code>
+            <code class="ruby">        it &quot;should return true for now&quot; do</code>
           </li>
         </div>
       
@@ -19253,7 +19253,7 @@
 
             
 
-            <code class="ruby">            b = FactoryBot.build(:profile, :id =&gt; 2)</code>
+            <code class="ruby">            a = FactoryBot.build(:profile) </code>
           </li>
         </div>
       
@@ -19264,18 +19264,18 @@
 
             
 
-            <code class="ruby">            expect(a.has_conversation_with(b)).to eq(true)</code>
+            <code class="ruby">            b = FactoryBot.build(:profile, :id =&gt; 2)</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="78">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="78">
+            <span class="hits">1</span>
             
 
-            <code class="ruby">        end</code>
+            
+
+            <code class="ruby">            expect(a.has_conversation_with(b)).to eq(true)</code>
           </li>
         </div>
       
@@ -19286,12 +19286,23 @@
 
             
 
-            <code class="ruby">    end</code>
+            <code class="ruby">        end</code>
           </li>
         </div>
       
         <div>
           <li class="never" data-hits="" data-linenumber="80">
+            
+            
+
+            
+
+            <code class="ruby">    end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="81">
             
             
 
