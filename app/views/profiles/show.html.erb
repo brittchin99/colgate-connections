@@ -35,8 +35,8 @@
 
                     <% elsif current_account.profile.connected_to(@profile) %>
                       <div><%= link_to "Disconnect", connection_path(:friend_id => @profile), :method => :delete, :class => "btn btn-success" %></div>
+                      <%= link_to "Message #{@profile.first_name}", conversations_path(:sender_id => current_account, :receiver_id => @profile), :method => :post, :class => "btn btn-primary" %>
                     <% end %>
-                    
                   </div>
                   <br/>
                  
