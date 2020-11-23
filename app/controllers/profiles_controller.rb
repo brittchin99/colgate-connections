@@ -1,25 +1,27 @@
 class ProfilesController < ApplicationController
   before_action :authenticate_account!
-
+  before_action :populate_info!, except: [:edit, :update]
+  
   def show
-    @profile = Account.find(params[:id])
+    @account = Account.find(params[:id])
+    if @account.profile.nil?
+      redirect_to new_profile_path and return 
+    end 
+    @profile = @account.profile
   end
   
   
   def edit
-    @profile = Account.find(params[:id])
+    @profile = Profile.find(params[:id])
   end
 
   def update 
-    @profile = Account.find(params[:id])
-    # @profile.avatar.attach(params[:avatar])
-    # @profile.photos.attach(params[:photos])
-    if @profile.update_without_password(profile_params)
+    @profile = Profile.find(params[:id])
+    if @profile.update(profile_params)
       flash[:success] = "Profile updated!"
       redirect_to profile_path(@profile)
     else 
-      # redirect_to profile_path(@profile)
-      flash[:alert] = "failed"
+      flash[:alert] = "Failed to update profile"
       respond_to do |format|
         format.html { render :edit }
       end
@@ -28,14 +30,13 @@ class ProfilesController < ApplicationController
   
   
   def index
-    @profiles = Account.all
+    @profiles = Profile.all
     
     if !params.has_key?("reset")
       if p = (params["filter_list"] || session["filter_list"])
         if !p.has_key?("general_search_term")
           @profiles = @profiles.where("first_name LIKE ?", "%#{p["first_name"]}")
                               .where("last_name LIKE ?", "%#{p["last_name"]}")
-                              .where("email LIKE ?", "%#{p["email"]}")
                               .where("pronouns LIKE ?", "%#{p["pronouns"]}")
                               .where("cast(class_year as text) LIKE ?", "%#{p["class_year"]}")
                               .where("majors LIKE ?", "%#{p["majors"]}")
@@ -44,8 +45,8 @@ class ProfilesController < ApplicationController
         else
           @profiles = @profiles.where("first_name LIKE ? 
                                       OR last_name LIKE ?
-                                      OR email LIKE ?
                                       OR pronouns LIKE ? 
+                                      OR first_name || ' ' || last_name LIKE ? 
                                       OR cast(class_year as text) LIKE ?", p["general_search_term"], p["general_search_term"], p["general_search_term"], p["general_search_term"], p["general_search_term"])
         end
         session["filter_list"] = params["filter_list"]
@@ -55,6 +56,6 @@ class ProfilesController < ApplicationController
   
   private
   def profile_params
-    params.require(:account).permit(:first_name, :last_name, :pronouns, :class_year, :majors => [], :minors => [], :interests => [])
+    params.require(:profile).permit(:first_name, :last_name, :pronouns, :class_year, :majors => [], :minors => [], :interests => [])
   end 
 end

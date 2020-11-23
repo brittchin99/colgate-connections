@@ -12,15 +12,15 @@
           
           <p><%= f.input :email, label: 'Colgate Email', placeholder: 'user@colgate.edu' %></p>
           
-          <p><%= f.input :pronouns, as: :radio_buttons, collection: Account::PRONOUNS %></p>
+          <p><%= f.input :pronouns, as: :radio_buttons, collection: Profile::PRONOUNS %></p>
           
-          <p><%= f.input :class_year, as: :radio_buttons, collection: Account::CLASS_YEARS %></p>
+          <p><%= f.input :class_year, as: :radio_buttons, collection: Profile::CLASS_YEARS %></p>
           
-          <p><%= f.input :majors, label: "Major(s)", collection: Account::MAJORS, input_html: { multiple: true }, include_hidden: false %></p>
+          <p><%= f.input :majors, label: "Major(s)", collection: Profile::MAJORS, input_html: { multiple: true }, include_hidden: false %></p>
           
-          <p><%= f.input :minors, label: "Minor(s)", collection: Account::MAJORS, input_html: { multiple: true }, include_hidden: false %></p>
+          <p><%= f.input :minors, label: "Minor(s)", collection: Profile::MAJORS, input_html: { multiple: true }, include_hidden: false %></p>
           
-          <p><%= f.input :interests, as: :check_boxes, collection: Account::INTERESTS, wrapper: :vertical_collection_inline, include_hidden: false %></p>
+          <p><%= f.input :interests, as: :check_boxes, collection: Profile::INTERESTS, wrapper: :vertical_collection_inline, include_hidden: false %></p>
           
           <p><%= f.button :submit, "Search", class: "btn-primary" %></p>
           
@@ -60,9 +60,9 @@
                 <% end %>
               </td>
               <td>
-                <% if current_account!=p && !current_account.connected_to(p) %>
+                <% if current_account.profile !=p && !current_account.profile.connected_to(p) %>
                   Not yet connected
-                <% elsif current_account.connected_to(p) %>
+                <% elsif current_account.profile.connected_to(p) %>
                   Connected
                 <% else %>
                   Me!

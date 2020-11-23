@@ -13,11 +13,12 @@
         <div class="sidenav">
         <div>
           <%= link_to "My Connections", connections_path%>
-          <% if current_account.friend_requests.length() != 0 %>
+          <% if current_account.profile.friend_requests.length() != 0 %>
             <span class="notif side-notif"/>
           <% end %>
         </div>
         <%= link_to "All Users", profiles_path %>
+        <%= link_to "My Messages", conversations_path %>
         </div>
     <% end %>
    
@@ -42,20 +43,20 @@
       <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto navbar-right">
           <li class="nav-item">
-            <% if account_signed_in? %>
+            <% if account_signed_in? && current_account.profile.first_name %>
             
               <div class="btn-group">
                 <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <%= current_account.first_name + ' ' + current_account.last_name %>
+                  <%= current_account.profile.first_name + " " + current_account.profile.last_name %>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
                   <%= link_to "My Profile", profile_path(current_account), :class => "dropdown-item", :type => "button" %>
-                  <%= link_to "Account Settings", edit_profile_path(current_account), :class => "dropdown-item", :type => "button" %>
+                  <%= link_to "Update Profile", edit_profile_path(current_account), :class => "dropdown-item", :type => "button" %>
                   <div class="dropdown-divider"></div>
                   <%= link_to "Log Out", destroy_account_session_path, method: :delete, :class => "dropdown-item", :type => "button" %>
                 </div>
               </div>
-              
+            <% elsif account_signed_in? %>
             <% else %>
               <%= link_to "Log In / Sign Up", new_account_session_path, :class => "nav-link subtext heading" %>
             <% end %>

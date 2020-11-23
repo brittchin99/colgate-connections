@@ -1,5 +1,6 @@
 class AccountsController < Devise::RegistrationsController
   before_action :authenticate_account!, except: [:create, :new]
+  before_action :populate_info!, except: [:create, :new]
   
   def new
     super
@@ -16,8 +17,9 @@ class AccountsController < Devise::RegistrationsController
     end
   end
   
+  
   private
     def account_params
-        params.require(:account).permit(:first_name, :last_name, :email, :password, :pronouns, :class_year, :avatar, :photos => [], :majors => [], :minors => [], :interests => [])
-    end
+        params.require(:account).permit(:email, :password)
+    end 
 end

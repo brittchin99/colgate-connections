@@ -1,6 +1,6 @@
 FactoryBot.define do
     factory :connection do
-        account = nil
+        profile = nil
         friend = nil
     end
 end
