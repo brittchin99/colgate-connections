@@ -1,55 +1,23 @@
 {
   "RSpec": {
     "coverage": {
-      "/home/ubuntu/environment/colgate-connections/spec/models/account_spec.rb": {
+      "/home/ubuntu/environment/colgate-connections/spec/controllers/accounts_controller_spec.rb": {
         "lines": [
           1,
           null,
           1,
-          1,
-          1,
-          1,
-          1,
-          null,
-          1,
-          1,
-          1,
           null,
           null,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          null,
-          1,
           null,
           null,
-          1,
-          1,
-          1,
-          1,
-          null,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
           null,
           null,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
           null,
           null,
           null
@@ -119,6 +87,8 @@
           null,
           1,
           null,
+          null,
+          1,
           null,
           null
         ]
@@ -1299,6 +1269,7 @@
           1,
           1,
           1,
+          1,
           null,
           null
         ]
@@ -1313,6 +1284,56 @@
           null
         ]
       },
+      "/home/ubuntu/environment/colgate-connections/spec/factories/conversation.rb": {
+        "lines": [
+          1,
+          1,
+          9,
+          9,
+          1,
+          null,
+          null
+        ]
+      },
+      "/home/ubuntu/environment/colgate-connections/spec/factories/friend_requests.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          null,
+          null
+        ]
+      },
+      "/home/ubuntu/environment/colgate-connections/spec/factories/message.rb": {
+        "lines": [
+          1,
+          1,
+          6,
+          7,
+          7,
+          7,
+          null,
+          null
+        ]
+      },
+      "/home/ubuntu/environment/colgate-connections/spec/factories/profiles.rb": {
+        "lines": [
+          1,
+          1,
+          15,
+          15,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          1,
+          null,
+          null
+        ]
+      },
       "/home/ubuntu/environment/colgate-connections/config/routes.rb": {
         "lines": [
           1,
@@ -1320,6 +1341,10 @@
           1,
           1,
           1,
+          1,
+          1,
+          1,
+          null,
           1,
           1,
           null
@@ -1330,34 +1355,7 @@
           1,
           1,
           1,
-          null,
           1,
-          2,
-          null,
-          null,
-          1,
-          2,
-          2,
-          1,
-          1,
-          null,
-          null,
-          2,
-          null,
-          null,
-          1,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          null,
-          0,
-          null,
           null,
           null,
           null,
@@ -1368,11 +1366,6 @@
           1,
           null,
           null,
-          null,
-          1,
-          1,
-          1,
-          1,
           null
         ]
       },
@@ -1389,87 +1382,37 @@
           null
         ]
       },
-      "/home/ubuntu/environment/colgate-connections/spec/models/connection_spec.rb": {
+      "/home/ubuntu/environment/colgate-connections/app/helpers/friend_request_helper.rb": {
         "lines": [
           1,
-          null,
-          1,
-          1,
-          1,
-          1,
-          null,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          null,
-          null,
-          null,
           null
         ]
       },
-      "/home/ubuntu/environment/colgate-connections/app/models/connection.rb": {
+      "/home/ubuntu/environment/colgate-connections/app/controllers/accounts_controller.rb": {
         "lines": [
           1,
           1,
           1,
           null,
-          1,
-          null,
-          1,
-          null,
-          null,
-          null
-        ]
-      },
-      "/home/ubuntu/environment/colgate-connections/spec/requests/accounts_request_spec.rb": {
-        "lines": [
-          1,
-          null,
-          1,
-          null,
-          1,
-          1,
           1,
           0,
           null,
           null,
+          1,
+          0,
+          0,
+          0,
+          0,
           null,
-          null
-        ]
-      },
-      "/home/ubuntu/environment/colgate-connections/spec/requests/connections_request_spec.rb": {
-        "lines": [
-          1,
-          null,
-          1,
-          null,
-          null
-        ]
-      },
-      "/home/ubuntu/environment/colgate-connections/spec/requests/homes_request_spec.rb": {
-        "lines": [
-          1,
-          null,
-          1,
-          null,
-          1,
-          1,
-          1,
+          0,
           0,
           null,
           null,
           null,
-          null
-        ]
-      },
-      "/home/ubuntu/environment/colgate-connections/spec/requests/profiles_request_spec.rb": {
-        "lines": [
-          1,
           null,
           1,
+          1,
+          0,
           null,
           null
         ]
@@ -1496,6 +1439,10 @@
           null,
           1,
           0,
+          0,
+          null,
+          0,
+          null,
           null,
           null,
           1,
@@ -1505,40 +1452,427 @@
           null,
           0,
           0,
+          null,
+          null,
+          null,
+          null,
+          1,
+          0,
+          0,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/ubuntu/environment/colgate-connections/spec/controllers/homes_controller_spec.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
           null,
           null,
           null,
           null
         ]
       },
-      "/home/ubuntu/environment/colgate-connections/app/controllers/accounts_controller.rb": {
+      "/home/ubuntu/environment/colgate-connections/app/controllers/homes_controller.rb": {
         "lines": [
           1,
           1,
           1,
-          0,
+          1,
+          null,
+          null
+        ]
+      },
+      "/home/ubuntu/environment/colgate-connections/spec/models/account_spec.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          null,
+          null
+        ]
+      },
+      "/home/ubuntu/environment/colgate-connections/spec/models/connection_spec.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/ubuntu/environment/colgate-connections/app/models/connection.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/ubuntu/environment/colgate-connections/spec/models/conversation_spec.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          null,
           null,
           null,
           1,
-          0,
+          1,
+          1,
+          1,
           null,
-          0,
-          0,
-          0,
+          1,
+          1,
+          1,
+          1,
           null,
-          0,
-          0,
+          null,
+          null,
+          null,
+          null,
           null,
           null,
           null,
           1,
           1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/ubuntu/environment/colgate-connections/app/models/conversation.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
           0,
           null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          2,
+          null,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          1,
+          2,
+          2,
+          null,
+          null
+        ]
+      },
+      "/home/ubuntu/environment/colgate-connections/spec/models/friend_request_spec.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          null
+        ]
+      },
+      "/home/ubuntu/environment/colgate-connections/app/models/friend_request.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null,
+          1,
+          null
+        ]
+      },
+      "/home/ubuntu/environment/colgate-connections/spec/models/message_spec.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/ubuntu/environment/colgate-connections/app/models/message.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null,
+          1,
+          null,
+          1,
+          1,
+          null,
+          null
+        ]
+      },
+      "/home/ubuntu/environment/colgate-connections/spec/models/profile_spec.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/ubuntu/environment/colgate-connections/app/models/profile.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          2,
+          null,
+          null,
+          1,
+          2,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          3,
+          1,
+          null,
+          2,
+          2,
+          2,
+          null,
+          2,
+          1,
+          null,
+          2,
+          null,
+          null,
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null
+        ]
+      },
+      "/home/ubuntu/environment/colgate-connections/spec/requests/accounts_request_spec.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          null,
+          null
+        ]
+      },
+      "/home/ubuntu/environment/colgate-connections/spec/requests/connections_request_spec.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          null,
+          null
+        ]
+      },
+      "/home/ubuntu/environment/colgate-connections/spec/requests/friend_request_request_spec.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          null,
+          null
+        ]
+      },
+      "/home/ubuntu/environment/colgate-connections/spec/requests/homes_request_spec.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          null,
+          null
+        ]
+      },
+      "/home/ubuntu/environment/colgate-connections/spec/requests/profiles_request_spec.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          null,
+          null
+        ]
+      },
+      "/home/ubuntu/environment/colgate-connections/spec/views/friend_request/create.html.erb_spec.rb": {
+        "lines": [
+          1,
+          null,
+          1,
           null
         ]
       }
     },
-    "timestamp": 1605128720
+    "timestamp": 1606106442
   }
 }

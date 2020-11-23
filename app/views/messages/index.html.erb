@@ -15,6 +15,7 @@
     <%= image_tag("avatar.jpeg", class: "msg-header-img", alt:"photo") %>
     
     <%= link_to profile_path(receiver.id) do %>
+
       <div class="msg-name">
         <h4><%= receiver.first_name + " " + receiver.last_name %></h4>
       </div>
