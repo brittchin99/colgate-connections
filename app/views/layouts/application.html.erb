@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ColgateConnections</title>
+    <title>Colgate Connections</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= javascript_pack_tag 'application' %>
@@ -12,6 +12,7 @@
     <% if account_signed_in? %>
         <div class="sidenav">
         <div>
+          <%= link_to "My Profile", profile_path(current_account) %>
           <%= link_to "My Connections", connections_path%>
           <% if current_account.profile.friend_requests.length() != 0 %>
             <span class="notif side-notif"/>
@@ -46,14 +47,13 @@
             <% if account_signed_in? && current_account.profile.first_name %>
             
               <div class="btn-group">
-                <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button type="button" style="color:white;" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <%= current_account.profile.first_name + " " + current_account.profile.last_name %>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
-                  <%= link_to "My Profile", profile_path(current_account), :class => "dropdown-item", :type => "button" %>
-                  <%= link_to "Update Profile", edit_profile_path(current_account), :class => "dropdown-item", :type => "button" %>
+                  <%= link_to "My Profile", profile_path(current_account), :class => "dropdown-item" %>
                   <div class="dropdown-divider"></div>
-                  <%= link_to "Log Out", destroy_account_session_path, method: :delete, :class => "dropdown-item", :type => "button" %>
+                  <%= link_to "Log Out", destroy_account_session_path, method: :delete, :class => "dropdown-item" %>
                 </div>
               </div>
             <% elsif account_signed_in? %>

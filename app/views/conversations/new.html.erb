@@ -7,10 +7,19 @@
     <h3>All Accounts</h3>
     <div class="ui list">
       <% @profiles.each do |profile| %>
-        <% if profile.id != current_account.profile.id && current_account..profile.has_conversation_with(profile_id: profile.id)%>
-        <div class="item">
-          <%= profile.first_name %> <%= link_to "Message me!", conversations_path(sender_id: current_account.profile.id, receiver_id: profile.id), method: "post"%>
+        <% if profile.id != current_account.profile.id %>
+        <%= link_to conversations_path(sender_id: current_account.profile.id, receiver_id: profile.id), method: "post" do %>
+        <div class="btn btn-light contact">
+          <div class="row">
+              <div class="column contact-left">
+                <%= image_tag("avatar.jpeg", class: "contact-img", alt:"photo") %>
+              </div>
+              <div class="column contact-right">
+                  <h5><%= profile.first_name + " " + profile.last_name %></h5>
+              </div>
+          </div>
         </div>
+        <% end %>
         <% end %>
       <% end %>
     </div>

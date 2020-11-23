@@ -15,7 +15,7 @@
         <% receiver = Profile.find(conversation.sender_id) %>
       <% end %>
       <%= link_to conversation_messages_path(conversation) do %>
-            <div class="btn btn-light contact">
+        <div class="btn btn-light contact">
           <div class="row">
               <div class="column contact-left">
                 <%= image_tag("avatar.jpeg", class: "contact-img", alt:"photo") %>
