@@ -1,8 +1,4 @@
 <div class="profile-container">
-      <!--check logged in to the right user -->
-      <% if current_account==@profile %>
-        <%= link_to "Update Profile", edit_profile_path(@profile), :class => "btn btn-primary update-button" %>
-      <% end %>
       <div class="profile-basic">
             <% if @profile.avatar.attached? %>
               <img class="profile-image-circle" src="<%= (url_for(@profile.avatar)) %>">
