@@ -14,7 +14,6 @@
         <div class="sidenav">
         <%= link_to "My Profile", profile_path(current_account) %>
         <div>
-          <%= link_to "My Profile", profile_path(current_account) %>
           <%= link_to "My Connections", connections_path%>
           <% if current_account.profile.friend_requests.length() != 0 %>
             <span class="notif side-notif"/>
@@ -22,7 +21,6 @@
         </div>
         <%= link_to "All Users", profiles_path %>
         <%= link_to "My Messages", conversations_path %>
-        <%= link_to "Log Out", destroy_account_session_path, method: :delete %>
         </div>
     <% end %>
    
