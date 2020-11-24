@@ -4,38 +4,38 @@ class ConnectionsController < ApplicationController
     
     def index
         @friend_requests = current_account.profile.friend_requests
-        @connections = current_account.profile.connections.joins(:friend).group("first_name")
+        @connections = current_account.profile.connections.joins(:friend)
         
         @sort_key = "Name"
-        
-        if params.has_key?("filter_list")
-            p = params["filter_list"] 
-            
-            
-            if p.has_key?("general_search_term")
-               @connections = @connections.joins(:friend).where("first_name LIKE ? 
-                                      OR last_name LIKE ?
-                                      OR email LIKE ?
-                                      OR pronouns LIKE ? 
-                                      OR first_name || ' ' || last_name LIKE ? 
-                                      OR cast(class_year as text) LIKE ?", p["general_search_term"], p["general_search_term"], p["general_search_term"], p["general_search_term"], p["general_search_term"], p["general_search_term"])
-            end
-            
-            
-            if p.has_key?("sort_by")
-                sort_key = p["sort_by"]
-                if sort_key == "Date Connected: Latest"
-                    @connections = @connections.order("created_at DESC")
-                    @sort_key = "Date Connected: Latest"
-                elsif sort_key == "Date Connected: Earliest"
-                    @connections = @connections.order("created_at")
-                    @sort_key = "Date Connected: Earliest"
-                elsif sort_key == "Name"
-                    @connections = @connections.joins(:friend).group("first_name")
+        if !params.has_key?("reset")
+            if params.has_key?("filter_list")
+                p = params["filter_list"] 
+                
+                
+                if p.has_key?("general_search_term")
+                   @connections = @connections.joins(:friend).where("first_name LIKE ? 
+                                          OR last_name LIKE ?
+                                          OR pronouns LIKE ? 
+                                          OR first_name || ' ' || last_name LIKE ? 
+                                          OR cast(class_year as text) LIKE ?", p["general_search_term"], p["general_search_term"], p["general_search_term"], p["general_search_term"], p["general_search_term"])
                 end
+                
+                
+                if p.has_key?("sort_by")
+                    sort_key = p["sort_by"]
+                    if sort_key == "Date Connected: Latest"
+                        @connections = @connections.order("created_at DESC")
+                        @sort_key = "Date Connected: Latest"
+                    elsif sort_key == "Date Connected: Earliest"
+                        @connections = @connections.order("created_at")
+                        @sort_key = "Date Connected: Earliest"
+                    elsif sort_key == "Name"
+                        @connections = @connections.joins(:friend).order("first_name")
+                    end
+                end
+                
+                
             end
-            
-            
         end
     end
     

@@ -50,6 +50,9 @@
                 <%= f.button :submit, "Sort", class: "btn btn-light spacer"%>
             <% end %>
           </div>
+          <div style="display: table-cell;">
+            <%= link_to "Reset filter", connections_path(:reset => true), class: "btn btn-light spacer" %>
+          </div>
           <br/>
           
       <% if @connections.length() == 0 %>
