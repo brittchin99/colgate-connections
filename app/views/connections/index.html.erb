@@ -1,28 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script>
+  $(document).ready(function(){
+  	$('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+  		localStorage.setItem('activeTab', $(e.target).attr('href'));
+  	});
+  	var activeTab = localStorage.getItem('activeTab');
+  	if(activeTab){
+  		$('#myTab a[href="' + activeTab + '"]').tab('show');
+  	}
+  });
+</script>
 </head>
 <body>
   <div class="main pad-left">
-    <ul class="nav nav-tabs">
-      <li class="active"><a data-toggle="tab" href="#connections">Connections</a></li>
-      <li>
-        <a data-toggle="tab" href="#requests">Connection Requests
-        
+    <br/>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a class="nav-link active" id="connections-tab" data-toggle="tab" href="#connections" >Connections</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="requests-tab" data-toggle="tab" href="#requests" >Connection Requests
         <% if @friend_requests.length() != 0 %>
             <span class="notif"/>
         <% end %>
-        </a>
-        
-      </li>
-    </ul>
-    
-    <div class="tab-content">
-      <div id="connections" class="tab-pane active">
-        <h4>Suggested Connections</h4>
+      </a>
+    </li>
+  </ul>
+  <br/>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane show active" id="connections" role="tabpanel" aria-labelledby="connections-tab">
         <h3>My Connections</h3>
           <div class="search" style="display: table-cell;">
             <%= simple_form_for :filter_list, url: connections_path, :method => 'get', html: {:class => "form-inline"} do |f| %>
@@ -68,10 +77,9 @@
         </table>
         
       <% end %>
-      </div>
-      
-      <div id="requests" class="tab-pane">
-        <h3>Connection Requests</h3>
+    </div>
+    <div class="tab-pane" id="requests" role="tabpanel" aria-labelledby="requests-tab">
+      <h3>Connection Requests</h3>
         <div>
           <% if @friend_requests.length() == 0 %>
             <p class="center">Too bad, no secret admirers!</p>
@@ -97,40 +105,10 @@
               </tbody>
             </table>  
           <% end %>
-      </div>
     </div>
+  </div>
   </div>
 </body>
 
-<script>
-  if (location.hash) {
-    $('a[href=\'' + location.hash + '\']').tab('show');
-  }
-  var activeTab = localStorage.getItem('activeTab');
-  if (activeTab) {
-    $('a[href="' + activeTab + '"]').tab('show');
-  }
-  
-  $('body').on('click', 'a[data-toggle=\'tab\']', function (e) {
-    e.preventDefault()
-    var tab_name = this.getAttribute('href')
-    if (history.pushState) {
-      history.pushState(null, null, tab_name)
-    }
-    else {
-      location.hash = tab_name
-    }
-    localStorage.setItem('activeTab', tab_name)
-  
-    $(this).tab('show');
-    return false;
-  });
-  $(window).on('popstate', function () {
-    var anchor = location.hash ||
-      $('a[data-toggle=\'tab\']').first().attr('href');
-    $('a[href=\'' + anchor + '\']').tab('show');
-  });
-</script>
-  
 </html>
 

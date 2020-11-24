@@ -13,14 +13,25 @@
  *= require_tree .
  *= require_self
  */
- .masthead {
-  min-height: 500px;
-  height: 100vh;
+/* .masthead {*/
+/*  min-height: 500px;*/
+/*  height: 100vh;*/
+/*  background-size: cover;*/
+/*  background-position: center;*/
+/*  background-repeat: no-repeat;*/
+/*  overflow: visible;*/
+/*  margin-top: -50px;*/
+/*}*/
+
+.masthead {
+  min-height: 600px;
+  height: 80vh;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   overflow: visible;
-  margin-top: -50px;
+  background-image: url(/assets/arrival_edit.jpg);
+  margin-top: -15px;
 }
 
 p {
@@ -161,10 +172,10 @@ p {
   .sidenav a {font-size: 18px;}
 }
 
-.maroon-btn {
+.maroon {
   background-color: #E10028;
-  color: whitesmoke;
-  /*text-decoration: none;*/
+  color: white;
+  text-decoration: none;
 }
 
 .spacer {
@@ -245,7 +256,7 @@ padding: 5px;
  }
 
  .chat-page {
-   padding: 0 0 20px 0;
+   padding: 0 0 0px 0;
  }
 
  .msg-inbox {
