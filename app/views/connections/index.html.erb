@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
-  <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
-  <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>-->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script>
+  $(document).ready(function(){
+  	$('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+  		localStorage.setItem('activeTab', $(e.target).attr('href'));
+  	});
+  	var activeTab = localStorage.getItem('activeTab');
+  	if(activeTab){
+  		$('#myTab a[href="' + activeTab + '"]').tab('show');
+  	}
+  });
+</script>
 </head>
 <body>
   <div class="main pad-left">
@@ -95,35 +104,5 @@
   </div>
 </body>
 
-<script>
-  if (location.hash) {
-    $('a[href=\'' + location.hash + '\']').tab('show');
-  }
-  var activeTab = localStorage.getItem('activeTab');
-  if (activeTab) {
-    $('a[href="' + activeTab + '"]').tab('show');
-  }
-  
-  $('body').on('click', 'a[data-toggle=\'tab\']', function (e) {
-    e.preventDefault()
-    var tab_name = this.getAttribute('href')
-    if (history.pushState) {
-      history.pushState(null, null, tab_name)
-    }
-    else {
-      location.hash = tab_name
-    }
-    localStorage.setItem('activeTab', tab_name)
-  
-    $(this).tab('show');
-    return false;
-  });
-  $(window).on('popstate', function () {
-    var anchor = location.hash ||
-      $('a[data-toggle=\'tab\']').first().attr('href');
-    $('a[href=\'' + anchor + '\']').tab('show');
-  });
-</script>
-  
 </html>
 
