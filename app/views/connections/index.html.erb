@@ -22,7 +22,11 @@
       <a class="nav-link active" id="connections-tab" data-toggle="tab" href="#connections" >Connections</a>
     </li>
     <li class="nav-item" role="presentation">
-      <a class="nav-link" id="requests-tab" data-toggle="tab" href="#requests" >Connection Requests</a>
+      <a class="nav-link" id="requests-tab" data-toggle="tab" href="#requests" >Connection Requests
+        <% if @friend_requests.length() != 0 %>
+            <span class="notif"/>
+        <% end %>
+      </a>
     </li>
   </ul>
   <br/>
