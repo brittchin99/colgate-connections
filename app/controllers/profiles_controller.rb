@@ -17,6 +17,9 @@ class ProfilesController < ApplicationController
 
   def update 
     @profile = Profile.find(params[:id])
+    @profile.avatar.attach(params[:avatar])
+    @profile.photos.attach(params[:profile][:photo])
+
     if @profile.update(profile_params)
       flash[:success] = "Profile updated!"
       redirect_to profile_path(@profile)
@@ -56,6 +59,6 @@ class ProfilesController < ApplicationController
   
   private
   def profile_params
-    params.require(:profile).permit(:first_name, :last_name, :pronouns, :class_year, :majors => [], :minors => [], :interests => [])
+    params.require(:profile).permit(:first_name, :last_name, :pronouns, :class_year, :avatar, :photos, :majors => [], :minors => [], :interests => [])
   end 
 end

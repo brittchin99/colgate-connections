@@ -1,3 +1,8 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
 <div class="profile-container">
       <!--check logged in to the right user -->
       <% if current_account.profile == @profile %>
@@ -76,25 +81,36 @@
                 </td>
               </tr>
         </table>
-        
-
-      <% if current_account.profile ==@profile && @profile.photos.attachments.length < 13 %>
-        <button onclick="f()" class="add-button">Upload up to 13 photos!</button>
-      <% end %>
-      
+    
+       <div class="photos">
             <% if @profile.photos.attached? %>
-            <div class="photos">
                 <% @profile.photos.each do |photo| %>
                     <img class="profile-image-square" src="<%= (url_for(photo)) %>">
-            
                 <%end %>
-             </div>
-             <% else %>
+            <% else %>
              <br/>
-               <h4 class="center">No photos yet.</h4>
-             <% end %>
-          
-     </div>
+              <h4 class="center">No photos yet.</h4>
+            <% end %>
+            
+        <% if current_account.profile ==@profile && @profile.photos.attachments.length < 13 %>
+        
+        
+
+          <div class="profile-image-square">
+            <div class="add-form">
+              
+            
+           <%= simple_form_for @profile, :url => url_for(:action => 'update', :controller => 'profiles'), :method => 'patch' do |f| %>
+            <%= f.file_field :photos, id: "f-field" %>
+            <%= f.button :submit %>
+           <% end %>
+           </div>
+          </div>
+        <% end %>
+        
+
+      </div>  
+    </div>
 
 </div>
     
