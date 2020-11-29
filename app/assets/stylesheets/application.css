@@ -339,3 +339,17 @@ padding: 5px;
  .msg-button {
    display: inline-block;
 } 
+
+.pad {
+    padding: 20px;
+}
+
+.toggle-label {
+    font-weight: bold;
+}
+
+.disabled{
+  pointer-events: none;
+  cursor: not-allowed;
+  color: #dbdbdb;
+ }

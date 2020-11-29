@@ -26,7 +26,11 @@ class ProfilesController < ApplicationController
         format.html { render :edit }
       end
     end
-  end 
+  end
+  
+  def settings
+    @profile = Profile.find(params[:id])
+  end
   
   
   def index

@@ -52,6 +52,7 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
                   <%= link_to "My Profile", profile_path(current_account), :class => "dropdown-item" %>
+                  <%= link_to "Account Settings", settings_path(current_account), :class => "dropdown-item" %>
                   <div class="dropdown-divider"></div>
                   <%= link_to "Log Out", destroy_account_session_path, method: :delete, :class => "dropdown-item" %>
                 </div>
