@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <%= stylesheet_link_tag 'accounts', media: 'all' %>
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
   <script>
   $(document).ready(function(){
@@ -36,7 +37,7 @@
           <div class="search" style="display: table-cell;">
             <%= simple_form_for :filter_list, url: connections_path, :method => 'get', html: {:class => "form-inline"} do |f| %>
               <%= f.input :general_search_term, label: false, placeholder: "Search connections"%>
-              <%= f.button :submit, "Search", class: "btn btn-light spacer"%>
+              <%= f.button :submit, "Search", class: "btn btn-maroon spacer"%>
             <% end %>
           </div>
           
@@ -47,7 +48,7 @@
           <div style="display: table-cell;">
             <%= simple_form_for :filter_list, url: connections_path, :method => 'get',  html: {:class => "form-inline"} do |f|%>
                 <%= f.input :sort_by, label: false, collection: ["Name", "Date Connected: Latest", "Date Connected: Earliest"], selected: @sort_key %>
-                <%= f.button :submit, "Sort", class: "btn btn-light spacer"%>
+                <%= f.button :submit, "Sort", class: "btn btn-maroon spacer"%>
             <% end %>
           </div>
           <div style="display: table-cell;">

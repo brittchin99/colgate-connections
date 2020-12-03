@@ -64,9 +64,14 @@ p {
   margin-top: 15px;
 }
 
-.pad-left {
-  margin-left: 25px;
+.pad {
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
+
+/*.pad-left {*/
+/*  margin-left: 25px;*/
+/*}*/
 
 .centered {
   position: absolute;
@@ -172,10 +177,15 @@ p {
   .sidenav a {font-size: 18px;}
 }
 
-.maroon {
+.btn-maroon {
   background-color: #E10028;
   color: white;
   text-decoration: none;
+}
+
+.btn-maroon:hover {
+    color: black;
+    background-color: #D2D4D6;
 }
 
 .spacer {
