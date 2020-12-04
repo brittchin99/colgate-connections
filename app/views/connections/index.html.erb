@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <%= stylesheet_link_tag 'accounts', media: 'all' %>
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
   <script>
   $(document).ready(function(){
@@ -15,9 +16,10 @@
 </script>
 </head>
 <body>
-  <div class="main pad-left">
+  <div class="main">
     <br/>
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <div class="pad-left">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
       <a class="nav-link active" id="connections-tab" data-toggle="tab" href="#connections" >Connections</a>
     </li>
@@ -29,31 +31,36 @@
       </a>
     </li>
   </ul>
+    </div>
+    
   <br/>
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane show active" id="connections" role="tabpanel" aria-labelledby="connections-tab">
+      <div class="pad-left">
         <h3>My Connections</h3>
           <div class="search" style="display: table-cell;">
             <%= simple_form_for :filter_list, url: connections_path, :method => 'get', html: {:class => "form-inline"} do |f| %>
               <%= f.input :general_search_term, label: false, placeholder: "Search connections"%>
-              <%= f.button :submit, "Search", class: "btn btn-light spacer"%>
+              <%= f.button :submit, "Search", class: "btn btn-maroon spacer"%>
             <% end %>
           </div>
           
           <div style="display: table-cell; padding: 5px;">
-            <p>Sort By </p>
+            <h6>Sort By </h6>
           </div>
           
           <div style="display: table-cell;">
             <%= simple_form_for :filter_list, url: connections_path, :method => 'get',  html: {:class => "form-inline"} do |f|%>
                 <%= f.input :sort_by, label: false, collection: ["Name", "Date Connected: Latest", "Date Connected: Earliest"], selected: @sort_key %>
-                <%= f.button :submit, "Sort", class: "btn btn-light spacer"%>
+                <%= f.button :submit, "Sort", class: "btn btn-maroon spacer"%>
             <% end %>
           </div>
           <div style="display: table-cell;">
             <%= link_to "Reset filter", connections_path(:reset => true), class: "btn btn-light spacer" %>
           </div>
-          <br/>
+      </div>
+        
+      <br/>
           
       <% if @connections.length() == 0 %>
         <p class="center">No connections found. <%= link_to "Add some?", profiles_path() %></p>
@@ -61,17 +68,18 @@
         <table class="table">
         <tbody>
           <% @connections.each do |c| %>
-            <tr><p>
-              <td>
-                Photo
-              </td>
-              <td>
-                <%= link_to "#{c.friend.first_name} #{c.friend.last_name}", profile_path(c.friend.id) %>
-              </td>
-              <td>
-                <div><%= link_to "Disconnect", connection_path(:id => current_account.id, :friend_id => c.friend.id), :method => :delete, :class => "btn btn-success" %></div>
-              </td>
-            </p></tr>
+          <div class="btn contact grey">
+              <div class="float-left">
+                <%= image_tag("avatar.jpg", class: "contact-photo", alt:"avatar") %>
+              </div>
+              <div class="float-left pad spacer">
+                <h6><%= link_to "#{c.friend.first_name} #{c.friend.last_name}", profile_path(c.friend.id) %></h6>
+              </div>
+              <div class="pad-right float-right">
+               <div><%= link_to "Connected", connection_path(:id => current_account.id, :friend_id => c.friend.id), :method => :delete, :class => "btn btn-success" %></div>
+              </div>
+            </div>
+
             <% end %>
           </tbody>
         </table>
@@ -79,33 +87,27 @@
       <% end %>
     </div>
     <div class="tab-pane" id="requests" role="tabpanel" aria-labelledby="requests-tab">
-      <h3>Connection Requests</h3>
-        <div>
+      <div class="pad-left">
+        <h3>Connection Requests</h3>
+      </div>
           <% if @friend_requests.length() == 0 %>
             <p class="center">Too bad, no secret admirers!</p>
           <% else %>
-            <table class="table">
-            <tbody>
-              <% @friend_requests.each do |c| %>
-                <tr><p>
-                  <td>
-                    Photo
-                  </td>
-                  <td>
-                    <h5><%= link_to "#{c.friend.first_name} #{c.friend.last_name}", profile_path(c.friend.id) %></h5>
-                  </td>
-                  <td>
-                    <div><%= link_to "Accept", connections_path(:id => current_account, :friend_id => c.friend.id), :method => :post, :class => "btn btn-primary" %></div>
-                  </td>
-                  <td>
-                    <div><%= link_to "Delete", friend_request_path(:id => current_account, :friend_id => c.friend.id), :method => :delete, :class => "btn btn-light" %></div>
-                  </td>
-                </p></tr>
-                <% end %>
-              </tbody>
-            </table>  
+            <% @friend_requests.each do |c| %>
+            <div class="btn contact grey">
+              <div class="float-left">
+                <%= image_tag("avatar.jpg", class: "contact-photo", alt:"avatar") %>
+              </div>
+              <div class="float-left pad spacer">
+                <h6><%= link_to "#{c.friend.first_name} #{c.friend.last_name}", profile_path(c.friend.id) %></h6>
+              </div>
+              <div class="pad-right float-right">
+                <%= link_to "Accept", connections_path(:id => current_account, :friend_id => c.friend.id), :method => :post, :class => "btn btn-primary" %>
+                <%= link_to "Delete", friend_request_path(:id => current_account, :friend_id => c.friend.id), :method => :delete, :class => "btn btn-light" %>
+              </div>
+            </div>
+            <% end %>
           <% end %>
-    </div>
   </div>
   </div>
 </body>

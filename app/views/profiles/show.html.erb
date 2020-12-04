@@ -29,12 +29,11 @@
                       <% elsif !current_account.profile.pending_friend_request?(@profile) %>
                         <div><%= link_to "Send Friend Request", friend_requests_path(:friend_id => @profile), :method => :post, :class => "btn btn-primary" %></div>
                       <% else %>
-                        <div><%= link_to "Accept", connections_path(:friend_id => @profile), :method => :post, :class => "btn btn-primary" %></div>
-                        <div><%= link_to "Delete", friend_request_path(:friend_id => @profile), :method => :delete, :class => "btn btn-light" %></div>
+                        <div><%= link_to "Accept", connections_path(:friend_id => @profile), :method => :post, :class => "btn btn-primary" %>
+                        <%= link_to "Delete", friend_request_path(:friend_id => @profile), :method => :delete, :class => "btn btn-light" %></div>
                       <% end %>
-
                     <% elsif current_account.profile.connected_to(@profile) %>
-                      <div><%= link_to "Disconnect", connection_path(:friend_id => @profile), :method => :delete, :class => "btn btn-success" %></div>
+                      <div><%= link_to "Connected", connection_path(:friend_id => @profile), :method => :delete, :class => "btn btn-success" %></div>
                       <%= link_to "Message #{@profile.first_name}", conversations_path(:sender_id => current_account, :receiver_id => @profile), :method => :post, :class => "btn btn-primary" %>
                     <% end %>
                   </div>
