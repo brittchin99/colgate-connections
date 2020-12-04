@@ -16,9 +16,10 @@
 </script>
 </head>
 <body>
-  <div class="main pad-left">
+  <div class="main">
     <br/>
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <div class="pad-left">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
       <a class="nav-link active" id="connections-tab" data-toggle="tab" href="#connections" >Connections</a>
     </li>
@@ -30,9 +31,12 @@
       </a>
     </li>
   </ul>
+    </div>
+    
   <br/>
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane show active" id="connections" role="tabpanel" aria-labelledby="connections-tab">
+      <div class="pad-left">
         <h3>My Connections</h3>
           <div class="search" style="display: table-cell;">
             <%= simple_form_for :filter_list, url: connections_path, :method => 'get', html: {:class => "form-inline"} do |f| %>
@@ -54,7 +58,9 @@
           <div style="display: table-cell;">
             <%= link_to "Reset filter", connections_path(:reset => true), class: "btn btn-light spacer" %>
           </div>
-          <br/>
+      </div>
+        
+      <br/>
           
       <% if @connections.length() == 0 %>
         <p class="center">No connections found. <%= link_to "Add some?", profiles_path() %></p>
@@ -62,7 +68,7 @@
         <table class="table">
         <tbody>
           <% @connections.each do |c| %>
-          <div class="btn contact">
+          <div class="btn contact grey">
               <div class="float-left">
                 <%= image_tag("avatar.jpg", class: "contact-photo", alt:"avatar") %>
               </div>
@@ -81,13 +87,14 @@
       <% end %>
     </div>
     <div class="tab-pane" id="requests" role="tabpanel" aria-labelledby="requests-tab">
-      <h3>Connection Requests</h3>
-        <div>
+      <div class="pad-left">
+        <h3>Connection Requests</h3>
+      </div>
           <% if @friend_requests.length() == 0 %>
             <p class="center">Too bad, no secret admirers!</p>
           <% else %>
             <% @friend_requests.each do |c| %>
-            <div class="btn contact">
+            <div class="btn contact grey">
               <div class="float-left">
                 <%= image_tag("avatar.jpg", class: "contact-photo", alt:"avatar") %>
               </div>
@@ -101,7 +108,6 @@
             </div>
             <% end %>
           <% end %>
-    </div>
   </div>
   </div>
 </body>

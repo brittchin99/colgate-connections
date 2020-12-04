@@ -23,6 +23,7 @@
         <table class="table">
         <thead class="thead-light">
           <tr class="products_header">
+            <th class="very-small"></th>
             <th>Name</th>
             <th>Year</th>
             <th>Majors</th>
@@ -33,7 +34,11 @@
         <tbody>
           <% @profiles.each do |p| %>
             <% if p.id != current_account.id %>
-              <tr><p>
+              <tr>
+              <p>
+              <td>
+                <%= image_tag("avatar.jpeg", class: "contact-photo", alt:"photo") %>
+              </td>
               <td>
                 <%= link_to "#{p.first_name + " " + p.last_name}", profile_path(p) %>
               </td>

@@ -1,22 +1,16 @@
 <div id="advanced-search">
   <%= simple_form_for :filter_list, :method => 'get' do |f| %>
-  
-    <p><%= f.input :first_name %></p>
     
-    <p><%= f.input :last_name %></p>
+    <p><%= f.input :pronouns, as: :radio_buttons, collection: Profile::PRONOUNS, required: false %></p>
     
-    <p><%= f.input :email, label: 'Colgate Email', placeholder: 'user@colgate.edu' %></p>
+    <p><%= f.input :class_year, as: :radio_buttons, collection: Profile::CLASS_YEARS, required: false %></p>
     
-    <p><%= f.input :pronouns, as: :radio_buttons, collection: Profile::PRONOUNS %></p>
+    <p><%= f.input :majors, label: "Major(s)", collection: Profile::MAJORS, input_html: { multiple: true }, include_hidden: false, required: false %></p>
     
-    <p><%= f.input :class_year, as: :radio_buttons, collection: Profile::CLASS_YEARS %></p>
+    <p><%= f.input :minors, label: "Minor(s)", collection: Profile::MAJORS, input_html: { multiple: true }, include_hidden: false, required: false %></p>
     
-    <p><%= f.input :majors, label: "Major(s)", collection: Profile::MAJORS, input_html: { multiple: true }, include_hidden: false %></p>
+    <p><%= f.input :interests, as: :check_boxes, collection: Profile::INTERESTS, wrapper: :vertical_collection_inline, include_hidden: false, required: false %></p>
     
-    <p><%= f.input :minors, label: "Minor(s)", collection: Profile::MAJORS, input_html: { multiple: true }, include_hidden: false %></p>
-    
-    <p><%= f.input :interests, as: :check_boxes, collection: Profile::INTERESTS, wrapper: :vertical_collection_inline, include_hidden: false %></p>
-    
-    <p><%= f.button :submit, "Filter", class: "btn btn-secondary" %></p>
+    <p class="center"><%= f.button :submit, "Filter", class: "btn btn-maroon" %></p>
   <% end %>
 </div>

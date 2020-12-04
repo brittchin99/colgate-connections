@@ -88,6 +88,10 @@ p {
   width: 100px;
 }
 
+.very-small {
+  width: 40px;
+}
+
 .form {
     padding-left: 500px;
     padding-right: 500px;
@@ -214,6 +218,11 @@ p {
 .btn-grey:hover{
   background-color: #D2D4D6;
   color: black;
+}
+
+.grey {
+  background-color: #f7f7f7;
+  margin-bottom: 3px;
 }
 
 .spacer {
