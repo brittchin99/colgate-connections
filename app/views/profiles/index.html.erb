@@ -5,9 +5,12 @@
   </head>
   <body>
     <div class = "main">
-      <% if @profiles.length() == 0 %>
-        <p class="center">No match found</p>
-      <% else %>
+      <div class="container page-heading">
+        <h3><%= @profiles.length %> profiles found.</h3>
+        <%= link_to "Filters", profiles_path(:reset => true), class: "btn btn-grey"%>
+        <%= link_to "Reset filter", profiles_path(:reset => true), class: "btn btn-light"%>
+      </div>
+      
         <table class="table">
         <thead class="thead-light">
           <tr class="products_header">
@@ -48,7 +51,6 @@
             <% end %>
           </tbody>
         </table>  
-      <% end %>
     </div>
   </body>
 </html>

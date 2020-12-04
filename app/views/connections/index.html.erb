@@ -70,7 +70,7 @@
                 <%= link_to "#{c.friend.first_name} #{c.friend.last_name}", profile_path(c.friend.id) %>
               </td>
               <td>
-                <div><%= link_to "Disconnect", connection_path(:id => current_account.id, :friend_id => c.friend.id), :method => :delete, :class => "btn btn-success" %></div>
+                <div><%= link_to "Connected", connection_path(:id => current_account.id, :friend_id => c.friend.id), :method => :delete, :class => "btn btn-success" %></div>
               </td>
             </p></tr>
             <% end %>
@@ -85,26 +85,20 @@
           <% if @friend_requests.length() == 0 %>
             <p class="center">Too bad, no secret admirers!</p>
           <% else %>
-            <table class="table">
-            <tbody>
-              <% @friend_requests.each do |c| %>
-                <tr><p>
-                  <td>
-                    Photo
-                  </td>
-                  <td>
-                    <h5><%= link_to "#{c.friend.first_name} #{c.friend.last_name}", profile_path(c.friend.id) %></h5>
-                  </td>
-                  <td>
-                    <div><%= link_to "Accept", connections_path(:id => current_account, :friend_id => c.friend.id), :method => :post, :class => "btn btn-primary" %></div>
-                  </td>
-                  <td>
-                    <div><%= link_to "Delete", friend_request_path(:id => current_account, :friend_id => c.friend.id), :method => :delete, :class => "btn btn-light" %></div>
-                  </td>
-                </p></tr>
-                <% end %>
-              </tbody>
-            </table>  
+            <% @friend_requests.each do |c| %>
+            <div class="btn contact">
+              <div class="float-left">
+                <%= image_tag("avatar.jpg", class: "contact-photo", alt:"avatar") %>
+              </div>
+              <div class="float-left pad spacer">
+                <h6><%= link_to "#{c.friend.first_name} #{c.friend.last_name}", profile_path(c.friend.id) %></h6>
+              </div>
+              <div class="pad-right float-right">
+                <%= link_to "Accept", connections_path(:id => current_account, :friend_id => c.friend.id), :method => :post, :class => "btn btn-primary" %>
+                <%= link_to "Delete", friend_request_path(:id => current_account, :friend_id => c.friend.id), :method => :delete, :class => "btn btn-light" %>
+              </div>
+            </div>
+            <% end %>
           <% end %>
     </div>
   </div>

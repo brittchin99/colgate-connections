@@ -152,6 +152,10 @@ p {
   padding-left: 15px; 
 }
 
+.pad-right {
+  padding-right: 15px;
+}
+
 .contact-left {
     width: 10%;
 }
@@ -165,6 +169,14 @@ p {
   width: 60%;
 }
 
+.float-right {
+  float: right;
+}
+
+.float-left {
+  float: left;
+}
+
 .home-img {
   width: 100%;
   display: block;
@@ -172,8 +184,13 @@ p {
   padding: 20px;
 }
 
+.page-heading {
+  text-align:left;
+  padding:10px;
+}
+
 @media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
+  .sidenav {padding-top: 20px;}
   .sidenav a {font-size: 18px;}
 }
 
@@ -186,6 +203,17 @@ p {
 .btn-maroon:hover {
     color: black;
     background-color: #D2D4D6;
+}
+
+.btn-grey {
+  background-color: #5A646E;
+  color: white;
+  text-decoration: none;
+}
+
+.btn-grey:hover{
+  background-color: #D2D4D6;
+  color: black;
 }
 
 .spacer {
@@ -230,6 +258,13 @@ padding: 5px;
 
 .line {
   display: inline;
+}
+
+.contact-photo {
+    border-radius: 50%;
+    max-height: 40px;
+    position:relative;
+    overflow: hidden;
 }
 
 /* Messaging */
