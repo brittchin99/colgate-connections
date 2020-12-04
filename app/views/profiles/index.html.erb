@@ -6,7 +6,7 @@
   <body>
     <div class = "main">
       <div class="container page-heading">
-        <h3><%= @profiles.length-1 %> profiles found.</h3>
+        <h3><%= pluralize( @profiles.length, 'profile' )%> found.</h3>
         <%= link_to "Filters", profiles_path(:reset => true), class: "btn btn-grey"%>
         <%= link_to "Reset filter", profiles_path(:reset => true), class: "btn btn-light"%>
       </div>
