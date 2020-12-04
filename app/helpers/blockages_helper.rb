@@ -1,0 +1,2 @@
+module BlockagesHelper
+end

@@ -38,6 +38,15 @@
                       <%= link_to "Message #{@profile.first_name}", conversations_path(:sender_id => current_account, :receiver_id => @profile), :method => :post, :class => "btn btn-primary" %>
                     <% end %>
                   </div>
+                  <div>
+                    <% if current_account.profile!=@profile%> 
+                      <% if current_account.profile.blocking(@profile) %>
+                        <div><%= link_to "Unblock", blockage_path(:blockee_id => @profile), :method => :delete, :class => "btn btn-secondary" %></div>
+                      <% else %>
+                        <div><%= link_to "Block", blockages_path(:blockee_id => @profile), :method => :post, :class => "btn btn-primary" %></div>
+                      <% end %>
+                    <% end %>
+                  </div>
                   <br/>
                  
             </div>

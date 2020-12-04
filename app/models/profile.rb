@@ -3,12 +3,18 @@ class Profile < ApplicationRecord
   has_many :friends, through: :connections
   has_many :friend_requests
   has_many :admirers, through: :friend_requests
+  has_many :blockages
+  has_many :blockees, through: :blockages
   belongs_to :account
   has_one_attached :avatar
   has_many_attached :photos
 
   def connected_to(profile)
     nil != self.connections.find_by(friend_id: profile.id)
+  end
+  
+  def blocking(profile)
+    nil != self.blockages.find_by(blockee_id: profile.id)
   end
   
   def pending_friend_request?(profile)

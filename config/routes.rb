@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'blockages/index'
   devise_for :accounts, :controllers => {:registrations => "accounts"} 
     resources :accounts, :only => [:new, :create]
     resources :profiles, :only => [:index, :show, :update, :edit]
@@ -8,5 +9,6 @@ Rails.application.routes.draw do
       resources :messages
     end
     resources :friend_requests, :only => [:index, :create, :destroy]
+    resources :blockages, :only => [:index, :create, :destroy]
   root :to => "homes#index"
 end
