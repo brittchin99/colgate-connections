@@ -32,6 +32,60 @@
   <br/>
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane show active" id="connections" role="tabpanel" aria-labelledby="connections-tab">
+        <h4>Suggested Connections</h4>
+        
+        <div style="width: 100%; display:table-cell;" class="center">
+          <div class="card float-left spacer pad" style="width: 13rem;">
+          <div class="card-body center">
+            <%= image_tag("avatar.jpg", class: "suggested-img", alt:"avatar") %>
+            <a href="#" class="card-link"><h5>John Smith</h5></a>
+            <h6 class="card-subtitle mb-2 text-muted">he/him/his</h6>
+            <p class="time">12 mutual connections.</p>
+            
+          </div>
+        </div>
+        
+        <div class="card float-left spacer pad" style="width: 13rem;">
+          <div class="card-body center">
+            <%= image_tag("avatar.jpg", class: "suggested-img", alt:"avatar") %>
+            <a href="#" class="card-link"><h5>Caroline Dover</h5></a>
+            <h6 class="card-subtitle mb-2 text-muted">she/her/hers</h6>
+            <p class="time">32 mutual connections.</p>
+            
+          </div>
+        </div>
+        
+        <div class="card float-left spacer pad" style="width: 13rem;">
+          <div class="card-body center">
+            <%= image_tag("avatar.jpg", class: "suggested-img", alt:"avatar") %>
+            <a href="#" class="card-link"><h5>Megan Hamilton</h5></a>
+            <h6 class="card-subtitle mb-2 text-muted">she/her/hers</h6>
+            <p class="time">14 mutual connections.</p>
+          </div>
+        </div>
+      
+        
+        <div class="card float-left spacer pad" style="width: 13rem;">
+          <div class="card-body center">
+            <%= image_tag("avatar.jpg", class: "suggested-img", alt:"avatar") %>
+            <a href="#" class="card-link"><h5>Joel Sommers</h5></a>
+            <h6 class="card-subtitle mb-2 text-muted">he/him/his</h6>
+            <p class="time">7 mutual connections.</p>
+          </div>
+        </div>
+        
+        <div class="card float-left spacer pad" style="width: 13rem;">
+          <div class="card-body center">
+            <%= image_tag("avatar.jpg", class: "suggested-img", alt:"avatar") %>
+            <a href="#" class="card-link"><h5>Rob Park</h5></a>
+            <h6 class="card-subtitle mb-2 text-muted">they/them/theirs</h6>
+            <p class="time">7 mutual connections.</p>
+          </div>
+        </div>
+        <button class="btn btn-light pad">Get more suggestions</button>
+        </div>
+        
+        <br/>
         <h3>My Connections</h3>
           <div class="search" style="display: table-cell;">
             <%= simple_form_for :filter_list, url: connections_path, :method => 'get', html: {:class => "form-inline"} do |f| %>
