@@ -23,7 +23,8 @@
         </thead>
         <tbody>
           <% @profiles.each do |p| %>
-            <tr><p>
+            <% if p.id != current_account.id %>
+              <tr><p>
               <td>
                 <%= link_to "#{p.first_name + " " + p.last_name}", profile_path(p) %>
               </td>
@@ -39,15 +40,24 @@
                 <% end %>
               </td>
               <td>
-                <% if current_account.profile !=p && !current_account.profile.connected_to(p) %>
-                  Not yet connected
+                <% if !current_account.profile.connected_to(p) %>
+                <% if p.pending_friend_request?(current_account.profile) %>
+                      <%= link_to "Unsend Friend Request", friend_request_path(:id => current_account.id, :friend_id => p.id), :method => :delete, :class => "btn btn-secondary" %></div>
+                  <% elsif !current_account.profile.pending_friend_request?(p) %>
+                      <%= link_to "Send Friend Request", friend_requests_path(:friend_id => p.id), :method => :post, :class => "btn btn-primary" %></div>
+                  <% else %>
+                        <div>
+                          <%= link_to "Accept", connections_path(:friend_id => p.id), :method => :post, :class => "btn btn-primary" %>
+                        <%= link_to "Delete", friend_request_path(:id => current_account.id, :friend_id => p.id), :method => :delete, :class => "btn btn-light" %></div>
+                  <% end %>
                 <% elsif current_account.profile.connected_to(p) %>
-                  Connected
+                  <%= link_to "Connected", connection_path(:id => current_account.id, :friend_id => p.id), :method => :delete, :class => "btn btn-success" %>
                 <% else %>
                   Me!
                 <% end %>
               </td>
             </p></tr>
+            <% end %>
             <% end %>
           </tbody>
         </table>  

@@ -42,7 +42,7 @@
           </div>
           
           <div style="display: table-cell; padding: 5px;">
-            <p>Sort By </p>
+            <h6>Sort By </h6>
           </div>
           
           <div style="display: table-cell;">
@@ -62,17 +62,18 @@
         <table class="table">
         <tbody>
           <% @connections.each do |c| %>
-            <tr><p>
-              <td>
-                Photo
-              </td>
-              <td>
-                <%= link_to "#{c.friend.first_name} #{c.friend.last_name}", profile_path(c.friend.id) %>
-              </td>
-              <td>
-                <div><%= link_to "Connected", connection_path(:id => current_account.id, :friend_id => c.friend.id), :method => :delete, :class => "btn btn-success" %></div>
-              </td>
-            </p></tr>
+          <div class="btn contact">
+              <div class="float-left">
+                <%= image_tag("avatar.jpg", class: "contact-photo", alt:"avatar") %>
+              </div>
+              <div class="float-left pad spacer">
+                <h6><%= link_to "#{c.friend.first_name} #{c.friend.last_name}", profile_path(c.friend.id) %></h6>
+              </div>
+              <div class="pad-right float-right">
+               <div><%= link_to "Connected", connection_path(:id => current_account.id, :friend_id => c.friend.id), :method => :delete, :class => "btn btn-success" %></div>
+              </div>
+            </div>
+
             <% end %>
           </tbody>
         </table>
