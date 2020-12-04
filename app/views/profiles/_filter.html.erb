@@ -1,25 +1,22 @@
-<div class="center">
-        <h1>Advanced Search</h1>
-        <%= simple_form_for :filter_list, :method => 'get' do |f| %>
-        
-          <p><%= f.input :first_name, input_html: { size: 40 }%></p>
-          
-          <p><%= f.input :last_name %></p>
-          
-          <p><%= f.input :email, label: 'Colgate Email', placeholder: 'user@colgate.edu' %></p>
-          
-          <p><%= f.input :pronouns, as: :radio_buttons, collection: Profile::PRONOUNS %></p>
-          
-          <p><%= f.input :class_year, as: :radio_buttons, collection: Profile::CLASS_YEARS %></p>
-          
-          <p><%= f.input :majors, label: "Major(s)", collection: Profile::MAJORS, input_html: { multiple: true }, include_hidden: false %></p>
-          
-          <p><%= f.input :minors, label: "Minor(s)", collection: Profile::MAJORS, input_html: { multiple: true }, include_hidden: false %></p>
-          
-          <p><%= f.input :interests, as: :check_boxes, collection: Profile::INTERESTS, wrapper: :vertical_collection_inline, include_hidden: false %></p>
-          
-          <p><%= f.button :submit, "Search", class: "btn btn-maroon" %></p>
-          
-          <p><%= link_to "Reset filter", profiles_path(:reset => true), class: "btn btn-light"%></p>
-        <% end %>
+<div id="advanced-search">
+  <%= simple_form_for :filter_list, :method => 'get' do |f| %>
+  
+    <p><%= f.input :first_name %></p>
+    
+    <p><%= f.input :last_name %></p>
+    
+    <p><%= f.input :email, label: 'Colgate Email', placeholder: 'user@colgate.edu' %></p>
+    
+    <p><%= f.input :pronouns, as: :radio_buttons, collection: Profile::PRONOUNS %></p>
+    
+    <p><%= f.input :class_year, as: :radio_buttons, collection: Profile::CLASS_YEARS %></p>
+    
+    <p><%= f.input :majors, label: "Major(s)", collection: Profile::MAJORS, input_html: { multiple: true }, include_hidden: false %></p>
+    
+    <p><%= f.input :minors, label: "Minor(s)", collection: Profile::MAJORS, input_html: { multiple: true }, include_hidden: false %></p>
+    
+    <p><%= f.input :interests, as: :check_boxes, collection: Profile::INTERESTS, wrapper: :vertical_collection_inline, include_hidden: false %></p>
+    
+    <p><%= f.button :submit, "Filter", class: "btn btn-secondary" %></p>
+  <% end %>
 </div>

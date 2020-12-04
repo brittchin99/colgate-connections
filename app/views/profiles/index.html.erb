@@ -7,7 +7,16 @@
     <div class = "main">
       <div class="container page-heading">
         <h3><%= pluralize( @profiles.length, 'profile' )%> found.</h3>
-        <%= link_to "Filters", profiles_path(:reset => true), class: "btn btn-grey"%>
+        
+        <div class="dropdown" id="filter-button">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Filter
+          </button>
+          <div class="dropdown-menu">
+            <%= render 'filter' %>
+          </div>
+        </div>
+        
         <%= link_to "Reset filter", profiles_path(:reset => true), class: "btn btn-light"%>
       </div>
       
