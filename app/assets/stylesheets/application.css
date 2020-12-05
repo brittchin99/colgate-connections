@@ -31,7 +31,7 @@
   background-repeat: no-repeat;
   overflow: visible;
   background-image: url(/assets/arrival_edit.jpg);
-  margin-top: -15px;
+  margin-top: -13px;
 }
 
 p {
@@ -393,3 +393,17 @@ padding: 5px;
  .msg-button {
    display: inline-block;
 } 
+
+.options {
+  height: 40px;
+}
+
+.options-text {
+  color:black;
+   margin-top: -15px;
+}
+
+.options:focus {
+  outline: none;
+  box-shadow: none;
+}
