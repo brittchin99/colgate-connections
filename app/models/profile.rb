@@ -21,12 +21,11 @@ class Profile < ApplicationRecord
     nil != self.friend_requests.find_by(friend_id: profile.id)
   end
     
-  def has_conversation_with(account_id)
-    true
-    # c = Conversation.where("sender_id = ? AND receiver_id = ?
-    # OR receiver_id = ? AND sender_id = ?", self.id, account_id, account_id, self.id)
-    
-    # c.nil?
+  def has_conversation_with(receiver_id)
+    if Conversation.between(self.id, receiver_id).present?
+      @conversation = Conversation.between(self.id, receiver_id).first
+      @conversation.has_messages?
+    end
   end
   
   def toList(str)

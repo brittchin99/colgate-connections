@@ -7,7 +7,7 @@ class ConversationsController < ApplicationController
     end
     
     def new
-        @profiles = current_account.profile.connections
+        @connections = current_account.profile.connections
     end
 
 
@@ -15,8 +15,7 @@ class ConversationsController < ApplicationController
         @partner = Profile.find_by_id(params[:receiver_id])
         if current_account.profile.connected_to(@partner)
             if Conversation.between(params[:sender_id],params[:receiver_id]).present?
-                @conversation = Conversation.between(params[:sender_id],
-                params[:receiver_id]).first
+                @conversation = Conversation.between(params[:sender_id], params[:receiver_id]).first
             else
                 @conversation = Conversation.create!(conversation_params)
             end

@@ -45,11 +45,9 @@
                       <% end %>
                     </div>
                   <% elsif current_account.profile.blocking(@profile) %>
-                    <div>User is blocked.</div>
                     <div><%= link_to "Unblock", blockage_path(:blockee_id => @profile), :method => :delete, :class => "btn btn-secondary" %></div>
-                  <% else %>
-                    <div>User unavailable</div>
                   <% end %>
+
                   <br/>
             </div>
             <% if flash[:notice] %>
@@ -107,6 +105,10 @@
                <% end %>
             
        </div>
+      <% elsif current_account.profile.blocking(@profile) %>
+        <div>User is blocked.</div>
+      <% else %>
+        <div>User unavailable</div>
       <% end %>
 </div>
     
