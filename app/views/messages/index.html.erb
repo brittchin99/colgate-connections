@@ -1,6 +1,6 @@
 <div class="main">
   <div class="msg-header">
-    <%= link_to conversations_path, :class => "button" do %>
+    <%= link_to :back, :class => "button" do %>
       <div class="btn btn-primary" style="float: left; background-color: #E10028; border-color: #E10028;"><h3>&lt;</h3></div>
     <% end %>
     
@@ -70,7 +70,7 @@
                   <%= f.text_area :body, class: "msg-box" %>
                   <%= f.text_field :profile_id, value: current_account.profile.id, type: "hidden" %>
                   
-                  <%= f.submit "Send Message", class: "btn btn-primary msg-button" %>
+                  <%= f.submit "Send Message", class: "btn btn-primary msg-button spacer" %>
               
               <% end %>
           </div>

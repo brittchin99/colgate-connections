@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <%= stylesheet_link_tag 'accounts', media: 'all' %>
+  </head>
   <body>
+    <br/>
+    <h2 class = "center">Log in</h2>
     <div class="center form">
-        <h2>Log in</h2>
         <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
           <div class="field">
             <%= f.label :email %><br />
@@ -14,10 +18,13 @@
             <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
           </div>
           
-          <%= link_to "Don't have an account? Sign up.", new_account_registration_path  %>
+          <div class="pad">
+            <%= link_to "Don't have an account? Sign up.", new_account_registration_path%>
+          </div>
+          
         
           <div class="actions">
-            <%= f.submit "Log in", class: "btn btn-light" %>
+            <%= f.submit "Log in", class: "btn btn-maroon" %>
           </div>
         <% end %>
     </div>

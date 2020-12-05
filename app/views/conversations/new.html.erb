@@ -1,21 +1,28 @@
+<head>
+    <%= stylesheet_link_tag 'accounts', media: 'all' %>
+  </head>
 <div class="main">
   <div style="text-align:left; padding:10px;" class="container">
     <%= link_to conversations_path do %>
-      <span class="btn btn-primary">Back to Messages</span>
+      <span class="btn btn-maroon">&lt; Back to Messages</span>
     <% end %>
+    </div>
     
-    <h3>All Accounts</h3>
+    <div class="container page-heading">
+  <h3 class="line">Your Connections</h3>
+  
+  </div>
     <div class="ui list">
-      <% @profiles.each do |profile| %>
-        <% if profile.id != current_account.profile.id %>
-        <%= link_to conversations_path(sender_id: current_account.profile.id, receiver_id: profile.id), method: "post" do %>
+      <% @connections.each do |c| %>
+       <% if !current_account.profile.has_conversation_with(c.friend.id) %>
+        <%= link_to conversations_path(sender_id: current_account.profile.id, receiver_id: c.friend.id), method: "post" do %>
         <div class="btn btn-light contact">
           <div class="row">
               <div class="column contact-left">
                 <%= image_tag("avatar.jpeg", class: "contact-img", alt:"photo") %>
               </div>
               <div class="column contact-right">
-                  <h5><%= profile.first_name + " " + profile.last_name %></h5>
+                  <h5 class="pad"><%= c.friend.first_name + " " + c.friend.last_name %></h5>
               </div>
           </div>
         </div>
