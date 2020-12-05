@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get 'blockages/index'
   devise_for :accounts, :controllers => {:registrations => "accounts"} 
     resources :accounts, :only => [:new, :create]
     resources :profiles, :only => [:index, :show, :update, :edit]

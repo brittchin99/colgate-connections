@@ -1274,6 +1274,15 @@
           null
         ]
       },
+      "/home/ubuntu/environment/colgate-connections/spec/factories/blockages.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          null,
+          null
+        ]
+      },
       "/home/ubuntu/environment/colgate-connections/spec/factories/connection.rb": {
         "lines": [
           1,
@@ -1347,6 +1356,7 @@
           null,
           1,
           1,
+          1,
           null
         ]
       },
@@ -1377,6 +1387,12 @@
         ]
       },
       "/home/ubuntu/environment/colgate-connections/app/helpers/application_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/home/ubuntu/environment/colgate-connections/app/helpers/blockages_helper.rb": {
         "lines": [
           1,
           null
@@ -1507,6 +1523,23 @@
           null,
           1,
           null,
+          null
+        ]
+      },
+      "/home/ubuntu/environment/colgate-connections/spec/models/blockage_spec.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          1,
+          null
+        ]
+      },
+      "/home/ubuntu/environment/colgate-connections/app/models/blockage.rb": {
+        "lines": [
+          1,
+          1,
+          1,
           null
         ]
       },
@@ -1780,9 +1813,15 @@
           1,
           1,
           1,
+          1,
+          1,
           null,
           1,
           2,
+          null,
+          null,
+          1,
+          0,
           null,
           null,
           1,
@@ -1829,6 +1868,15 @@
           null
         ]
       },
+      "/home/ubuntu/environment/colgate-connections/spec/requests/blockages_request_spec.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          null,
+          null
+        ]
+      },
       "/home/ubuntu/environment/colgate-connections/spec/requests/connections_request_spec.rb": {
         "lines": [
           1,
@@ -1865,6 +1913,14 @@
           null
         ]
       },
+      "/home/ubuntu/environment/colgate-connections/spec/views/blockages/index.html.erb_spec.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          null
+        ]
+      },
       "/home/ubuntu/environment/colgate-connections/spec/views/friend_request/create.html.erb_spec.rb": {
         "lines": [
           1,
@@ -1874,6 +1930,6 @@
         ]
       }
     },
-    "timestamp": 1606169383
+    "timestamp": 1607192865
   }
 }
