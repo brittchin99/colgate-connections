@@ -4,7 +4,11 @@
   <%= link_to new_conversation_path do %>
     <span class="btn btn-primary" style="display: inline-block; float:right;">+</span>
   <% end %>
-  
+  <% if flash[:alert] %>
+    <div class="alert alert-warning alert top-alert">
+      <%= "#{flash[:alert]}" %>
+    </div>
+  <% end %>
   <% @conversations.each do |conversation| %>
   
   <% if conversation.has_messages? %>

@@ -7,7 +7,7 @@
             <% if !@profile.blocking(current_account.profile) && !current_account.profile.blocking(@profile) && @profile.avatar.attached? %>
               <img class="profile-image-circle" src="<%= (url_for(@profile.avatar)) %>">
             <% else %>
-              <div class="profile-image-circle"></div>
+              <div><%= image_tag("avatar.jpeg", class: "profile-image-circle", alt:"photo") %></div>
             <% end %>
             <div class="profile-text">
                  <h4><%= "#{@profile.first_name} #{@profile.last_name}" %> </h4>
