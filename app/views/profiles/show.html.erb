@@ -59,19 +59,19 @@
               <tr>
                 <th>Major(s)</th>
                 <td> 
-                  <%= @profile.toList(@profile.majors).join(", ")%>
+                  <%= Profile.toList(@profile.majors).join(", ")%>
                 </td>
               </tr>
               <tr>
                 <th>Minor(s)</th>
                 <td> 
-                  <%= @profile.toList(@profile.minors).join(", ")%>
+                  <%= Profile.toList(@profile.minors).join(", ")%>
                 </td>
               </tr>
               <tr>
                 <th>Interest(s):</th>
                 <td>
-                  <%= @profile.toList(@profile.interests).join(", ")%>
+                  <%= Profile.toList(@profile.interests).join(", ")%>
                 </td>
               </tr>
         </table>
