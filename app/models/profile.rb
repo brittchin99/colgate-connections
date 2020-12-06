@@ -46,6 +46,7 @@ class Profile < ApplicationRecord
       if points >= 1
         matches[current_profile.id] = points
       end
+    end
       matches = matches.sort_by { |k,v| -v }[0..4].to_h
     return matches
   end
