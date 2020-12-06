@@ -22,6 +22,33 @@ class Profile < ApplicationRecord
     
     # c.nil?
   end
+  def suggested_connections
+    @profile = Profile.all.where("id NOT IN (?)", current_accountprofile.id)
+    @profiles = @profiles.where('id NOT IN (?)', current_account.profile.connections.map(&:id).join(','))
+    matches = Hash.new()
+    # points = 0
+    #@suggested = @profile.where("cast(class_year as text) LIKE ? OR majors LIKE ? OR minors LIKE ? AND interests LIKE ? ", current_account.class_year, current_account.majors, current_account.minors, current_account.interests).limit(5).order("class_year DESC")
+    
+    @profile.each do |current_profile|
+      points = 0
+      if current_profile.class_year == current_account.profile.class_year
+        points += 1
+      end
+      if current_profile.majors == current_account.profile.majors
+        points += 1
+      end
+      if current_profile.minors == current_account.profile.minors
+        points += 1
+      end
+      if current_profile.interests == current_account.profile.interests
+        points += 1
+      end
+      if points >= 1
+        matches[current_profile.id] = points
+      end
+      matches = matches.sort_by { |k,v| -v }[0..4].to_h
+    return matches
+  end
   
   def toList(str)
     if str.blank?

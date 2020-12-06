@@ -30,7 +30,7 @@ class ProfilesController < ApplicationController
   
   
   def index
-    @profiles = Profile.all
+    @profiles = Profile.all 
     
     if !params.has_key?("reset")
       if p = (params["filter_list"] || session["filter_list"])
