@@ -3,7 +3,6 @@ class ConversationsController < ApplicationController
     before_action :populate_info!
 
     def index
-        @profiles = Profile.all
         @conversations = Conversation.all
     end
     
@@ -13,12 +12,18 @@ class ConversationsController < ApplicationController
 
 
     def create
-        if Conversation.between(params[:sender_id],params[:receiver_id]).present?
-            @conversation = Conversation.between(params[:sender_id], params[:receiver_id]).first
+        @partner = Profile.find_by_id(params[:receiver_id])
+        if current_account.profile.connected_to(@partner)
+            if Conversation.between(params[:sender_id],params[:receiver_id]).present?
+                @conversation = Conversation.between(params[:sender_id], params[:receiver_id]).first
+            else
+                @conversation = Conversation.create!(conversation_params)
+            end
+            redirect_to conversation_messages_path(@conversation)
         else
-            @conversation = Conversation.create!(conversation_params)
+            flash[:alert] = "Unable to message user"
+            redirect_to conversations_path
         end
-        redirect_to conversation_messages_path(@conversation)
     end
 
     private

@@ -1,0 +1,21 @@
+<div class="main pad-left">
+  <h3>My Block List</h3>
+  <% if @blockages.length() == 0 %>
+    <p class="center">You haven't blocked anyone!</p>
+  <% else %>
+    <table class="table">
+    <tbody>
+      <% @blockages.each do |b| %>
+        <tr><p>
+          <td>
+            <h5><%= link_to "#{b.first_name} #{b.last_name}", profile_path(b.id) %></h5>
+          </td>
+          <td>
+            <div><%= link_to "Unblock", blockage_path(:id => current_account, :blockee_id => b.id), :method => :delete, :class => "btn btn-light" %></div>
+          </td>
+        </p></tr>
+        <% end %>
+      </tbody>
+    </table>  
+  <% end %>
+</div>

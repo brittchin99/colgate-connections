@@ -31,11 +31,13 @@ class ProfilesController < ApplicationController
   
   def index
     @profiles = Profile.where("id NOT LIKE ?", current_account.profile.id)
-    
+    @profiles = @profiles.where('id NOT IN (?)', current_account.profile.blockees.map(&:id).join(','))
+    @profiles = @profiles.where('id NOT IN (?)', Blockage.where('blockee_id LIKE ?', current_account.profile.id).map(&:profile_id).join(','))
+
     if !session.has_key?(:filter_list)
       session[:filter_list] = {}
     end
-    
+  
     if !params.has_key?("reset")
       if p = (params["filter_list"] || session["filter_list"])
         if !p.has_key?("general_search_term")

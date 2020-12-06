@@ -393,3 +393,19 @@ padding: 5px;
  .msg-button {
    display: inline-block;
 } 
+
+
+
+.options {
+  height: 40px;
+}
+
+.options-text {
+  color:black;
+   margin-top: -15px;
+}
+
+.options:focus {
+  outline: none;
+  box-shadow: none;
+}
