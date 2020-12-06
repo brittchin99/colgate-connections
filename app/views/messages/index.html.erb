@@ -1,6 +1,6 @@
 <div class="main">
   <div class="msg-header">
-    <%= link_to conversations_path, :class => "button" do %>
+    <%= link_to :back, :class => "button" do %>
       <div class="btn btn-primary" style="float: left; background-color: #E10028; border-color: #E10028;"><h3>&lt;</h3></div>
     <% end %>
     
@@ -65,13 +65,16 @@
 
           </div>
           <div class="msg-bottom">
-              <%= form_for [@conversation, @message], html: {:class => "form-inline"} do |f| %>
-              
-                  <%= f.text_area :body, class: "msg-box" %>
-                  <%= f.text_field :profile_id, value: current_account.profile.id, type: "hidden" %>
-                  
-                  <%= f.submit "Send Message", class: "btn btn-primary msg-button" %>
-              
+              <% if !current_account.profile.connected_to(receiver) %>
+                <div class="msg-box center alert-warning"><%= "You are currently unable to message #{receiver.first_name}" %></div>
+              <% else %>
+                <%= form_for [@conversation, @message], html: {:class => "form-inline"} do |f| %>
+                
+                    <%= f.text_area :body, class: "msg-box" %>
+                    <%= f.text_field :profile_id, value: current_account.profile.id, type: "hidden" %>
+                    
+                    <%= f.submit "Send Message", class: "btn btn-primary msg-button" %>
+                <% end %>
               <% end %>
           </div>
         </div>

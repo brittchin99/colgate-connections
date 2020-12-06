@@ -1,45 +1,93 @@
-<div class="profile-container">
+<head>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+</head>
+<div class="main">
+  
+  <% if !@profile.pending_friend_request?(current_account.profile) and !!current_account.profile.pending_friend_request?(@profile) %>
+    <div class="alert alert-secondary" role="alert">
+      <%= @profile.first_name %> would like to connect with you.
+      <%= link_to "Accept", connections_path(:friend_id => @profile), :method => :post, :class => "btn btn-primary spacer" %>
+      <%= link_to "Delete", friend_request_path(:friend_id => @profile), :method => :delete, :class => "btn btn-light" %>
+    </div>
+  <% end %>
+  <div class="profile-container">
+    
       <!--check logged in to the right user -->
       <% if current_account.profile == @profile %>
         <%= link_to "Update Profile", edit_profile_path(@profile), :class => "btn btn-primary update-button" %>
       <% end %>
       <div class="profile-basic">
-            <% if @profile.avatar.attached? %>
-              <img class="profile-image-circle" src="<%= (url_for(@profile.avatar)) %>">
+            <% if !@profile.blocking(current_account.profile) && !current_account.profile.blocking(@profile) && @profile.avatar.attached? %>
+              <div class="center">
+                <img class="profile-image-circle" src="<%= (url_for(@profile.avatar)) %>">
+              </div>
             <% else %>
-              <div class="profile-image-circle"></div>
+              <div class="center">
+                <%= image_tag("avatar.jpeg", class: "profile-image-circle", alt:"photo") %>
+              </div>
             <% end %>
             <div class="profile-text">
                  <h4><%= "#{@profile.first_name} #{@profile.last_name}" %> </h4>
                  <p> <%= "#{@profile.pronouns}"%></p>   
                   <!--check logged in to the right user -->
-                  <% if @profile.status %>
-                      <%= "#{@profile.status}"%>
+                  <% if current_account.profile.blocking(@profile) %>
+                  
+                    <%= link_to "Unblock #{@profile.first_name}", blockage_path(:blockee_id => @profile), :method => :delete, :class => "btn btn-primary" %>
+                
                   <% end %>
-                  <% if current_account.profile==@profile %>
-                     <% if !@profile.status %>
-                        <button onclick="toggle()" class="add-button" id="profile-status">Add a status</button>                      
+                  
+                  <% if !@profile.blocking(current_account.profile) && !current_account.profile.blocking(@profile) %>
+                    <div>
+                      <% if current_account.profile!=@profile %>
+                        <% if !current_account.profile.connected_to(@profile) %>
+                          <% if @profile.pending_friend_request?(current_account.profile) %>
+                            <%= link_to "Unsend Friend Request", friend_request_path(:friend_id => @profile), :method => :delete, :class => "btn btn-secondary" %>
+                          <% elsif !current_account.profile.pending_friend_request?(@profile) %>
+                            <%= link_to "Send Friend Request", friend_requests_path(:friend_id => @profile), :method => :post, :class => "btn btn-primary" %>
+                          <% end %>
+    
+                        <% elsif current_account.profile.connected_to(@profile) %>
+                          
+                   
+                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Connected
+                        </button>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <%= link_to "Disconnect", connection_path(:friend_id => @profile), :method => :delete, :class => "dropdown-item" %>
+                        </div>
+                  
+                          <%= link_to "Message #{@profile.first_name}", conversations_path(:sender_id => current_account, :receiver_id => @profile), :method => :post, :class => "btn btn-primary" %>
+                        <% end %>
                       <% end %>
-                  <% end %>
-                  <!--connected & message button -->
-                  <div>
-                    <% if current_account.profile!=@profile && !current_account.profile.connected_to(@profile) %>
-                      <% if @profile.pending_friend_request?(current_account.profile) %>
-                        <div><%= link_to "Unsend Friend Request", friend_request_path(:friend_id => @profile), :method => :delete, :class => "btn btn-secondary" %></div>
-                      <% elsif !current_account.profile.pending_friend_request?(@profile) %>
-                        <div><%= link_to "Send Friend Request", friend_requests_path(:friend_id => @profile), :method => :post, :class => "btn btn-primary" %></div>
-                      <% else %>
-                        <div><%= link_to "Accept", connections_path(:friend_id => @profile), :method => :post, :class => "btn btn-primary" %></div>
-                        <div><%= link_to "Delete", friend_request_path(:friend_id => @profile), :method => :delete, :class => "btn btn-light" %></div>
-                      <% end %>
-
-                    <% elsif current_account.profile.connected_to(@profile) %>
-                      <div><%= link_to "Disconnect", connection_path(:friend_id => @profile), :method => :delete, :class => "btn btn-success" %></div>
-                      <%= link_to "Message #{@profile.first_name}", conversations_path(:sender_id => current_account, :receiver_id => @profile), :method => :post, :class => "btn btn-primary" %>
+                      
+                      <% if current_account.profile!=@profile %>
+                      <div class="btn-group">
+                        <button type="button" class="btn options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <h1 class="options-text">&middot;&middot;&middot;</h1>
+                        </button>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            
+                              <%= link_to "Block #{@profile.first_name}", blockages_path(:blockee_id => @profile), :method => :post, :class => "dropdown-item" %>
+                           
+                        </div>
+                      </div>
+                    </div>
+                   
+                    <%end%>
+                    
+                    <% if @profile.status %>
+                        <%= "#{@profile.status}"%>
                     <% end %>
-                  </div>
+                            <% if current_account.profile==@profile %>
+           <% if !@profile.status %>
+                          <button onclick="toggle()" class="add-button" id="profile-status">Add a status</button>                      
+                        <% end %>
+                    <% end %>
+                    <!--connected & message button -->
+                    
+                  <% end %>
+
                   <br/>
-                 
             </div>
             <% if flash[:notice] %>
               <div class="alert alert-primary notice top-alert">
@@ -52,51 +100,58 @@
               </div>
             <% end %>
       </div> 
-      <div>
-        <table class="profile-info">
-              <tr>
-                <th><%= "Class of #{@profile.class_year}" %></th>
-              </tr>
-              <tr>
-                <th>Major(s)</th>
-                <td> 
-                  <%= @profile.toList(@profile.majors).join(", ")%>
-                </td>
-              </tr>
-              <tr>
-                <th>Minor(s)</th>
-                <td> 
-                  <%= @profile.toList(@profile.minors).join(", ")%>
-                </td>
-              </tr>
-              <tr>
-                <th>Interest(s):</th>
-                <td>
-                  <%= @profile.toList(@profile.interests).join(", ")%>
-                </td>
-              </tr>
-        </table>
-        
-
-      <% if current_account.profile ==@profile && @profile.photos.attachments.length < 13 %>
-        <button onclick="f()" class="add-button">Upload up to 13 photos!</button>
-      <% end %>
-      
-            <% if @profile.photos.attached? %>
-            <div class="photos">
-                <% @profile.photos.each do |photo| %>
-                    <img class="profile-image-square" src="<%= (url_for(photo)) %>">
-            
-                <%end %>
-             </div>
-             <% else %>
-             <br/>
-               <h4 class="center">No photos yet.</h4>
-             <% end %>
+      <% if !@profile.blocking(current_account.profile) && !current_account.profile.blocking(@profile) %>
+        <div>
+          <table class="profile-info">
+                <tr>
+                  <th><%= "Class of #{@profile.class_year}" %></th>
+                </tr>
+                <tr>
+                  <th>Major(s)</th>
+                  <td> 
+                    <%= @profile.toList(@profile.majors).join(", ")%>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Minor(s)</th>
+                  <td> 
+                    <%= @profile.toList(@profile.minors).join(", ")%>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Interest(s):</th>
+                  <td>
+                    <%= @profile.toList(@profile.interests).join(", ")%>
+                  </td>
+                </tr>
+          </table>
           
-     </div>
-
+  
+        <% if current_account.profile ==@profile && @profile.photos.attachments.length < 13 %>
+          <button onclick="f()" class="add-button">Upload up to 13 photos!</button>
+        <% end %>
+        
+              <% if @profile.photos.attached? %>
+              <div class="photos">
+                  <% @profile.photos.each do |photo| %>
+                      <img class="profile-image-square" src="<%= (url_for(photo)) %>">
+              
+                  <%end %>
+               </div>
+               <% else %>
+               <br/>
+                 <h4 class="center">No photos yet.</h4>
+               <% end %>
+            
+       </div>
+      <% elsif current_account.profile.blocking(@profile) %>
+        <div class="pad">User is blocked.</div>
+      <% else %>
+        <div class="pad">User unavailable</div>
+      <% end %>
 </div>
+</div>
+
     
     
 <script>

@@ -1274,6 +1274,16 @@
           null
         ]
       },
+      "/home/ubuntu/environment/colgate-connections/spec/factories/blockages.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          null,
+          null
+        ]
+      },
       "/home/ubuntu/environment/colgate-connections/spec/factories/connection.rb": {
         "lines": [
           1,
@@ -1321,14 +1331,14 @@
         "lines": [
           1,
           1,
-          15,
-          15,
-          20,
-          20,
-          20,
-          20,
-          20,
-          20,
+          17,
+          17,
+          25,
+          25,
+          25,
+          25,
+          25,
+          25,
           1,
           null,
           null
@@ -1345,6 +1355,7 @@
           1,
           1,
           null,
+          1,
           1,
           1,
           null
@@ -1377,6 +1388,12 @@
         ]
       },
       "/home/ubuntu/environment/colgate-connections/app/helpers/application_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/home/ubuntu/environment/colgate-connections/app/helpers/blockages_helper.rb": {
         "lines": [
           1,
           null
@@ -1510,6 +1527,22 @@
           null
         ]
       },
+      "/home/ubuntu/environment/colgate-connections/spec/models/blockage_spec.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          null
+        ]
+      },
+      "/home/ubuntu/environment/colgate-connections/app/models/blockage.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null
+        ]
+      },
       "/home/ubuntu/environment/colgate-connections/spec/models/connection_spec.rb": {
         "lines": [
           1,
@@ -1611,14 +1644,14 @@
           1,
           1,
           1,
-          0,
+          2,
           null,
           null,
           null,
           null,
           null,
           1,
-          2,
+          3,
           null,
           null,
           null,
@@ -1731,7 +1764,6 @@
           1,
           null,
           null,
-          null,
           1,
           1,
           1,
@@ -1739,9 +1771,6 @@
           null,
           1,
           1,
-          1,
-          null,
-          null,
           1,
           1,
           1,
@@ -1752,7 +1781,17 @@
           1,
           1,
           1,
+          1,
           null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
           null,
           null,
           1,
@@ -1761,6 +1800,20 @@
           1,
           null,
           null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
           1,
           1,
           1,
@@ -1780,6 +1833,8 @@
           1,
           1,
           1,
+          1,
+          1,
           null,
           1,
           2,
@@ -1790,10 +1845,13 @@
           null,
           null,
           1,
+          2,
+          null,
+          null,
           1,
-          null,
-          null,
-          null,
+          1,
+          1,
+          1,
           null,
           null,
           null,
@@ -1821,6 +1879,15 @@
         ]
       },
       "/home/ubuntu/environment/colgate-connections/spec/requests/accounts_request_spec.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          null,
+          null
+        ]
+      },
+      "/home/ubuntu/environment/colgate-connections/spec/requests/blockages_request_spec.rb": {
         "lines": [
           1,
           null,
@@ -1865,6 +1932,14 @@
           null
         ]
       },
+      "/home/ubuntu/environment/colgate-connections/spec/views/blockages/index.html.erb_spec.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          null
+        ]
+      },
       "/home/ubuntu/environment/colgate-connections/spec/views/friend_request/create.html.erb_spec.rb": {
         "lines": [
           1,
@@ -1874,6 +1949,6 @@
         ]
       }
     },
-    "timestamp": 1606169383
+    "timestamp": 1607225465
   }
 }

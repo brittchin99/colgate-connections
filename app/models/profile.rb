@@ -3,6 +3,8 @@ class Profile < ApplicationRecord
   has_many :friends, through: :connections
   has_many :friend_requests
   has_many :admirers, through: :friend_requests
+  has_many :blockages
+  has_many :blockees, through: :blockages
   belongs_to :account
   has_one :setting
   has_one_attached :avatar
@@ -19,16 +21,19 @@ class Profile < ApplicationRecord
     nil != self.connections.find_by(friend_id: profile.id)
   end
   
+  def blocking(profile)
+    nil != self.blockages.find_by(blockee_id: profile.id)
+  end
+  
   def pending_friend_request?(profile)
     nil != self.friend_requests.find_by(friend_id: profile.id)
   end
     
-  def has_conversation_with(account_id)
-    true
-    # c = Conversation.where("sender_id = ? AND receiver_id = ?
-    # OR receiver_id = ? AND sender_id = ?", self.id, account_id, account_id, self.id)
-    
-    # c.nil?
+  def has_conversation_with(receiver_id)
+    if Conversation.between(self.id, receiver_id).present?
+      @conversation = Conversation.between(self.id, receiver_id).first
+      @conversation.has_messages?
+    end
   end
   
   def toList(str)

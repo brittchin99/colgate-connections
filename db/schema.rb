@@ -43,6 +43,15 @@ ActiveRecord::Schema.define(version: 2020_12_06_040043) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "blockages", force: :cascade do |t|
+    t.integer "profile_id"
+    t.integer "blockee_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["blockee_id"], name: "index_blockages_on_blockee_id"
+    t.index ["profile_id"], name: "index_blockages_on_profile_id"
+  end
+
   create_table "connections", force: :cascade do |t|
     t.integer "profile_id"
     t.integer "friend_id"
@@ -106,6 +115,7 @@ ActiveRecord::Schema.define(version: 2020_12_06_040043) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "blockages", "profiles"
   add_foreign_key "connections", "profiles"
   add_foreign_key "friend_requests", "profiles"
   add_foreign_key "messages", "conversations"
