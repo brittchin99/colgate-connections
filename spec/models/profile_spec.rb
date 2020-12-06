@@ -42,7 +42,26 @@ RSpec.describe Profile, type: :model do
             expect(p1.pending_friend_request?(p2)).to eq(false)
         end
     end
-    
+    context "blocking method" do
+        it "should be defined" do
+            a = FactoryBot.build(:profile)  
+            expect(a).to respond_to(:blocking)
+        end
+        it "should return true if one account blocks another" do
+            p1 = FactoryBot.create(:profile)
+            a2 = FactoryBot.create(:account, :id => 2, :email => "ptnguyen@colgate.edu", :password => "colgate13")
+            p2 = FactoryBot.create(:profile, :account => a2, :first_name => "Amber", :last_name => "Nguyen")
+            b = FactoryBot.create(:blockage, :profile => p1, :blockee => p2)
+            expect(p1.blocking(p2)).to eq(true)
+          end
+      
+        it "should return false if one account does not block another" do
+            p1 = FactoryBot.create(:profile)
+            a2 = FactoryBot.create(:account, :id => 2, :email => "ptnguyen@colgate.edu", :password => "colgate13")
+            p2 = FactoryBot.create(:profile, :account => a2, :first_name => "Amber", :last_name => "Nguyen")
+            expect(p1.blocking(p2)).to eq(false)
+        end
+    end
     context "toList method" do
         it "should be defined" do
             a = FactoryBot.build(:profile)  
@@ -71,11 +90,12 @@ RSpec.describe Profile, type: :model do
             a = FactoryBot.build(:profile)  
             expect(a).to respond_to(:has_conversation_with)
         end
-        # This test needs to be changed when implementing private conversations later
-        it "should return true for now" do
-            a = FactoryBot.build(:profile) 
-            b = FactoryBot.build(:profile, :id => 2)
-            expect(a.has_conversation_with(b)).to eq(true)
+        it "should return false if there is no messages between two users" do
+            p1 = FactoryBot.create(:profile) 
+            a2 = FactoryBot.create(:account, :id => 2, :email => "ptnguyen@colgate.edu", :password => "colgate13")
+            p2 = FactoryBot.create(:profile, :account => a2, :first_name => "Amber", :last_name => "Nguyen")
+            c = FactoryBot.create(:conversation, :sender => p1, :receiver => p2)
+            expect(p1.has_conversation_with(p2)).to eq(false)
         end
     end
 end
