@@ -4,8 +4,16 @@ class Profile < ApplicationRecord
   has_many :friend_requests
   has_many :admirers, through: :friend_requests
   belongs_to :account
+  has_one :setting
   has_one_attached :avatar
   has_many_attached :photos
+  # before_create :build_setting
+  # accepts_nested_attributes_for :setting
+  after_create :init
+
+  def init
+    self.setting = self.create_setting(:notifs => NOTIFICATIONS, :public => PUBLIC, :dating => false, :preferences => {:pronouns => [], :class_year => []})
+  end
 
   def connected_to(profile)
     nil != self.connections.find_by(friend_id: profile.id)
@@ -43,4 +51,6 @@ class Profile < ApplicationRecord
   MAJORS = ["Africana and Latin American Studies","Anthropology","Applied Mathematics","Art and Art History","Asian Studies","Astrogeophysics","Astronomy/Physics","Biochemistry","Biology","Chemistry","Chinese","Classical Studies","Computer Science","Computer Science/Mathematics","Creative Writing","Economics","Educational Studies","English","Environmental Biology","Environmental Economics","Environmental Geography","Environmental Geology","Environmental Studies","Film and Media Studies","French","Geography","Geology","German","Greek","History","International Relations","Japanese","Jewish Studies","Latin","LGBTQ Studies","Linguistics","Mathematical Economics","Mathematical Systems Biology","Mathematics","Medieval and Renaissance Studies","Middle Eastern and Islamic Studies","Molecular Biology","Museum Studies","Music","Native American Studies","Neuroscience","Peace and Conflict Studies","Philosophy","Philosophy and Religion","Physical Science","Physics","Political Science","Psychological Science","Religion","Russian and Eurasian Studies","Sociology","Spanish","Theater","Women's Studies","Writing and Rhetoric"]
   CLASS_YEARS = ["2021", "2022", "2023", "2024"]
   INTERESTS = ["Sports and Athletics", "Community Service", "Performing Arts", "Dance", "Anime", "Video Games"]
+  NOTIFICATIONS = ['New Connections', 'Connection Profile Updates']
+  PUBLIC = ['Pronouns', 'Status', 'Interests', 'Photos']
 end

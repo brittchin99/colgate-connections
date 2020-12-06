@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_20_215514) do
+ActiveRecord::Schema.define(version: 2020_12_06_040043) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -94,10 +94,22 @@ ActiveRecord::Schema.define(version: 2020_11_20_215514) do
     t.index ["account_id"], name: "index_profiles_on_account_id"
   end
 
+  create_table "settings", force: :cascade do |t|
+    t.text "notifs"
+    t.text "public"
+    t.boolean "dating"
+    t.text "preferences"
+    t.integer "profile_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["profile_id"], name: "index_settings_on_profile_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "connections", "profiles"
   add_foreign_key "friend_requests", "profiles"
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "profiles"
   add_foreign_key "profiles", "accounts"
+  add_foreign_key "settings", "profiles"
 end

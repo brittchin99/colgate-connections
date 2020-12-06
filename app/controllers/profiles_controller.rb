@@ -28,10 +28,6 @@ class ProfilesController < ApplicationController
     end
   end
   
-  def settings
-    @profile = Profile.find(params[:id])
-  end
-  
   
   def index
     @profiles = Profile.all
