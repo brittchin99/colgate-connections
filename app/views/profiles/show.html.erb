@@ -10,7 +10,6 @@
       <%= link_to "Delete", friend_request_path(:friend_id => @profile), :method => :delete, :class => "btn btn-light" %>
     </div>
   <% end %>
-  
   <div class="profile-container">
     
       <!--check logged in to the right user -->
@@ -79,8 +78,8 @@
                     <% if @profile.status %>
                         <%= "#{@profile.status}"%>
                     <% end %>
-                    <% if current_account.profile==@profile %>
-                       <% if !@profile.status %>
+                            <% if current_account.profile==@profile %>
+           <% if !@profile.status %>
                           <button onclick="toggle()" class="add-button" id="profile-status">Add a status</button>                      
                         <% end %>
                     <% end %>
