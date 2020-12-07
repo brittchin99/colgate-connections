@@ -37,6 +37,11 @@ class Profile < ApplicationRecord
     contents
   end
 
+
+  def delete_image(photo)
+    print "hello"
+  end 
+  
   validates :first_name, :last_name, :pronouns, :class_year, :majors, :interests, presence: true
 
   PRONOUNS = ['she/her/hers', 'he/him/his', 'they/them/theirs', 'Other']

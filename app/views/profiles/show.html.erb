@@ -1,7 +1,10 @@
+
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
 
 <div class="profile-container">
       <!--check logged in to the right user -->
@@ -82,7 +85,7 @@
               </tr>
         </table>
     
-       <div class="photos">
+       <div class="photos" id="items">
             <% if @profile.photos.attached? %>
                 <% @profile.photos.each do |photo| %>
                     <img class="profile-image-square" src="<%= (url_for(photo)) %>">
@@ -93,13 +96,8 @@
             <% end %>
             
         <% if current_account.profile ==@profile && @profile.photos.attachments.length < 13 %>
-        
-        
-
           <div class="profile-image-square">
             <div class="add-form">
-              
-            
            <%= simple_form_for @profile, :url => url_for(:action => 'update', :controller => 'profiles'), :method => 'patch' do |f| %>
             <%= f.file_field :photos, id: "f-field" %>
             <%= f.button :submit %>
@@ -116,7 +114,21 @@
     
     
 <script>
-function f() {
-  alert("Not implemented yet");
-}
+var el = document.getElementById("items");
+// from sortableJS
+var sortable = Sortable.create(el, {
+  group: "localStorage-example",
+  store: {
+    get: function (sortable) {
+      var order = localStorage.getItem(sortable.options.group.name);
+      return order ? order.split("|") : [];
+    },
+
+    set: function (sortable) {
+      var order = sortable.toArray();
+      localStorage.setItem(sortable.options.group.name, order.join("|"));
+    },
+  },
+});
+
 </script>
