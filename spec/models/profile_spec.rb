@@ -64,24 +64,20 @@ RSpec.describe Profile, type: :model do
     end
     context "toList method" do
         it "should be defined" do
-            a = FactoryBot.build(:profile)  
-            expect(a).to respond_to(:toList)
+            expect(Profile).to respond_to(:toList)
         end
         it "should return an empty array if the string representation is blank" do
-            p = FactoryBot.create(:profile)
-            expect(p.toList("")).to eq([])
+            expect(Profile.toList("")).to eq([])
         end
       
         it "should return an array of 1 item if the string representation doesn't contain square brackets" do
-            p = FactoryBot.create(:profile)
             s = "Computer Science"
-            expect(p.toList(s)).to eq([s])
+            expect(Profile.toList(s)).to eq([s])
         end
         
         it "should return have the correct number of items" do
-            p = FactoryBot.create(:profile)
             s = "[\"Computer Science\", \"Asian Studies\"]"
-            expect(p.toList(s).length).to eq(2)
+            expect(Profile.toList(s).length).to eq(2)
         end
     end
     
