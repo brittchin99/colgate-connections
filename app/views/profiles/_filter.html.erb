@@ -1,16 +1,33 @@
 <div id="advanced-search">
-  <%= simple_form_for :filter_list, :method => 'get' do |f| %>
-    
-    <p><%= f.input :pronouns, as: :radio_buttons, collection: Profile::PRONOUNS, checked: session[:filter_list][:pronouns], required: false %></p>
-    
-    <p><%= f.input :class_year, as: :radio_buttons, collection: Profile::CLASS_YEARS, checked: session[:filter_list][:class_year], required: false %></p>
-    
-    <p><%= f.input :majors, label: "Major(s)", collection: Profile::MAJORS, input_html: { multiple: true }, include_hidden: false, selected: session[:filter_list][:majors], required: false %></p>
-    
-    <p><%= f.input :minors, label: "Minor(s)", collection: Profile::MAJORS, input_html: { multiple: true }, include_hidden: false, selected: session[:filter_list][:minors], required: false %></p>
-    
-    <p><%= f.input :interests, as: :check_boxes, collection: Profile::INTERESTS, wrapper: :vertical_collection_inline, include_hidden: false, checked: session[:filter_list][:interests], required: false %></p>
-    
-    <p class="center"><%= f.button :submit, "Filter", class: "btn btn-maroon" %></p>
+  <% if session[:filter_list] %>
+    <%= simple_form_for :filter_list, :method => 'get' do |f| %>
+      
+      <p><%= f.input :pronouns, as: :radio_buttons, collection: Profile::PRONOUNS, checked: session[:filter_list][:pronouns], required: false %></p>
+      
+      <p><%= f.input :class_year, as: :radio_buttons, collection: Profile::CLASS_YEARS, checked: session[:filter_list][:class_year], required: false %></p>
+      
+      <p><%= f.input :majors, label: "Major(s)", collection: Profile::MAJORS, input_html: { multiple: true }, include_hidden: false, selected: session[:filter_list][:majors], required: false %></p>
+      
+      <p><%= f.input :minors, label: "Minor(s)", collection: Profile::MAJORS, input_html: { multiple: true }, include_hidden: false, selected: session[:filter_list][:minors], required: false %></p>
+      
+      <p><%= f.input :interests, as: :check_boxes, collection: Profile::INTERESTS, wrapper: :vertical_collection_inline, include_hidden: false, checked: session[:filter_list][:interests], required: false %></p>
+      
+      <p class="center"><%= f.button :submit, "Filter", class: "btn btn-maroon" %></p>
+    <% end %>
+  <% else %>
+    <%= simple_form_for :filter_list, :method => 'get' do |f| %>
+      
+      <p><%= f.input :pronouns, as: :radio_buttons, collection: Profile::PRONOUNS, required: false %></p>
+      
+      <p><%= f.input :class_year, as: :radio_buttons, collection: Profile::CLASS_YEARS, required: false %></p>
+      
+      <p><%= f.input :majors, label: "Major(s)", collection: Profile::MAJORS, input_html: { multiple: true }, include_hidden: false, required: false %></p>
+      
+      <p><%= f.input :minors, label: "Minor(s)", collection: Profile::MAJORS, input_html: { multiple: true }, include_hidden: false, required: false %></p>
+      
+      <p><%= f.input :interests, as: :check_boxes, collection: Profile::INTERESTS, wrapper: :vertical_collection_inline, include_hidden: false, required: false %></p>
+      
+      <p class="center"><%= f.button :submit, "Filter", class: "btn btn-maroon" %></p>
+    <% end %>
   <% end %>
 </div>
