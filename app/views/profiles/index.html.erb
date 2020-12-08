@@ -44,12 +44,12 @@
               </td>
               <td><%= p.class_year %></td>
               <td>
-                <% p.toList(p.majors).each do |m| %>
+                <% Profile.toList(p.majors).each do |m| %>
                   <%= m %><br>
                 <% end %>
               </td>
               <td>
-                <% p.toList(p.minors).each do |m| %>
+                <% Profile.toList(p.minors).each do |m| %>
                   <%= m %><br>
                 <% end %>
               </td>

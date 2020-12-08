@@ -28,7 +28,7 @@ class Profile < ApplicationRecord
     end
   end
   
-  def toList(str)
+  def self.toList(str)
     if str.blank?
       return []
     end
