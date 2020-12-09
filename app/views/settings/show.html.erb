@@ -7,12 +7,12 @@
     <p>Manage which notifications you will receive.</p>
     
     <div class="custom-control custom-switch">
-      <%= form.check_box(:notifs, {:multiple => true, :class => 'custom-control-input', :id => 'connections', :checked => (@setting.to_list(@setting.notifs).include? 'New Connections')}, "New Connections", nil)%>
+      <%= form.check_box(:notifs, {:multiple => true, :class => 'custom-control-input', :id => 'connections', :checked => (Setting.to_list(@setting.notifs).include? 'New Connections')}, "New Connections", nil)%>
       <label class="custom-control-label toggle-label" for="connections">New Connections</label>
     </div>
     
     <div class="custom-control custom-switch">
-      <%= form.check_box(:notifs, {:multiple => true, :class => 'custom-control-input', :id => 'profiles', :checked => (@setting.to_list(@setting.notifs).include? 'Connection Profile Updates')}, "Connection Profile Updates", nil)%>
+      <%= form.check_box(:notifs, {:multiple => true, :class => 'custom-control-input', :id => 'profiles', :checked => (Setting.to_list(@setting.notifs).include? 'Connection Profile Updates')}, "Connection Profile Updates", nil)%>
       <label class="custom-control-label toggle-label" for="profiles">Connection Profile Updates</label>
     </div>
     
@@ -21,22 +21,22 @@
     <p>Manage which information is visible to non-connections. Name, Profile Picture, Class Year, Major(s) and Minor(s) are required.</p>
 
     <div class="custom-control custom-switch">
-      <%= form.check_box(:public, {:multiple => true, :class => 'custom-control-input', :id => 'pronouns', :checked => (@setting.to_list(@setting.public).include? 'Pronouns')}, "Pronouns", nil)%>
+      <%= form.check_box(:public, {:multiple => true, :class => 'custom-control-input', :id => 'pronouns', :checked => (Setting.to_list(@setting.public).include? 'Pronouns')}, "Pronouns", nil)%>
       <label class="custom-control-label toggle-label" for="pronouns">Pronouns</label>
     </div>
     
     <div class="custom-control custom-switch">
-      <%= form.check_box(:public, {:multiple => true, :class => 'custom-control-input', :id => 'status', :checked => (@setting.to_list(@setting.public).include? 'Status')}, "Status", nil)%>
+      <%= form.check_box(:public, {:multiple => true, :class => 'custom-control-input', :id => 'status', :checked => (Setting.to_list(@setting.public).include? 'Status')}, "Status", nil)%>
       <label class="custom-control-label toggle-label" for="status">Status</label>
     </div>
     
     <div class="custom-control custom-switch">
-      <%= form.check_box(:public, {:multiple => true, :class => 'custom-control-input', :id => 'interests', :checked => (@setting.to_list(@setting.public).include? 'Interests')}, "Interests", nil)%>
+      <%= form.check_box(:public, {:multiple => true, :class => 'custom-control-input', :id => 'interests', :checked => (Setting.to_list(@setting.public).include? 'Interests')}, "Interests", nil)%>
       <label class="custom-control-label toggle-label" for="interests">Interests</label>
     </div>
     
     <div class="custom-control custom-switch">
-      <%= form.check_box(:public, {:multiple => true, :class => 'custom-control-input', :id => 'photos', :checked => (@setting.to_list(@setting.public).include? 'Photos')}, "Photos", nil)%>
+      <%= form.check_box(:public, {:multiple => true, :class => 'custom-control-input', :id => 'photos', :checked => (Setting.to_list(@setting.public).include? 'Photos')}, "Photos", nil)%>
       <label class="custom-control-label toggle-label" for="photos">Photos</label>
     </div>
 
@@ -53,14 +53,14 @@
       
       <h5 class="text">I am interested in people who use the following pronouns (check all that apply):</h5>
       <% Profile::PRONOUNS.each do |p_value| %>
-        <%= preference_fields.check_box(:pronouns, { :multiple => true, :disabled => !@setting.dating, :checked => (@setting.to_list(@setting.preference.pronouns).include? p_value), :class => 'prefs' }, p_value, nil) %>
+        <%= preference_fields.check_box(:pronouns, { :multiple => true, :disabled => !@setting.dating, :checked => (Setting.to_list(@setting.preference.pronouns).include? p_value), :class => 'prefs' }, p_value, nil) %>
         <label class="text"><%= p_value %></label>
         <br/>
       <% end %>
     
       <h5 class="text">I am interested in people from the following class years (check all that apply):</h5>
       <% Profile::CLASS_YEARS.each do |c_value| %>
-        <%= preference_fields.check_box(:class_years, { :multiple => true, :disabled => !@setting.dating, :checked => (@setting.to_list(@setting.preference.class_years).include? c_value), :class => 'prefs' }, c_value, nil) %>
+        <%= preference_fields.check_box(:class_years, { :multiple => true, :disabled => !@setting.dating, :checked => (Setting.to_list(@setting.preference.class_years).include? c_value), :class => 'prefs' }, c_value, nil) %>
         <label class="text"><%= c_value %></label>
         <br/>
       <% end %>

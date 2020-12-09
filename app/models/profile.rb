@@ -34,6 +34,33 @@ class Profile < ApplicationRecord
     end
   end
   
+  def self.should_show(s, current_account, profile)
+    if current_account.profile == profile || current_account.profile.connected_to(profile) || (current_account.profile != profile and Setting.to_list(profile.setting.public).include? s)
+      true
+    else
+      false
+    end
+  end
+  
+  def is_a_match(profile)
+    if self.setting.dating && profile.setting.dating && profiles_match(self, profile)
+      true
+    else
+      false
+    end
+  end
+  
+  def profiles_match(current_account, profile)
+    if Setting.to_list(profile.setting.preference.pronouns).include? current_account.pronouns and
+      Setting.to_list(current_account.setting.preference.pronouns).include? profile.pronouns and
+      Setting.to_list(current_account.setting.preference.class_years).include? profile.class_year.to_s and
+      Setting.to_list(profile.setting.preference.class_years).include? current_account.class_year.to_s
+      true
+    else
+      false
+    end
+  end
+  
   def get_mutual_connections(profile)
     Profile.where("id IN (SELECT a.friend_id FROM Connections a, Connections b WHERE a.friend_id = b.friend_id AND a.profile_id = ? AND b.profile_id = ?)", self.id, profile.id)
   end

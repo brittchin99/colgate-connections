@@ -8,7 +8,7 @@ class Setting < ApplicationRecord
         self.preference = self.create_preference(:pronouns => [], :class_years => [])
     end
 
-    def to_list(s)
+    def self.to_list(s)
         s.tr('[]', '').tr('"', '').split(',').map(&:strip)
     end
 end
