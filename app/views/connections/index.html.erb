@@ -42,9 +42,9 @@
               <% else %>
                  <%= image_tag("avatar.jpg", class: "suggested-img", alt:"avatar") %>
               <% end %>
-                <a href="#" class="card-link"><h5> <%= "#{s.first_name} #{s.last_name}" =%> </h5></a>
+                <a href="#" class="card-link"><h5> <%= link_to "#{s.first_name + " " + s.last_name}", profile_path(s) %> </h5></a>
                 <h6 class="card-subtitle mb-2 text-muted"><%= "#{s.pronouns}" =%></h6>
-                <p class="time">12 mutual connections.</p>
+                <p class="time"><%="#{current_account.profile.get_mutual_connections(s).length} mutual connections."%></p>
               </div>
             </div>
           <%end%>

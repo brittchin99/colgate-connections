@@ -27,6 +27,11 @@ class Profile < ApplicationRecord
       @conversation.has_messages?
     end
   end
+  
+  def get_mutual_connections(profile)
+    Profile.where("id IN (SELECT a.friend_id FROM Connections a, Connections b WHERE a.friend_id = b.friend_id AND a.profile_id = ? AND b.profile_id = ?)", self.id, profile.id)
+  end
+  
   def suggested_connections()
     @profile = Profile.all.where("id NOT IN (?)", self.id)
     @profile = @profile.where('id NOT IN (?)', self.connections.map(&:id).join(','))
