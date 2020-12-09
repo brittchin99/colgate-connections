@@ -34,31 +34,19 @@ class Profile < ApplicationRecord
     end
   end
   
-  def self.should_show(s, current_account, profile)
-    if current_account.profile == profile || current_account.profile.connected_to(profile) || (current_account.profile != profile and Setting.to_list(profile.setting.public).include? s)
-      true
-    else
-      false
-    end
+  def should_show(s, profile)
+    return self == profile || self.connected_to(profile) || (self != profile and Setting.to_list(profile.setting.public).include? s)
   end
   
   def is_a_match(profile)
-    if self.setting.dating && profile.setting.dating && profiles_match(self, profile)
-      true
-    else
-      false
-    end
+    return self.setting.dating && profile.setting.dating && profiles_match(profile)
   end
   
-  def profiles_match(current_account, profile)
-    if Setting.to_list(profile.setting.preference.pronouns).include? current_account.pronouns and
-      Setting.to_list(current_account.setting.preference.pronouns).include? profile.pronouns and
-      Setting.to_list(current_account.setting.preference.class_years).include? profile.class_year.to_s and
-      Setting.to_list(profile.setting.preference.class_years).include? current_account.class_year.to_s
-      true
-    else
-      false
-    end
+  def profiles_match(profile)
+    return (Setting.to_list(profile.setting.preference.pronouns).include?(self.pronouns) and
+      Setting.to_list(self.setting.preference.pronouns).include?(profile.pronouns) and
+      Setting.to_list(self.setting.preference.class_years).include?(profile.class_year.to_s) and
+      Setting.to_list(profile.setting.preference.class_years).include?(self.class_year.to_s))
   end
   
   def get_mutual_connections(profile)
@@ -68,64 +56,33 @@ class Profile < ApplicationRecord
   def suggested_connections
     profiles = Profile.where("id NOT LIKE ?", self.id).where('id NOT IN (SELECT friend_id FROM connections WHERE profile_id = ?)', self.id)
     matches = Hash.new
-    # points = 0
-    # suggested = profiles.where("cast(class_year as text) LIKE ? OR majors LIKE ? OR minors LIKE ? AND interests LIKE ? ", current_account.class_year, current_account.majors, current_account.minors, current_account.interests).limit(5).order("class_year DESC")
     
     profiles.each do |p|
       points = 0
       if p.class_year == self.class_year
         points += 1
       end
-
-      p_majors = p.majors.tr('[]', '').tr('"', '').split(',').map(&:strip)
-      current_majors = self.majors.tr('[]', '').tr('"', '').split(',').map(&:strip)
-
-      if p_majors.length == 2 
-        points += compare(p_majors, current_majors)
-      elsif current_majors.length == 2
-        points += compare(current_majors,p_majors)
-      elsif p_majors.length == 1 && current_majors.length == 1 
-        if p_majors == current_majors
-          points += 1
-        end
-      end 
-      
+      points += compare(self.majors, p.majors)
+      points += compare(self.interests, p.interests)
       if p.minors != nil && self.minors != nil
-        pminors = p.minors.tr('[]', '').tr('"', '').split(',').map(&:strip)
-        cminors = self.minors.tr('[]', '').tr('"', '').split(',').map(&:strip)
-        if cminors.length == 2
-          points += compare(cminors, pminors)
-        elsif pminors.length == 2
-          points += compare(pminors, cminors)
-        elsif cminors.length ==1 && pminors.length == 1
-         points += 1 if cminors == pminors
-        end
+        points += compare(self.minors, p.minors)
       end
-      
-      pinterests = p.interests.tr('[]', '').tr('"', '').split(',').map(&:strip)
-      cinterests = self.interests.tr('[]', '').tr('"', '').split(',').map(&:strip)
-      if cinterests.length > 1 
-        points += compare(cinterests,pinterests)
-      elsif pinterests.length > 1
-         points += compare(pinterests,cinterests)
-      elsif pinterests.length == 1 && cinterests.length == 1
-        points += 1 if pinterests == cinterests
-      end
-      
-      if points >= 1
-        matches[p.id] = points
-      end
+      matches[p.id] = points
     end
+    
     if matches.length > 5
       matches = matches.sort_by { |k,v| -v }[0..4].to_h
     end
+    
     matches.each do |key,value|
       profiles = profiles.or(profiles.where("id LIKE (?)", key))
     end
     return profiles
   end
   
-  def compare(p1, p2)
+  def compare(current, other)
+    p1 = current.tr('[]', '').tr('"', '').split(',').map(&:strip)
+    p2 = other.tr('[]', '').tr('"', '').split(',').map(&:strip)
     points = 0
     p1.each do |p|
       if p2.include?(p)

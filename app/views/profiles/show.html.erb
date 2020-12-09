@@ -57,7 +57,7 @@
                    <%= image_tag("heart.png", class: "heart", alt:"heart") %> 
                  <% end %>
                  </h4>
-                 <% if Profile.should_show("Pronouns", current_account, @profile)%>
+                 <% if current_account.profile.should_show("Pronouns", @profile)%>
                    <p> <%= "#{@profile.pronouns}"%></p>
                    <% end %>
                   <!--check logged in to the right user -->
@@ -106,7 +106,7 @@
                    
                     <%end%>
                     
-                    <% if @profile.status && Profile.should_show("Status", current_account, @profile)%>
+                    <% if @profile.status && current_account.profile.should_show("Status", @profile)%>
                         <div class="pad"><%= "#{@profile.status}"%></div>
                     <% end %>
                     <% if current_account.profile==@profile %>
@@ -140,7 +140,7 @@
                     <%= Profile.toList(@profile.minors).join(", ")%>
                   </td>
                 </tr>
-                <% if Profile.should_show("Interests", current_account, @profile) %>
+                <% if current_account.profile.should_show("Interests", @profile) %>
                   <tr>
                     <th>Interest(s):</th>
                     <td>
@@ -155,7 +155,7 @@
           <button onclick="f()" class="add-button">Upload up to 13 photos!</button>
         <% end %>
         
-        <% if Profile.should_show("Photos", current_account, @profile) %>
+        <% if current_account.profile.should_show("Photos", @profile) %>
             <% if @profile.photos.attached? %>
               <div class="photos">
                 <% @profile.photos.each do |photo| %>
