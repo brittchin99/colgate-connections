@@ -17,7 +17,7 @@
     </div>
     
     <div class="custom-control custom-switch">
-      <%= form.check_box(:public, {:multiple => true, :class => 'custom-control-input', :id => 'profiles', :checked => (@setting.to_list(@setting.notifs).include? 'Connection Profile Updates')}, "Connection Profile Updates", nil)%>
+      <%= form.check_box(:notifs, {:multiple => true, :class => 'custom-control-input', :id => 'profiles', :checked => (@setting.to_list(@setting.notifs).include? 'Connection Profile Updates')}, "Connection Profile Updates", nil)%>
       <label class="custom-control-label toggle-label" for="profiles">Connection Profile Updates</label>
     </div>
     
@@ -54,17 +54,17 @@
     
     <p>When this is toggled on, a heart symbol will be displayed on your profile indicating that you are open to dating. This emoji will only be visible to those who <b>also have this feature toggled on</b> and whose <b>interest settings match your profile.</b></p>
     
-    <h5 class="disabled">I am interested in people who use the following pronouns (check all that apply):</h5>
-    <% Profile::PRONOUNS.each do |a_value| %>
-      <%= form.check_box(:a, { :multiple => true, :disabled => true, :class => 'prefs' }, a_value) %>
-      <label class="disabled"><%= a_value %></label>
+    <h5 class="text disabled">I am interested in people who use the following pronouns (check all that apply):</h5>
+    <% Profile::PRONOUNS.each do |p_value| %>
+      <%= form.check_box(:preferences, { :multiple => true, :disabled => true, :class => 'prefs' }, p_value) %>
+      <label class="text disabled"><%= p_value %></label>
       <br/>
     <% end %>
     
-    <h5 class="disabled">I am interested in people from the following class years (check all that apply):</h5>
-    <% Profile::CLASS_YEARS.each do |a_value| %>
-      <%= form.check_box(:a, { :multiple => true, :disabled => true }, a_value) %>
-      <label class="disabled"><%= a_value %></label>
+    <h5 class="text disabled">I am interested in people from the following class years (check all that apply):</h5>
+    <% Profile::CLASS_YEARS.each do |c_value| %>
+      <%= form.check_box(:preferences, { :multiple => true, :disabled => true, :class => 'prefs' }, c_value) %>
+      <label class="text disabled"><%= c_value %></label>
       <br/>
     <% end %>
     
@@ -81,43 +81,31 @@
 </div>
 
 <script>
-//   function datingChecked() {
-//   var checked = document.getElementById("dating").checked;
-
-//   if (checked === true) {
-//     alert("I want to date!");
-//   }
-// }
-// $( document ).ready(function() {
-//     $("#dating").click(function() {
-//         var isEnabled = $("#dating").prop('checked')
-        
-//         if (isEnabled) {
-//           alert("Dating is checked!")
-//         }
-//         // if(isDisabled) {
-//         //     $("#prefs").removeAttr("disabled");
-//         // } else {
-//         //     $("#prefs").prop('disabled', true)
-//         // }
-//     });
-// });
 var checkbox = document.querySelector("input[id=dating]");
 
 checkbox.addEventListener('change', function() {
+  var elements = document.getElementsByClassName("prefs")
+  var text = document.getElementsByClassName("text")
+  
   if (this.checked) {
-    // console.log("Checkbox is checked..");
-    alert("Checked!")
-    var elements = document.getElementsByClassName("prefs")
+
     for (let item of elements) {
-      console.log(item);
+     $(`#${item.id}`).removeAttr("disabled");
     }
-    // $("#prefs").removeAttr("disabled");
+    
+    for (let w of text) {
+      w.classList.remove("disabled");
+    }
     
   } else {
-    // console.log("Checkbox is not checked..");
-    alert("Not Checked!")
-    // $("#prefs").prop('disabled', true)
+
+    for (let item of elements) {
+     $(`#${item.id}`).prop('disabled', true);
+    }
+    
+    for (let w of text) {
+      w.classList.add("disabled");
+    }
   }
 });
 </script>
