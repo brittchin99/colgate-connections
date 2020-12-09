@@ -22,33 +22,72 @@ class Profile < ApplicationRecord
     
     # c.nil?
   end
-  def suggested_connections
-    @profile = Profile.all.where("id NOT IN (?)", current_accountprofile.id)
-    @profiles = @profiles.where('id NOT IN (?)', current_account.profile.connections.map(&:id).join(','))
+  def suggested_connections(profile)
+    @profile = Profile.all.where("id NOT IN (?)", profile.id)
+    @profile = @profile.where('id NOT IN (?)', profile.connections.map(&:id).join(','))
+    @suggest = @profile
     matches = Hash.new()
     # points = 0
     #@suggested = @profile.where("cast(class_year as text) LIKE ? OR majors LIKE ? OR minors LIKE ? AND interests LIKE ? ", current_account.class_year, current_account.majors, current_account.minors, current_account.interests).limit(5).order("class_year DESC")
     
     @profile.each do |current_profile|
+      @majors = ""
       points = 0
-      if current_profile.class_year == current_account.profile.class_year
+      if current_profile.class_year == profile.class_year
         points += 1
       end
-      if current_profile.majors == current_account.profile.majors
-        points += 1
+
+      user = current_profile.majors.tr('[]', '').tr('"', '').split(',').map(&:strip)
+      current = profile.majors.tr('[]', '').tr('"', '').split(',').map(&:strip)
+
+      if user.length == 2 
+        points += compare(user, current)
+      elsif current.length == 2
+        points += compare(current,user)
+      elsif user.length == 1 && current.length == 1 
+        if user == current
+          points += 1
+        end
+      end 
+      if current_profile.minors != nil && profile.minors != nil
+        cminors = current_profile.minors.tr('[]', '').tr('"', '').split(',').map(&:strip)
+        pminors = profile.minors.tr('[]', '').tr('"', '').split(',').map(&:strip)
+        if cminors.length == 2
+          points += compare(cminors, pminors)
+        elsif pminors.length == 2
+          points += compare(pminors, cminors)
+        elsif cminors.length ==1 && pminors.length == 1
+         points += 1 if cminors == pminors
+        end
       end
-      if current_profile.minors == current_account.profile.minors
-        points += 1
-      end
-      if current_profile.interests == current_account.profile.interests
-        points += 1
+      cinterests = current_profile.interests.tr('[]', '').tr('"', '').split(',').map(&:strip)
+      pinterests = profile.interests.tr('[]', '').tr('"', '').split(',').map(&:strip)
+      if cinterests.length > 1 
+        points += compare(cinterests,pinterests)
+      elsif pinterests.length > 1
+         points += compare(pinterests,cinterests)
+      elsif pinterests.length == 1 && cinterests.length == 1
+        points += 1 if pinterests == cinterests
       end
       if points >= 1
         matches[current_profile.id] = points
       end
     end
-      matches = matches.sort_by { |k,v| -v }[0..4].to_h
-    return matches
+    matches = matches.sort_by { |k,v| -v }[0..4].to_h
+    matches.each do |key,value|
+      @suggest = @suggest.where("id LIKE (?)", key)
+    end
+    return @suggest
+  end
+  
+  def compare(p1, p2)
+    points =0
+    p1.each do |p|
+      if p2.include?(p)
+        points +=1
+      end
+    end
+    return points
   end
   
   def toList(str)

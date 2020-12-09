@@ -54,9 +54,17 @@
             <%= link_to "Reset filter", connections_path(:reset => true), class: "btn btn-light spacer" %>
           </div>
           <br/>
-          
+        <table class="table">
+          <tbody>
+            <% @suggestions.each do |s| %>
+             <div> <%= link_to "#{s.first_name} #{s.last_name}", profile_path(s.id) %> </div>
+            <%end%>
+          </tbody>
+        </table
+        
       <% if @connections.length() == 0 %>
         <p class="center">No connections found. <%= link_to "Add some?", profiles_path() %></p>
+
       <% else %>
         <table class="table">
         <tbody>
