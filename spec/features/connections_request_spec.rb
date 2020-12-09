@@ -13,14 +13,24 @@ RSpec.feature "Connection", :type => :feature do
             page.all(".profilefirst_name").each { |x| first_names << x.text }
             expect(first_names).to match_array(first_names.sort)
         end
-        # it "should show the connections filtered by search term" do
-        #     visit "/connections"
-        #     # find('.search', :text => 'Search').fill_in '2021'
-        #     fill_in 'connection_search', with: '2021'
-        #     click_button 'Search'
-            
-        #     expect(page.all(".profile").length ).to eq(2)
-        # end
+        it "should show the connections filtered by search term" do
+            visit "/connections"
+            within('#connections') do
+                fill_in 'filter_list_general_search_term', with: '2022'
+                click_button 'Search'
+            end
+            expect(page.all(".profile").length ).to eq(0)
+        end
+        it "should show the connections sorted by sort key" do
+            visit "/connections"
+            within('#connections') do
+                select 'Name', from: 'filter_list_sort_by'
+                click_button 'Sort'
+            end
+            first_names = []
+            page.all(".profilefirst_name").each { |x| first_names << x.text }
+            expect(first_names).to match_array(first_names.sort)
+        end
     end
     context "disconnect" do
         it "should successfully disconnect with a connection" do

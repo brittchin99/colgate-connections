@@ -17,6 +17,30 @@ RSpec.feature "Profile", :type => :feature do
             page.all(".profilefirst_name").each { |x| first_names << x.text }
             expect(first_names).to match_array(first_names.sort)
         end
+        it "should show the profiles filtered by queried majors" do
+            visit profiles_path(:reset => true)
+            within('#advanced-search') do
+                select 'Japanese', from: 'filter_list_majors'
+                click_button 'Filter'
+            end
+            expect(page.all(".profile").length ).to eq(0)
+        end
+        it "should show the profiles filtered by queried minors" do
+            visit profiles_path(:reset => true)
+            within('#advanced-search') do
+                select 'Computer Science', from: 'filter_list_minors'
+                click_button 'Filter'
+            end
+            expect(page.all(".profile").length ).to eq(0)
+        end
+        it "should show the profiles filtered by queried interests" do
+            visit profiles_path(:reset => true)
+            within('#advanced-search') do
+                page.check 'Video Games'
+                click_button 'Filter'
+            end
+            expect(page.all(".profile").length ).to eq(0)
+        end
     end
     context "update page" do
         it "should successfully update last name" do

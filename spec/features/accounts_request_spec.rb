@@ -20,6 +20,12 @@ RSpec.feature "Account", :type => :feature do
             sign_in(admin)
             expect(page).to have_text("Class year")
         end
+        it "should redirect to update profile if account is newly created" do
+            admin = Account.create!(:email => 'admin@colgate.edu', :admin => true, :password => "colgate13")
+            sign_in(admin)
+            visit profile_path(1)
+            expect(page).to have_text("Edit your profile")
+        end
     end
     
     def sign_in(account)
