@@ -14,7 +14,7 @@ class Profile < ApplicationRecord
   after_create :init
 
   def init
-    self.setting = self.create_setting(:notifs => NOTIFICATIONS, :public => PUBLIC, :dating => false, :preferences => {:pronouns => [], :class_year => []})
+    self.setting = self.create_setting(:notifs => NOTIFICATIONS, :public => PUBLIC, :dating => false)
   end
 
   def connected_to(profile)
