@@ -53,11 +53,11 @@
             <div class="profile-text">
                  <h4><%= "#{@profile.first_name} #{@profile.last_name}" %>
                  
-                 <% if current_account.profile != @profile && current_account.profile.is_a_match(@profile) %>
+                 <% if current_account.profile == @profile || (current_account.profile != @profile and current_account.profile.is_a_match(@profile)) %>
                    <%= image_tag("heart.png", class: "heart", alt:"heart") %> 
                  <% end %>
                  </h4>
-                 <% if current_account.profile == @profile || current_account.profile.connected_to(@profile) || (current_account.profile != @profile and Setting.to_list(@profile.setting.public).include? "Pronouns")%>
+                 <% if Profile.should_show("Pronouns", current_account, @profile)%>
                    <p> <%= "#{@profile.pronouns}"%></p>
                    <% end %>
                   <!--check logged in to the right user -->
@@ -106,13 +106,13 @@
                    
                     <%end%>
                     
-                    <% if @profile.status %>
-                        <%= "#{@profile.status}"%>
+                    <% if @profile.status && Profile.should_show("Status", current_account, @profile)%>
+                        <div class="pad"><%= "#{@profile.status}"%></div>
                     <% end %>
-                            <% if current_account.profile==@profile %>
-           <% if !@profile.status %>
-                          <button onclick="toggle()" class="add-button" id="profile-status">Add a status</button>                      
-                        <% end %>
+                    <% if current_account.profile==@profile %>
+                      <% if !@profile.status %>
+                        <button onclick="toggle()" class="add-button" id="profile-status">Add a status</button>                      
+                      <% end %>
                     <% end %>
                     <!--connected & message button -->
                     
@@ -129,23 +129,25 @@
                   <th><%= "Class of #{@profile.class_year}" %></th>
                 </tr>
                 <tr>
-                  <th>Major(s)</th>
+                  <th>Major(s):</th>
                   <td> 
                     <%= Profile.toList(@profile.majors).join(", ")%>
                   </td>
                 </tr>
                 <tr>
-                  <th>Minor(s)</th>
+                  <th>Minor(s):</th>
                   <td> 
                     <%= Profile.toList(@profile.minors).join(", ")%>
                   </td>
                 </tr>
-                <tr>
-                  <th>Interest(s):</th>
-                  <td>
-                    <%= Profile.toList(@profile.interests).join(", ")%>
-                  </td>
-                </tr>
+                <% if Profile.should_show("Interests", current_account, @profile) %>
+                  <tr>
+                    <th>Interest(s):</th>
+                    <td>
+                      <%= Profile.toList(@profile.interests).join(", ")%>
+                    </td>
+                  </tr>
+                <% end %>
           </table>
           
   
@@ -153,17 +155,22 @@
           <button onclick="f()" class="add-button">Upload up to 13 photos!</button>
         <% end %>
         
-              <% if @profile.photos.attached? %>
+        <% if Profile.should_show("Photos", current_account, @profile) %>
+            <% if @profile.photos.attached? %>
               <div class="photos">
-                  <% @profile.photos.each do |photo| %>
-                      <img class="profile-image-square" src="<%= (url_for(photo)) %>">
+                <% @profile.photos.each do |photo| %>
+                  <img class="profile-image-square" src="<%= (url_for(photo)) %>">
               
-                  <%end %>
-               </div>
-               <% else %>
-               <br/>
-                 <h4 class="center">No photos yet.</h4>
-               <% end %>
+                <%end %>
+            </div>
+            <% else %>
+              <br/>
+              <h5 class="center pad">No photos yet.</h5>
+            <% end %>
+        <% else %>
+          <br/>
+          <h5 class="center pad"><p class="fas fa-lock"/> This user's photos are private</h5>
+        <% end %>
             
        </div>
       <% elsif current_account.profile.blocking(@profile) %>

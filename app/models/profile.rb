@@ -34,6 +34,14 @@ class Profile < ApplicationRecord
     end
   end
   
+  def self.should_show(s, current_account, profile)
+    if current_account.profile == profile || current_account.profile.connected_to(profile) || (current_account.profile != profile and Setting.to_list(profile.setting.public).include? s)
+      true
+    else
+      false
+    end
+  end
+  
   def is_a_match(profile)
     if self.setting.dating && profile.setting.dating && profiles_match(self, profile)
       true
