@@ -22,9 +22,9 @@ class Profile < ApplicationRecord
     
     # c.nil?
   end
-  def suggested_connections(profile)
-    @profile = Profile.all.where("id NOT IN (?)", profile.id)
-    @profile = @profile.where('id NOT IN (?)', profile.connections.map(&:id).join(','))
+  def suggested_connections()
+    @profile = Profile.all.where("id NOT IN (?)", self.id)
+    @profile = @profile.where('id NOT IN (?)', self.connections.map(&:id).join(','))
     @suggest = @profile
     matches = Hash.new()
     # points = 0
@@ -33,12 +33,12 @@ class Profile < ApplicationRecord
     @profile.each do |current_profile|
       @majors = ""
       points = 0
-      if current_profile.class_year == profile.class_year
+      if current_profile.class_year == self.class_year
         points += 1
       end
 
       user = current_profile.majors.tr('[]', '').tr('"', '').split(',').map(&:strip)
-      current = profile.majors.tr('[]', '').tr('"', '').split(',').map(&:strip)
+      current = self.majors.tr('[]', '').tr('"', '').split(',').map(&:strip)
 
       if user.length == 2 
         points += compare(user, current)
@@ -49,9 +49,9 @@ class Profile < ApplicationRecord
           points += 1
         end
       end 
-      if current_profile.minors != nil && profile.minors != nil
+      if current_profile.minors != nil && self.minors != nil
         cminors = current_profile.minors.tr('[]', '').tr('"', '').split(',').map(&:strip)
-        pminors = profile.minors.tr('[]', '').tr('"', '').split(',').map(&:strip)
+        pminors = self.minors.tr('[]', '').tr('"', '').split(',').map(&:strip)
         if cminors.length == 2
           points += compare(cminors, pminors)
         elsif pminors.length == 2
@@ -61,7 +61,7 @@ class Profile < ApplicationRecord
         end
       end
       cinterests = current_profile.interests.tr('[]', '').tr('"', '').split(',').map(&:strip)
-      pinterests = profile.interests.tr('[]', '').tr('"', '').split(',').map(&:strip)
+      pinterests = self.interests.tr('[]', '').tr('"', '').split(',').map(&:strip)
       if cinterests.length > 1 
         points += compare(cinterests,pinterests)
       elsif pinterests.length > 1
@@ -73,9 +73,11 @@ class Profile < ApplicationRecord
         matches[current_profile.id] = points
       end
     end
-    matches = matches.sort_by { |k,v| -v }[0..4].to_h
+    if matches.length > 5
+      matches = matches.sort_by { |k,v| -v }[0..4].to_h
+    end
     matches.each do |key,value|
-      @suggest = @suggest.where("id LIKE (?)", key)
+      @suggest = @suggest.or(@suggest.where("id LIKE (?)", key))
     end
     return @suggest
   end
