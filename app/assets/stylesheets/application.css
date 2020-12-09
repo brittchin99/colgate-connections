@@ -64,9 +64,14 @@ p {
   margin-top: 15px;
 }
 
-.pad-left {
-  margin-left: 25px;
+.pad {
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
+
+/*.pad-left {*/
+/*  margin-left: 25px;*/
+/*}*/
 
 .centered {
   position: absolute;
@@ -81,6 +86,10 @@ p {
 
 .small {
   width: 100px;
+}
+
+.very-small {
+  width: 40px;
 }
 
 .form {
@@ -147,6 +156,10 @@ p {
   padding-left: 15px; 
 }
 
+.pad-right {
+  padding-right: 25px;
+}
+
 .contact-left {
     width: 10%;
 }
@@ -160,6 +173,14 @@ p {
   width: 60%;
 }
 
+.float-right {
+  float: right;
+}
+
+.float-left {
+  float: left;
+}
+
 .home-img {
   width: 100%;
   display: block;
@@ -167,15 +188,41 @@ p {
   padding: 20px;
 }
 
+.page-heading {
+  text-align:left;
+  padding:10px;
+}
+
 @media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
+  .sidenav {padding-top: 20px;}
   .sidenav a {font-size: 18px;}
 }
 
-.maroon {
+.btn-maroon {
   background-color: #E10028;
   color: white;
   text-decoration: none;
+}
+
+.btn-maroon:hover {
+    color: black;
+    background-color: #D2D4D6;
+}
+
+.btn-grey {
+  background-color: #5A646E;
+  color: white;
+  text-decoration: none;
+}
+
+.btn-grey:hover{
+  background-color: #D2D4D6;
+  color: black;
+}
+
+.grey {
+  background-color: #f7f7f7;
+  margin-bottom: 3px;
 }
 
 .spacer {
@@ -227,6 +274,13 @@ padding: 5px;
 
 .line {
   display: inline;
+}
+
+.contact-photo {
+    border-radius: 50%;
+    max-height: 40px;
+    position:relative;
+    overflow: hidden;
 }
 
 /* Messaging */
@@ -346,3 +400,19 @@ padding: 5px;
  .msg-button {
    display: inline-block;
 } 
+
+
+
+.options {
+  height: 40px;
+}
+
+.options-text {
+  color:black;
+   margin-top: -15px;
+}
+
+.options:focus {
+  outline: none;
+  box-shadow: none;
+}
