@@ -1,8 +1,7 @@
 FactoryBot.define do
   factory :setting do
-    notifs { "MyText" }
-    public { "MyText" }
+    notifs { "This is a notification!" }
+    public { ["Pronouns", "Status"] }
     dating { false }
-    preferences { "MyText" }
   end
 end
