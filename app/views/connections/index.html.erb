@@ -33,24 +33,23 @@
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane show active" id="connections" role="tabpanel" aria-labelledby="connections-tab">
         <h4>Suggested Connections</h4>
-        <% @suggestions.each do |s| %>
-          <div style="width: 100%; display:table-cell;" class="center">
-            <div class="card float-left spacer pad" style="width: 13rem;">
-            <div class="card-body center">
-            <% if s.avatar.attached? %>
-              <img class= "suggested-img" src="<%= (url_for(s.avatar)) %>">
-            <% else %>
-               <%= image_tag("avatar.jpg", class: "suggested-img", alt:"avatar") %>
-            <% end %>
-              <a href="#" class="card-link"><h5> <%= "#{s.first_name} #{s.last_name}" =%> </h5></a>
-              <h6 class="card-subtitle mb-2 text-muted"><%= "#{s.pronouns}" =%></h6>
-              <p class="time">12 mutual connections.</p>
+        <div style="width: 100%; display:table-cell;" class="center">
+          <% @suggestions.each do |s| %>
+            <div class="card float-left spacer pad" style="width: 15rem; height: 14rem;">
+              <div class="card-body center">
+              <% if s.avatar.attached? %>
+                <img class= "suggested-img" src="<%= (url_for(s.avatar)) %>">
+              <% else %>
+                 <%= image_tag("avatar.jpg", class: "suggested-img", alt:"avatar") %>
+              <% end %>
+                <a href="#" class="card-link"><h5> <%= "#{s.first_name} #{s.last_name}" =%> </h5></a>
+                <h6 class="card-subtitle mb-2 text-muted"><%= "#{s.pronouns}" =%></h6>
+                <p class="time">12 mutual connections.</p>
+              </div>
             </div>
-          </div>
-        <%end%>
-         <!--<%= image_tag("avatar.jpg", class: "suggested-img", alt:"avatar") %>-->
+          <%end%>
         </div>
-        
+
         <br/>
         <h3>My Connections</h3>
           <div class="search" style="display: table-cell;">
@@ -131,5 +130,3 @@
 </body>
 
 </html>
-
-
