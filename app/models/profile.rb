@@ -32,36 +32,34 @@ class Profile < ApplicationRecord
     Profile.where("id IN (SELECT a.friend_id FROM Connections a, Connections b WHERE a.friend_id = b.friend_id AND a.profile_id = ? AND b.profile_id = ?)", self.id, profile.id)
   end
   
-  def suggested_connections()
-    @profile = Profile.all.where("id NOT IN (?)", self.id)
-    @profile = @profile.where('id NOT IN (?)', self.connections.map(&:id).join(','))
-    @suggest = @profile
-    matches = Hash.new()
+  def suggested_connections
+    profiles = Profile.where("id NOT LIKE ?", self.id).where('id NOT IN (SELECT friend_id FROM connections WHERE profile_id = ?)', self.id)
+    matches = Hash.new
     # points = 0
-    #@suggested = @profile.where("cast(class_year as text) LIKE ? OR majors LIKE ? OR minors LIKE ? AND interests LIKE ? ", current_account.class_year, current_account.majors, current_account.minors, current_account.interests).limit(5).order("class_year DESC")
+    # suggested = profiles.where("cast(class_year as text) LIKE ? OR majors LIKE ? OR minors LIKE ? AND interests LIKE ? ", current_account.class_year, current_account.majors, current_account.minors, current_account.interests).limit(5).order("class_year DESC")
     
-    @profile.each do |current_profile|
-      @majors = ""
+    profiles.each do |p|
       points = 0
-      if current_profile.class_year == self.class_year
+      if p.class_year == self.class_year
         points += 1
       end
 
-      user = current_profile.majors.tr('[]', '').tr('"', '').split(',').map(&:strip)
-      current = self.majors.tr('[]', '').tr('"', '').split(',').map(&:strip)
+      p_majors = p.majors.tr('[]', '').tr('"', '').split(',').map(&:strip)
+      current_majors = self.majors.tr('[]', '').tr('"', '').split(',').map(&:strip)
 
-      if user.length == 2 
-        points += compare(user, current)
-      elsif current.length == 2
-        points += compare(current,user)
-      elsif user.length == 1 && current.length == 1 
-        if user == current
+      if p_majors.length == 2 
+        points += compare(p_majors, current_majors)
+      elsif current_majors.length == 2
+        points += compare(current_majors,p_majors)
+      elsif p_majors.length == 1 && current_majors.length == 1 
+        if p_majors == current_majors
           points += 1
         end
       end 
-      if current_profile.minors != nil && self.minors != nil
-        cminors = current_profile.minors.tr('[]', '').tr('"', '').split(',').map(&:strip)
-        pminors = self.minors.tr('[]', '').tr('"', '').split(',').map(&:strip)
+      
+      if p.minors != nil && self.minors != nil
+        pminors = p.minors.tr('[]', '').tr('"', '').split(',').map(&:strip)
+        cminors = self.minors.tr('[]', '').tr('"', '').split(',').map(&:strip)
         if cminors.length == 2
           points += compare(cminors, pminors)
         elsif pminors.length == 2
@@ -70,8 +68,9 @@ class Profile < ApplicationRecord
          points += 1 if cminors == pminors
         end
       end
-      cinterests = current_profile.interests.tr('[]', '').tr('"', '').split(',').map(&:strip)
-      pinterests = self.interests.tr('[]', '').tr('"', '').split(',').map(&:strip)
+      
+      pinterests = p.interests.tr('[]', '').tr('"', '').split(',').map(&:strip)
+      cinterests = self.interests.tr('[]', '').tr('"', '').split(',').map(&:strip)
       if cinterests.length > 1 
         points += compare(cinterests,pinterests)
       elsif pinterests.length > 1
@@ -79,21 +78,22 @@ class Profile < ApplicationRecord
       elsif pinterests.length == 1 && cinterests.length == 1
         points += 1 if pinterests == cinterests
       end
+      
       if points >= 1
-        matches[current_profile.id] = points
+        matches[p.id] = points
       end
     end
     if matches.length > 5
       matches = matches.sort_by { |k,v| -v }[0..4].to_h
     end
     matches.each do |key,value|
-      @suggest = @suggest.or(@suggest.where("id LIKE (?)", key))
+      profiles = profiles.or(profiles.where("id LIKE (?)", key))
     end
-    return @suggest
+    return profiles
   end
   
   def compare(p1, p2)
-    points =0
+    points = 0
     p1.each do |p|
       if p2.include?(p)
         points +=1
