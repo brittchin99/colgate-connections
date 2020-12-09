@@ -4,9 +4,6 @@ class ProfilesController < ApplicationController
   
   def show
     @account = Account.find(params[:id])
-    if @account.profile.nil?
-      redirect_to new_profile_path and return 
-    end 
     @profile = @account.profile
   end
   
