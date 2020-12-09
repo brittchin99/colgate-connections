@@ -9,8 +9,6 @@ class Profile < ApplicationRecord
   has_one :setting
   has_one_attached :avatar
   has_many_attached :photos
-  # before_create :build_setting
-  # accepts_nested_attributes_for :setting
   after_create :init
 
   def init
