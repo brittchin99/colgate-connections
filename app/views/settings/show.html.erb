@@ -1,0 +1,127 @@
+<div class="main pad">
+  <h1>Account Settings</h1>
+  <hr/>
+    
+  <%= form_with model: @setting, local: true do |form| %>
+    <h3>Notifications</h3>
+    <p>Manage which notifications you will receive.</p>
+    
+    <div class="custom-control custom-switch">
+      <%= form.check_box(:notifs, {:multiple => true, :class => 'custom-control-input', :id => 'connections', :checked => (@setting.to_list(@setting.notifs).include? 'New Connections')}, "New Connections", nil)%>
+      <label class="custom-control-label toggle-label" for="connections">New Connections</label>
+    </div>
+    
+    <div class="custom-control custom-switch">
+      <%= form.check_box(:notifs, {:multiple => true, :class => 'custom-control-input', :id => 'profiles', :checked => (@setting.to_list(@setting.notifs).include? 'Connection Profile Updates')}, "Connection Profile Updates", nil)%>
+      <label class="custom-control-label toggle-label" for="profiles">Connection Profile Updates</label>
+    </div>
+    
+    <br/>
+    <h3>Public Information</h3>
+    <p>Manage which information is visible to non-connections. Name, Profile Picture, Class Year, Major(s) and Minor(s) are required.</p>
+
+    <div class="custom-control custom-switch">
+      <%= form.check_box(:public, {:multiple => true, :class => 'custom-control-input', :id => 'pronouns', :checked => (@setting.to_list(@setting.public).include? 'Pronouns')}, "Pronouns", nil)%>
+      <label class="custom-control-label toggle-label" for="pronouns">Pronouns</label>
+    </div>
+    
+    <div class="custom-control custom-switch">
+      <%= form.check_box(:public, {:multiple => true, :class => 'custom-control-input', :id => 'status', :checked => (@setting.to_list(@setting.public).include? 'Status')}, "Status", nil)%>
+      <label class="custom-control-label toggle-label" for="status">Status</label>
+    </div>
+    
+    <div class="custom-control custom-switch">
+      <%= form.check_box(:public, {:multiple => true, :class => 'custom-control-input', :id => 'interests', :checked => (@setting.to_list(@setting.public).include? 'Interests')}, "Interests", nil)%>
+      <label class="custom-control-label toggle-label" for="interests">Interests</label>
+    </div>
+    
+    <div class="custom-control custom-switch">
+      <%= form.check_box(:public, {:multiple => true, :class => 'custom-control-input', :id => 'photos', :checked => (@setting.to_list(@setting.public).include? 'Photos')}, "Photos", nil)%>
+      <label class="custom-control-label toggle-label" for="photos">Photos</label>
+    </div>
+
+    <br/>
+    
+    <div class="custom-control custom-switch">
+      <%= form.check_box(:dating, {:class => 'custom-control-input', :id => 'dating', :checked => @setting.dating}, true)%>
+      <label class="custom-control-label toggle-label" for="dating"><h3>More Than Friends</h3></label>
+    </div>
+    
+    <p>When this is toggled on, a heart symbol will be displayed on your profile indicating that you are open to dating. This emoji will only be visible to those who <b>also have this feature toggled on</b> and whose <b>interest settings match your profile.</b></p>
+
+    <%= fields_for :preference do |preference_fields| %>
+      
+      <h5 class="text">I am interested in people who use the following pronouns (check all that apply):</h5>
+      <% Profile::PRONOUNS.each do |p_value| %>
+        <%= preference_fields.check_box(:pronouns, { :multiple => true, :disabled => !@setting.dating, :checked => (@setting.to_list(@setting.preference.pronouns).include? p_value), :class => 'prefs' }, p_value, nil) %>
+        <label class="text"><%= p_value %></label>
+        <br/>
+      <% end %>
+    
+      <h5 class="text">I am interested in people from the following class years (check all that apply):</h5>
+      <% Profile::CLASS_YEARS.each do |c_value| %>
+        <%= preference_fields.check_box(:class_years, { :multiple => true, :disabled => !@setting.dating, :checked => (@setting.to_list(@setting.preference.class_years).include? c_value), :class => 'prefs' }, c_value, nil) %>
+        <label class="text"><%= c_value %></label>
+        <br/>
+      <% end %>
+    <% end %>
+    
+    <br/>
+    <h3>Blocking</h3>
+    <%= link_to "See blocked users >", blockages_path, class: "link" %>
+    
+    <br/><br/>
+    
+    <%= form.submit 'Update Account Settings', :class => 'btn btn-primary' %>
+    
+    <%= link_to "Cancel", profile_path(current_account.profile), class: "btn btn-danger" %>
+  <% end %>
+</div>
+
+<script>
+var checkbox = document.querySelector("input[id=dating]");
+
+window.onload = function() {
+  var text = document.getElementsByClassName("text")
+  
+  if (checkbox.checked) {
+    console.log("checked")
+    
+    for (let w of text) {
+      w.classList.remove("disabled");
+    }
+  } else {
+    console.log("not checked")
+    
+    for (let w of text) {
+      w.classList.add("disabled");
+    }
+  }
+};
+
+checkbox.addEventListener('change', function() {
+  var elements = document.getElementsByClassName("prefs")
+  var text = document.getElementsByClassName("text")
+  
+  if (this.checked) {
+
+    for (let item of elements) {
+    $(`#${item.id}`).removeAttr("disabled");
+    }
+    
+    for (let w of text) {
+      w.classList.remove("disabled");
+    }
+    
+  } else {
+
+    for (let item of elements) {
+    $(`#${item.id}`).prop('disabled', true);
+    }
+    
+    for (let w of text) {
+      w.classList.add("disabled");
+    }
+  }
+});
+</script>

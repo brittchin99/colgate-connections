@@ -1,5 +1,6 @@
 <head>
   <%= stylesheet_link_tag 'application', media: 'all' %>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 </head>
 <div class="main">
   
@@ -9,6 +10,29 @@
       <%= link_to "Accept", connections_path(:friend_id => @profile), :method => :post, :class => "btn btn-primary spacer" %>
       <%= link_to "Delete", friend_request_path(:friend_id => @profile), :method => :delete, :class => "btn btn-light" %>
     </div>
+  <% end %>
+  
+  <% if flash[:success] %>
+    <div class="alert alert-success notice alert-dismissible alert-notif" role="alert">
+      <%= "#{flash[:success]}" %>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+  <% end %>
+  <% if flash[:notice] %>
+    <div class="alert alert-primary notice alert-dismissible alert-notif" role="alert">
+      <%= "#{flash[:notice]}" %>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+  <% end %>
+  <% if flash[:alert] %>
+    <div class="alert alert-warning notice alert-dismissible alert-notif" role="alert">
+      <%= "#{flash[:alert]}" %>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+  <% end %>
+  
+  <% if current_account.profile == @profile %>
+    <%= link_to "", setting_path(:id => current_account.id), :class => "btn fas fa-cog setting" %>
   <% end %>
   <div class="profile-container">
     
@@ -89,16 +113,6 @@
 
                   <br/>
             </div>
-            <% if flash[:notice] %>
-              <div class="alert alert-primary notice top-alert">
-                <%= "#{flash[:notice]}" %>
-              </div>
-            <% end %>
-            <% if flash[:alert] %>
-              <div class="alert alert-warning alert top-alert">
-                <%= "#{flash[:alert]}" %>
-              </div>
-            <% end %>
       </div> 
 
       <% if !@profile.blocking(current_account.profile) && !current_account.profile.blocking(@profile) %>

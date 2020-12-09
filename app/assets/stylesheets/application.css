@@ -401,6 +401,19 @@ padding: 5px;
    display: inline-block;
 } 
 
+.pad {
+    padding: 20px;
+}
+
+.toggle-label {
+    font-weight: bold;
+}
+
+.disabled{
+  pointer-events: none;
+  cursor: not-allowed;
+  color: #dbdbdb;
+ }
 
 
 .options {
@@ -415,4 +428,10 @@ padding: 5px;
 .options:focus {
   outline: none;
   box-shadow: none;
+}
+
+.setting {
+  float: right;
+  font-size: 30px;
+  margin-top: -40px;
 }

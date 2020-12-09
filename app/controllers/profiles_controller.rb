@@ -23,7 +23,7 @@ class ProfilesController < ApplicationController
         format.html { render :edit }
       end
     end
-  end 
+  end
   
   
   def index

@@ -1,21 +1,32 @@
-<div class="main pad-left">
-  <h3>My Block List</h3>
+<head>
+    <%= stylesheet_link_tag 'accounts', media: 'all' %>
+  </head>
+  
+  <div class="main pad-left">
+  <div style="text-align:left; padding:10px;" class="container">
+    <%= link_to setting_path(:id => current_account.id) do %>
+      <span class="btn btn-maroon">&lt; Back to Settings</span>
+    <% end %>
+    </div>
+    
+  <div class="container page-heading">
+  <h3 class="line">Blocked Users</h3>
+  </div>
   <% if @blockages.length() == 0 %>
     <p class="center">You haven't blocked anyone!</p>
   <% else %>
-    <table class="table">
-    <tbody>
       <% @blockages.each do |b| %>
-        <tr><p>
-          <td>
-            <h5><%= link_to "#{b.first_name} #{b.last_name}", profile_path(b.id) %></h5>
-          </td>
-          <td>
-            <div><%= link_to "Unblock", blockage_path(:id => current_account, :blockee_id => b.id), :method => :delete, :class => "btn btn-light" %></div>
-          </td>
-        </p></tr>
+        <div class="btn contact grey">
+              <div class="float-left">
+                <%= image_tag("avatar.jpg", class: "contact-photo", alt:"avatar") %>
+              </div>
+              <div class="float-left pad-light spacer">
+                <h6><%= link_to "#{b.first_name} #{b.last_name}", profile_path(b.id) %></h6>
+              </div>
+              <div class="pad-right float-right">
+               <div><%= link_to "Unblock", blockage_path(:id => current_account, :blockee_id => b.id), :method => :delete, :class => "btn btn-primary" %></div>
+              </div>
+            </div>
         <% end %>
-      </tbody>
-    </table>  
   <% end %>
 </div>
