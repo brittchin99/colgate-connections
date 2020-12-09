@@ -1,5 +1,6 @@
 <head>
   <%= stylesheet_link_tag 'application', media: 'all' %>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 </head>
 <div class="main">
   
@@ -9,6 +10,10 @@
       <%= link_to "Accept", connections_path(:friend_id => @profile), :method => :post, :class => "btn btn-primary spacer" %>
       <%= link_to "Delete", friend_request_path(:friend_id => @profile), :method => :delete, :class => "btn btn-light" %>
     </div>
+  <% end %>
+  
+  <% if current_account.profile == @profile %>
+    <%= link_to "", setting_path(:id => current_account.id), :class => "btn fas fa-cog setting" %>
   <% end %>
   <div class="profile-container">
     

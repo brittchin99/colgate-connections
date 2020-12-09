@@ -422,3 +422,9 @@ padding: 5px;
   outline: none;
   box-shadow: none;
 }
+
+.setting {
+  float: right;
+  font-size: 30px;
+  margin-top: -40px;
+}
