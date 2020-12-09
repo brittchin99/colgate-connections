@@ -99,7 +99,7 @@
           <div class="profile-image-square">
             <div class="add-form">
            <%= simple_form_for @profile, :url => url_for(:action => 'update', :controller => 'profiles'), :method => 'patch' do |f| %>
-            <%= f.file_field :photos, id: "f-field" %>
+            <%= f.file_field :photos, id: "f-field", required: true %>
             <%= f.button :submit %>
            <% end %>
            </div>

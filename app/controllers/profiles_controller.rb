@@ -17,7 +17,7 @@ class ProfilesController < ApplicationController
 
   def update 
     @profile = Profile.find(params[:id])
-    
+    unless params[:profile].nil?
     if(!params[:profile][:avatar].nil?)
       @profile.avatar.purge
       @profile.avatar.attach(params[:profile][:avatar])
@@ -36,6 +36,9 @@ class ProfilesController < ApplicationController
         format.html { render :edit }
       end
     end
+  else
+    redirect_to profile_path(@profile)
+  end
   end 
   
   
