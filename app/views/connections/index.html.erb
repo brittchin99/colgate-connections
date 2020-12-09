@@ -43,7 +43,9 @@
                  <%= image_tag("avatar.jpg", class: "suggested-img", alt:"avatar") %>
               <% end %>
                 <a href="#" class="card-link"><h5> <%= link_to "#{s.first_name + " " + s.last_name}", profile_path(s) %> </h5></a>
-                <h6 class="card-subtitle mb-2 text-muted"><%= "#{s.pronouns}" =%></h6>
+                <% if Setting.to_list(s.setting.public).include? "Pronouns"%>
+                  <h6 class="card-subtitle mb-2 text-muted"><%= "#{s.pronouns}" =%></h6>
+                <% end %>
                 <p class="time"><%="#{current_account.profile.get_mutual_connections(s).length} mutual connections."%></p>
               </div>
             </div>
