@@ -53,7 +53,7 @@
             <div class="profile-text">
                  <h4><%= "#{@profile.first_name} #{@profile.last_name}" %>
                  
-                 <% if current_account.profile == @profile || (current_account.profile != @profile and current_account.profile.is_a_match(@profile)) %>
+                 <% if (current_account.profile == @profile && current_account.profile.setting.dating) || (current_account.profile != @profile and current_account.profile.is_a_match(@profile)) %>
                    <%= image_tag("heart.png", class: "heart", alt:"heart") %> 
                  <% end %>
                  </h4>
