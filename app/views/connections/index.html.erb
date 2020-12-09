@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <%= stylesheet_link_tag 'accounts', media: 'all' %>
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
   <script>
   $(document).ready(function(){
@@ -16,10 +15,9 @@
 </script>
 </head>
 <body>
-  <div class="main">
+  <div class="main pad-left">
     <br/>
-    <div class="pad-left">
-      <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
       <a class="nav-link active" id="connections-tab" data-toggle="tab" href="#connections" >Connections</a>
     </li>
@@ -31,36 +29,49 @@
       </a>
     </li>
   </ul>
-    </div>
-    
   <br/>
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane show active" id="connections" role="tabpanel" aria-labelledby="connections-tab">
-      <div class="pad-left">
+        <h4>Suggested Connections</h4>
+          <div style="width: 100%; display:table-cell;" class="center">
+          <% @suggestions.each do |s| %>
+            <div class="card float-left spacer pad" style="width: 15rem; height: 14rem;">
+              <div class="card-body center">
+              <% if s.avatar.attached? %>
+                <img class= "suggested-img" src="<%= (url_for(s.avatar)) %>">
+              <% else %>
+                 <%= image_tag("avatar.jpg", class: "suggested-img", alt:"avatar") %>
+              <% end %>
+                <a href="#" class="card-link"><h5> <%= "#{s.first_name} #{s.last_name}" =%> </h5></a>
+                <h6 class="card-subtitle mb-2 text-muted"><%= "#{s.pronouns}" =%></h6>
+                <p class="time">12 mutual connections.</p>
+              </div>
+            </div>
+          <%end%>
+        </div>
+        <br/>
         <h3>My Connections</h3>
           <div class="search" style="display: table-cell;">
             <%= simple_form_for :filter_list, url: connections_path, :method => 'get', html: {:class => "form-inline"} do |f| %>
               <%= f.input :general_search_term, label: false, placeholder: "Search connections"%>
-              <%= f.button :submit, "Search", class: "btn btn-maroon spacer"%>
+              <%= f.button :submit, "Search", class: "btn btn-light spacer"%>
             <% end %>
           </div>
           
           <div style="display: table-cell; padding: 5px;">
-            <h6>Sort By </h6>
+            <p>Sort By </p>
           </div>
           
           <div style="display: table-cell;">
             <%= simple_form_for :filter_list, url: connections_path, :method => 'get',  html: {:class => "form-inline"} do |f|%>
                 <%= f.input :sort_by, label: false, collection: ["Name", "Date Connected: Latest", "Date Connected: Earliest"], selected: @sort_key %>
-                <%= f.button :submit, "Sort", class: "btn btn-maroon spacer"%>
+                <%= f.button :submit, "Sort", class: "btn btn-light spacer"%>
             <% end %>
           </div>
           <div style="display: table-cell;">
             <%= link_to "Reset filter", connections_path(:reset => true), class: "btn btn-light spacer" %>
           </div>
-      </div>
-        
-      <br/>
+          <br/>
           
       <% if @connections.length() == 0 %>
         <p class="center">No connections found. <%= link_to "Add some?", profiles_path() %></p>
@@ -68,18 +79,17 @@
         <table class="table">
         <tbody>
           <% @connections.each do |c| %>
-          <div class="btn contact grey">
-              <div class="float-left">
-                <%= image_tag("avatar.jpg", class: "contact-photo", alt:"avatar") %>
-              </div>
-              <div class="float-left pad spacer">
-                <h6><%= link_to "#{c.friend.first_name} #{c.friend.last_name}", profile_path(c.friend.id) %></h6>
-              </div>
-              <div class="pad-right float-right">
-               <div><%= link_to "Connected", connection_path(:id => current_account.id, :friend_id => c.friend.id), :method => :delete, :class => "btn btn-success" %></div>
-              </div>
-            </div>
-
+            <tr><p>
+              <td>
+                Photo
+              </td>
+              <td>
+                <%= link_to "#{c.friend.first_name} #{c.friend.last_name}", profile_path(c.friend.id) %>
+              </td>
+              <td>
+                <div><%= link_to "Disconnect", connection_path(:id => current_account.id, :friend_id => c.friend.id), :method => :delete, :class => "btn btn-success" %></div>
+              </td>
+            </p></tr>
             <% end %>
           </tbody>
         </table>
@@ -87,30 +97,35 @@
       <% end %>
     </div>
     <div class="tab-pane" id="requests" role="tabpanel" aria-labelledby="requests-tab">
-      <div class="pad-left">
-        <h3>Connection Requests</h3>
-      </div>
+      <h3>Connection Requests</h3>
+        <div>
           <% if @friend_requests.length() == 0 %>
             <p class="center">Too bad, no secret admirers!</p>
           <% else %>
-            <% @friend_requests.each do |c| %>
-            <div class="btn contact grey">
-              <div class="float-left">
-                <%= image_tag("avatar.jpg", class: "contact-photo", alt:"avatar") %>
-              </div>
-              <div class="float-left pad spacer">
-                <h6><%= link_to "#{c.friend.first_name} #{c.friend.last_name}", profile_path(c.friend.id) %></h6>
-              </div>
-              <div class="pad-right float-right">
-                <%= link_to "Accept", connections_path(:id => current_account, :friend_id => c.friend.id), :method => :post, :class => "btn btn-primary" %>
-                <%= link_to "Delete", friend_request_path(:id => current_account, :friend_id => c.friend.id), :method => :delete, :class => "btn btn-light" %>
-              </div>
-            </div>
-            <% end %>
+            <table class="table">
+            <tbody>
+              <% @friend_requests.each do |c| %>
+                <tr><p>
+                  <td>
+                    Photo
+                  </td>
+                  <td>
+                    <h5><%= link_to "#{c.friend.first_name} #{c.friend.last_name}", profile_path(c.friend.id) %></h5>
+                  </td>
+                  <td>
+                    <div><%= link_to "Accept", connections_path(:id => current_account, :friend_id => c.friend.id), :method => :post, :class => "btn btn-primary" %></div>
+                  </td>
+                  <td>
+                    <div><%= link_to "Delete", friend_request_path(:id => current_account, :friend_id => c.friend.id), :method => :delete, :class => "btn btn-light" %></div>
+                  </td>
+                </p></tr>
+                <% end %>
+              </tbody>
+            </table>  
           <% end %>
+    </div>
   </div>
   </div>
 </body>
 
 </html>
-
