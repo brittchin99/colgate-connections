@@ -76,7 +76,17 @@ th {
   padding: 20px 10px 0px 0px;
 }
 
-#advanced-search {
+
+.add-form {
+    position: relative;
+    top: 40%;
+    text-align: center;
+}
+
+#f-field {
+    padding-left: 15%;
+
+  #advanced-search {
     width: 500px;
     height: auto; 
     max-height: 400px; 

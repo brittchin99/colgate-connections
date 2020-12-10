@@ -14,6 +14,16 @@ class ProfilesController < ApplicationController
 
   def update 
     @profile = Profile.find(params[:id])
+    unless params[:profile].nil?
+    if(!params[:profile][:avatar].nil?)
+      @profile.avatar.purge
+      @profile.avatar.attach(params[:profile][:avatar])
+    end 
+    
+    if (!params[:profile][:photos].nil?)
+      @profile.photos.attach(params[:profile][:photos])
+    end 
+    
     if @profile.update(profile_params)
       flash[:success] = "Profile updated!"
       redirect_to profile_path(@profile)
@@ -23,6 +33,10 @@ class ProfilesController < ApplicationController
         format.html { render :edit }
       end
     end
+  else
+    redirect_to profile_path(@profile)
+  end
+  end 
   end
   
   
