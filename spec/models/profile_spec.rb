@@ -94,4 +94,26 @@ RSpec.describe Profile, type: :model do
             expect(p1.has_conversation_with(p2)).to eq(false)
         end
     end
+    context "has_unread_conversations method" do
+        it "should be defined" do
+            a = FactoryBot.build(:profile)  
+            expect(a).to respond_to(:has_unread_conversations)
+        end
+        it "should return true if there are unread conversations" do
+            p1 = FactoryBot.create(:profile) 
+            a2 = FactoryBot.create(:account, :id => 2, :email => "ptnguyen@colgate.edu", :password => "colgate13")
+            p2 = FactoryBot.create(:profile, :account => a2, :first_name => "Amber", :last_name => "Nguyen")
+            c = FactoryBot.create(:conversation, :sender => p1, :receiver => p2, :messages => [])
+            m = FactoryBot.create(:message, :profile => p2, :conversation => c) 
+            expect(p1.has_unread_conversations).to eq(true)
+        end
+        it "should return false if there are no unread conversations" do
+            p1 = FactoryBot.create(:profile) 
+            a2 = FactoryBot.create(:account, :id => 2, :email => "ptnguyen@colgate.edu", :password => "colgate13")
+            p2 = FactoryBot.create(:profile, :account => a2, :first_name => "Amber", :last_name => "Nguyen")
+            c = FactoryBot.create(:conversation, :sender => p1, :receiver => p2, :messages => [])
+            m = FactoryBot.create(:message, :profile => p1, :conversation => c) 
+            expect(p1.has_unread_conversations).to eq(false)
+        end
+    end
 end

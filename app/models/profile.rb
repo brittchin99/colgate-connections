@@ -29,9 +29,18 @@ class Profile < ApplicationRecord
     
   def has_conversation_with(receiver_id)
     if Conversation.between(self.id, receiver_id).present?
-      @conversation = Conversation.between(self.id, receiver_id).first
-      @conversation.has_messages?
+      conversation = Conversation.between(self.id, receiver_id).first
+      conversation.has_messages?
     end
+  end
+  
+  def has_unread_conversations
+    if Conversation.where('sender_id LIKE ? OR receiver_id LIKE ?', self.id, self.id)
+      Conversation.where('sender_id LIKE ? OR receiver_id LIKE ?', self.id, self.id).each do |c|
+        return true if c.has_unread_messages? && c.messages.last.profile!=self
+      end
+    end
+    false
   end
   
   def should_show(s, profile)

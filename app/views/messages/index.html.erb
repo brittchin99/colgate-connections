@@ -1,6 +1,6 @@
 <div class="main">
   <div class="msg-header">
-    <%= link_to :back, :class => "button" do %>
+    <%= link_to conversations_path, :class => "button" do %>
       <div class="btn btn-primary" style="float: left; background-color: #E10028; border-color: #E10028;"><h3>&lt;</h3></div>
     <% end %>
     
@@ -26,13 +26,12 @@
     <div class="chat-page">
       <div class="msg-inbox">
         <div class="chats">
-          <div class="msg-page">
+          <div class="msg-page" id = "all-message">
             <div class="center">
               <% if @over_ten %>
                 <%= link_to 'Show More', '?m=all'%>
               <% end %>
             </div>
-            
             <div class="ui segment">
               <% @messages.each do |message| %>
                 <% if message.body %>
@@ -61,10 +60,9 @@
                 <% end %>
               <% end %>
               </div>
-            </div>
-
           </div>
-          <div class="msg-bottom">
+        </div>
+        <div class="msg-bottom">
               <% if !current_account.profile.connected_to(receiver) %>
                 <div class="msg-box center alert-warning"><%= "You are currently unable to message #{receiver.first_name}" %></div>
               <% else %>
@@ -77,7 +75,12 @@
                 <% end %>
               <% end %>
           </div>
-        </div>
       </div>
     </div>
+  </div>
 </div>
+
+<script>
+  var element = document.getElementById("all-message");
+  element.scrollTop = element.scrollHeight;
+</script>
