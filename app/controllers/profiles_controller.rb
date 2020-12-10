@@ -51,27 +51,27 @@ class ProfilesController < ApplicationController
     if !params.has_key?("reset")
       if p = (params["filter_list"] || session["filter_list"])
         if !p.has_key?("general_search_term")
-          @profiles = @profiles.where("first_name LIKE ?", "%#{p["first_name"]}")
-                              .where("last_name LIKE ?", "%#{p["last_name"]}")
-                              .where("pronouns LIKE ?", "%#{p["pronouns"]}")
+          @profiles = @profiles.where("LOWER(first_name) LIKE LOWER(?)", "%#{p["first_name"]}")
+                              .where("LOWER(last_name) LIKE LOWER(?)", "%#{p["last_name"]}")
+                              .where("LOWER(pronouns) LIKE LOWER(?)", "%#{p["pronouns"]}")
                               .where("cast(class_year as text) LIKE ?", "%#{p["class_year"]}")
           for major in Profile.toList(p["majors"].to_s)
-            @profiles = @profiles.where("majors LIKE ?", "%#{major}%")
+            @profiles = @profiles.where("LOWER(majors) LIKE LOWER(?)", "%#{major}%")
           end
           
           for minor in Profile.toList(p["minors"].to_s)
-            @profiles = @profiles.where("minors LIKE ?", "%#{minor}%")
+            @profiles = @profiles.where("LOWER(minors) LIKE LOWER(?)", "%#{minor}%")
           end
           
           for interest in Profile.toList(p["interests"].to_s)
-            @profiles = @profiles.where("interests LIKE ?", "%#{interest}%")
+            @profiles = @profiles.where("LOWER(interests) LIKE LOWER(?)", "%#{interest}%")
           end
           
         else
-          @profiles = @profiles.where("first_name LIKE ? 
-                                      OR last_name LIKE ?
-                                      OR pronouns LIKE ? 
-                                      OR first_name || ' ' || last_name LIKE ? 
+          @profiles = @profiles.where("LOWER(first_name) LIKE LOWER(?) 
+                                      OR LOWER(last_name) LIKE LOWER(?)
+                                      OR LOWER(pronouns) LIKE LOWER(?) 
+                                      OR LOWER(first_name || ' ' || last_name) LIKE LOWER(?) 
                                       OR cast(class_year as text) LIKE ?", p["general_search_term"], p["general_search_term"], p["general_search_term"], p["general_search_term"], p["general_search_term"])
         end
         session["filter_list"] = params["filter_list"]

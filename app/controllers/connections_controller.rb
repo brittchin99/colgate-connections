@@ -14,10 +14,10 @@ class ConnectionsController < ApplicationController
                 
                 
                 if p.has_key?("general_search_term")
-                   @connections = @connections.joins(:friend).where("first_name LIKE ? 
-                                          OR last_name LIKE ?
-                                          OR pronouns LIKE ? 
-                                          OR first_name || ' ' || last_name LIKE ? 
+                   @connections = @connections.joins(:friend).where("LOWER(first_name) LIKE LOWER(?) 
+                                          OR LOWER(last_name) LIKE LOWER(?)
+                                          OR LOWER(pronouns) LIKE LOWER(?) 
+                                          OR LOWER(first_name || ' ' || last_name) LIKE LOWER(?) 
                                           OR cast(class_year as text) LIKE ?", p["general_search_term"], p["general_search_term"], p["general_search_term"], p["general_search_term"], p["general_search_term"])
                 end
                 
