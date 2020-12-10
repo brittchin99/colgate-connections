@@ -31,12 +31,12 @@
               <div class="column contact-right">
                   <h6>
                     <%= receiver.first_name + " " + receiver.last_name %>
-                    <!--if there is something to display unread notification it should go here-->
+                    <% if conversation.has_unread_messages? && conversation.messages.last.profile_id!=current_account.profile.id %>
+                     <span class="notif"/>
+                  <% end %>
                   </h6>
                   <p class="time"><%= conversation.last_message.body.truncate(50) %>&middot; <%= conversation.last_message.message_time %></p>
-                  <% if conversation.has_unread_messages? && conversation.messages.last.profile_id!=current_account.profile.id %>
-                     <span class="notif side-notif"/>
-                  <% end %>
+                  
               </div>
           </div>
         </div>
