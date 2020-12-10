@@ -35,8 +35,8 @@ class Profile < ApplicationRecord
   end
   
   def has_unread_conversations
-    if Conversation.where('sender_id LIKE ? OR receiver_id LIKE ?', self.id, self.id)
-      Conversation.where('sender_id LIKE ? OR receiver_id LIKE ?', self.id, self.id).each do |c|
+    if Conversation.where('cast(sender_id as text) LIKE ? OR cast(receiver_id as text) LIKE ?', self.id, self.id)
+      Conversation.where('cast(sender_id as text) LIKE ? OR cast(receiver_id as text) LIKE ?', self.id, self.id).each do |c|
         return true if c.has_unread_messages? && c.messages.last.profile!=self
       end
     end
@@ -59,11 +59,11 @@ class Profile < ApplicationRecord
   end
   
   def get_mutual_connections(profile)
-    Profile.where("id IN (SELECT a.friend_id FROM Connections a, Connections b WHERE a.friend_id = b.friend_id AND a.profile_id = ? AND b.profile_id = ?)", self.id, profile.id)
+    Profile.where("cast(id as text) IN (SELECT a.friend_id FROM Connections a, Connections b WHERE a.friend_id = b.friend_id AND cast(a.profile_id as text) = ? AND cast(b.profile_id as text) = ?)", self.id, profile.id)
   end
   
   def suggested_connections
-    profiles = Profile.where("id NOT LIKE ?", self.id).where('id NOT IN (SELECT friend_id FROM connections WHERE profile_id = ?)', self.id)
+    profiles = Profile.where("cast(id as text) NOT LIKE ?", self.id).where('cast(id as text) NOT IN (SELECT friend_id FROM connections WHERE cast(profile_id as text) = ?)', self.id)
     matches = Hash.new
     
     profiles.each do |p|
@@ -84,7 +84,7 @@ class Profile < ApplicationRecord
     end
     
     matches.each do |key,value|
-      profiles = profiles.or(profiles.where("id LIKE (?)", key))
+      profiles = profiles.or(profiles.where("cast(id as text) LIKE (?)", key))
     end
     return profiles
   end
