@@ -1,18 +1,10 @@
-<head>
-    <%= stylesheet_link_tag 'accounts', media: 'all' %>
-  </head>
 <div class="main">
-  <div class="container page-heading">
-  <h3 class="line">Messages</h3>
+  <div style="text-align:left; padding:10px;" class="container">
+  <h3 style="display: inline-block;">Messages</h3>
   <%= link_to new_conversation_path do %>
-    <span class="btn btn-maroon" style="display: inline-block; float:right;">+</span>
+    <span class="btn btn-primary" style="display: inline-block; float:right;">+</span>
   <% end %>
-  <% if flash[:alert] %>
-    <div class="alert alert-warning alert top-alert">
-      <%= "#{flash[:alert]}" %>
-    </div>
-  <% end %>
-
+  
   <% @conversations.each do |conversation| %>
   
   <% if conversation.has_messages? %>

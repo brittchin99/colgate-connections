@@ -1,6 +1,4 @@
 class MessagesController < ApplicationController
-    before_action :authenticate_account!
-    before_action :populate_info!
     before_action do
         @conversation = Conversation.find(params[:conversation_id])
     end
@@ -22,41 +20,18 @@ class MessagesController < ApplicationController
                 @messages.last.read = true;
             end
         end
-        if @conversation.sender == current_account.profile
-            @partner = @conversation.receiver
-        else
-            @partner = @conversation.sender
-        end
-        if current_account.profile.connected_to(@partner)
-            @message = @conversation.messages.new
-        end
+        
+        @message = @conversation.messages.new
     end
     
     
     def new
-        if @conversation.sender == current_account.profile
-            @partner = @conversation.receiver
-        else
-            @partner = @conversation.sender
-        end
-        if current_account.profile.connected_to(@partner)
-            @message = @conversation.messages.new
-        end
+        @message = @conversation.messages.new
     end
     
     def create
-        if @conversation.sender == current_account.profile
-            @partner = @conversation.receiver
-        else
-            @partner = @conversation.sender
-        end
-        if current_account.profile.connected_to(@partner)
-            @message = @conversation.messages.new(message_params)
-            if @message.save
-                redirect_to conversation_messages_path(@conversation)
-            end
-        else
-            flash[:alert] = "Unable to message user"
+        @message = @conversation.messages.new(message_params)
+        if @message.save
             redirect_to conversation_messages_path(@conversation)
         end
     end

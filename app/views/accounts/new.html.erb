@@ -1,13 +1,8 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <%= stylesheet_link_tag 'accounts', media: 'all' %>
-    </head>
     <body>
-        <br/>
-        <h1 class="center">Create an Account</h1>
         <div class="center form">
-            
+            <h1>Create an Account</h1>
             <%= simple_form_for @account, :url => url_for(:action => 'create', :controller => 'accounts'), :method => 'post' do |f| %>
                 <%= f.error_notification %>
  
@@ -15,7 +10,7 @@
                 
                 <p><%= f.input :password, input_html: { required: true } %></p>
                 
-                <p><%= f.button :submit, class: "btn btn-maroon" %></p>
+                <p><%= f.button :submit, class: "btn-primary" %></p>
             <% end %>
         </div>
     </body>
