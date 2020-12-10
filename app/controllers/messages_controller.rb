@@ -19,7 +19,7 @@ class MessagesController < ApplicationController
         
         if @messages.last
             if @messages.last.profile_id != current_account.profile.id
-                @messages.last.read = true;
+                @messages.last.update_attributes(:read => true)
             end
         end
         
