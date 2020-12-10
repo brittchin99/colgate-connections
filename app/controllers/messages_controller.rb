@@ -22,6 +22,7 @@ class MessagesController < ApplicationController
                 @messages.last.read = true;
             end
         end
+        
         if @conversation.sender == current_account.profile
             @partner = @conversation.receiver
         else
@@ -41,6 +42,7 @@ class MessagesController < ApplicationController
         end
         if current_account.profile.connected_to(@partner)
             @message = @conversation.messages.new
+            @message.read = false
         end
     end
     
@@ -52,6 +54,7 @@ class MessagesController < ApplicationController
         end
         if current_account.profile.connected_to(@partner)
             @message = @conversation.messages.new(message_params)
+            @message.read = false
             if @message.save
                 redirect_to conversation_messages_path(@conversation)
             end

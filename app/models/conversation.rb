@@ -15,9 +15,8 @@ class Conversation < ApplicationRecord
         self.messages.length > 0
     end
     
-    # To be updated later
     def has_unread_messages?
-        true
+        !self.messages.last.read
     end
     
     def last_message
