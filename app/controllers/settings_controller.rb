@@ -7,6 +7,9 @@ class SettingsController < ApplicationController
         @setting = @profile.setting
     end
     
+    def index
+    end
+    
     def update
       @profile = Profile.find(params[:id])
       @setting = @profile.setting

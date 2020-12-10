@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     resources :profiles, :only => [:index, :show, :update, :edit]
     resources :connections, :only => [:index, :create, :destroy]
     resources :homes, :only => [:index]
-    resources :settings, :only => [:show, :update]
+    resources :settings, :only => [:index, :show, :update]
     resources :conversations do
       resources :messages
     end
