@@ -59,7 +59,7 @@ class Profile < ApplicationRecord
   end
   
   def get_mutual_connections(profile)
-    Profile.where("cast(id as text) IN (SELECT a.friend_id FROM Connections a, Connections b WHERE a.friend_id = b.friend_id AND cast(a.profile_id as text) = ? AND cast(b.profile_id as text) = ?)", self.id.to_s, profile.id.to_s)
+    Profile.where("id IN (SELECT a.friend_id FROM Connections a, Connections b WHERE a.friend_id = b.friend_id AND cast(a.profile_id as text) = ? AND cast(b.profile_id as text) = ?)", self.id.to_s, profile.id.to_s)
   end
   
   def suggested_connections
