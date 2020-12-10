@@ -63,7 +63,7 @@ class Profile < ApplicationRecord
   end
   
   def suggested_connections
-    profiles = Profile.where("cast(id as text) NOT LIKE ?", self.id.to_s).where('cast(id as text) NOT IN (SELECT friend_id FROM connections WHERE cast(profile_id as text) = ?)', self.id.to_s)
+    profiles = Profile.where("cast(id as text) NOT LIKE ?", self.id.to_s).where('id NOT IN (SELECT friend_id FROM connections WHERE cast(profile_id as text) = ?)', self.id.to_s)
     matches = Hash.new
     
     profiles.each do |p|
