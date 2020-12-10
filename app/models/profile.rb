@@ -37,7 +37,7 @@ class Profile < ApplicationRecord
   def has_unread_conversations
     if Conversation.where('sender_id LIKE ? OR receiver_id LIKE ?', self.id, self.id)
       Conversation.where('sender_id LIKE ? OR receiver_id LIKE ?', self.id, self.id).each do |c|
-        return true if c.has_unread_messages?
+        return true if c.has_unread_messages? && c.messages.last.profile!=self
       end
     end
     false
