@@ -19,7 +19,7 @@
             <span class="notif side-notif"/>
           <% end %>
         </div>
-        <%= link_to "All Users", profiles_path %>
+        <%= link_to "All Users", profiles_path(:reset => true) %>
         <%= link_to "My Messages", conversations_path %>
         </div>
     <% end %>
@@ -52,6 +52,7 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
                   <%= link_to "My Profile", profile_path(current_account), :class => "dropdown-item" %>
+                  <%= link_to "Account Settings", setting_path(:id => current_account.id), :class => "dropdown-item" %>
                   <div class="dropdown-divider"></div>
                   <%= link_to "Log Out", destroy_account_session_path, method: :delete, :class => "dropdown-item" %>
                 </div>

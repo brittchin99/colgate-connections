@@ -5,6 +5,7 @@ class ConnectionsController < ApplicationController
     def index
         @friend_requests = current_account.profile.friend_requests
         @connections = current_account.profile.connections.joins(:friend)
+        @suggestions = current_account.profile.suggested_connections
         
         @sort_key = "Name"
         if !params.has_key?("reset")

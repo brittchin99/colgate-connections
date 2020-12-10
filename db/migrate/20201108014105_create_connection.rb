@@ -4,7 +4,7 @@ class CreateConnection < ActiveRecord::Migration[6.0]
       t.belongs_to :profile, foreign_key: true
       t.belongs_to :friend
       
-t.timestamps
+      t.timestamps
     end
   end
 end
