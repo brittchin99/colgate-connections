@@ -154,11 +154,15 @@
           
   
         <% if current_account.profile ==@profile && @profile.photos.attachments.length < 13 %>
-          <button onclick="f()" class="add-button">Upload up to 13 photos!</button>
+          <h4 class="center">Upload up to 13 photos!</h4>
         <% end %>
         
         <% if current_account.profile.should_show("Photos", @profile) %>
+          <% if current_account.profile == @profile %>
             <div class="photos" id="items">
+          <% else %>
+            <div class="photos">
+          <% end %>
             <% if @profile.photos.attached? %>
                 <% @profile.photos.each do |photo| %>
                   <img class="profile-image-square" src="<%= (url_for(photo)) %>">
