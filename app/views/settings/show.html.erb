@@ -19,6 +19,7 @@
     <br/>
     <h3>Public Information</h3>
     <p>Manage which information is visible to non-connections. Name, Profile Picture, Class Year, Major(s) and Minor(s) are required.</p>
+    <p><%= link_to "View public profile >", settings_path, class: "link" %></p>
 
     <div class="custom-control custom-switch">
       <%= form.check_box(:public, {:multiple => true, :class => 'custom-control-input', :id => 'pronouns', :checked => (Setting.to_list(@setting.public).include? 'Pronouns')}, "Pronouns", nil)%>
