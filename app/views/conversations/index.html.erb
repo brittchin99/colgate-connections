@@ -21,9 +21,14 @@
                 <%= image_tag("avatar.jpeg", class: "contact-img", alt:"photo") %>
               </div>
               <div class="column contact-right">
-                  <h6><%= receiver.first_name + " " + receiver.last_name %></h6>
-    
+                  <h6>
+                    <%= receiver.first_name + " " + receiver.last_name %>
+                    <% if conversation.has_unread_messages? && conversation.messages.last.profile_id!=current_account.profile.id %>
+                     <span class="notif"/>
+                  <% end %>
+                  </h6>
                   <p class="time"><%= conversation.last_message.body.truncate(50) %>&middot; <%= conversation.last_message.message_time %></p>
+                  
               </div>
           </div>
         </div>

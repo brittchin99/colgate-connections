@@ -1,12 +1,51 @@
 
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
+<!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">-->
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>-->
+<!--<script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>-->
 
-<div class="profile-container">
+<head>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
+</head>
+<div class="main">
+  
+  <% if !@profile.pending_friend_request?(current_account.profile) and !!current_account.profile.pending_friend_request?(@profile) %>
+    <div class="alert alert-secondary" role="alert">
+      <%= @profile.first_name %> would like to connect with you.
+      <%= link_to "Accept", connections_path(:friend_id => @profile), :method => :post, :class => "btn btn-primary spacer" %>
+      <%= link_to "Delete", friend_request_path(:friend_id => @profile), :method => :delete, :class => "btn btn-light" %>
+    </div>
+  <% end %>
+  
+  <% if flash[:success] %>
+    <div class="alert alert-success notice alert-dismissible alert-notif" role="alert">
+      <%= "#{flash[:success]}" %>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+  <% end %>
+  <% if flash[:notice] %>
+    <div class="alert alert-primary notice alert-dismissible alert-notif" role="alert">
+      <%= "#{flash[:notice]}" %>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+  <% end %>
+  <% if flash[:alert] %>
+    <div class="alert alert-warning notice alert-dismissible alert-notif" role="alert">
+      <%= "#{flash[:alert]}" %>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+  <% end %>
+  
+  <% if current_account.profile == @profile %>
+    <%= link_to "", setting_path(:id => current_account.id), :class => "btn fas fa-cog setting" %>
+  <% end %>
+  <div class="profile-container">
+    
       <!--check logged in to the right user -->
       <% if current_account.profile == @profile %>
         <%= link_to "Update Profile", edit_profile_path(@profile), :class => "btn btn-primary update-button" %>
@@ -60,75 +99,12 @@
               </div>
             <% end %>
       </div> 
-      <div>
-        <table class="profile-info">
-              <tr>
-                <th><%= "Class of #{@profile.class_year}" %></th>
-              </tr>
-              <tr>
-                <th>Major(s)</th>
-                <td> 
-                  <%= @profile.toList(@profile.majors).join(", ")%>
-                </td>
-              </tr>
-              <tr>
-                <th>Minor(s)</th>
-                <td> 
-                  <%= @profile.toList(@profile.minors).join(", ")%>
-                </td>
-              </tr>
-              <tr>
-                <th>Interest(s):</th>
-                <td>
-                  <%= @profile.toList(@profile.interests).join(", ")%>
-                </td>
-              </tr>
-        </table>
-    
-       <div class="photos" id="items">
-            <% if @profile.photos.attached? %>
-                <% @profile.photos.each do |photo| %>
-                    <img class="profile-image-square" src="<%= (url_for(photo)) %>">
-                <%end %>
-            <% else %>
-             <br/>
-              <h4 class="center">No photos yet.</h4>
-            <% end %>
-            
-        <% if current_account.profile ==@profile && @profile.photos.attachments.length < 13 %>
-          <div class="profile-image-square">
-            <div class="add-form">
-           <%= simple_form_for @profile, :url => url_for(:action => 'update', :controller => 'profiles'), :method => 'patch' do |f| %>
-            <%= f.file_field :photos, id: "f-field", required: true %>
-            <%= f.button :submit %>
-           <% end %>
-           </div>
-          </div>
-        <% end %>
-        
-
-      </div>  
-    </div>
 
 </div>
     
     
 <script>
-var el = document.getElementById("items");
-// from sortableJS
-var sortable = Sortable.create(el, {
-  group: "localStorage-example",
-  store: {
-    get: function (sortable) {
-      var order = localStorage.getItem(sortable.options.group.name);
-      return order ? order.split("|") : [];
-    },
-
-    set: function (sortable) {
-      var order = sortable.toArray();
-      localStorage.setItem(sortable.options.group.name, order.join("|"));
-    },
-  },
-});
-
+function f() {
+  alert("Not implemented yet");
+}
 </script>

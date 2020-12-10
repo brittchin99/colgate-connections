@@ -26,13 +26,12 @@
     <div class="chat-page">
       <div class="msg-inbox">
         <div class="chats">
-          <div class="msg-page">
+          <div class="msg-page" id = "all-message">
             <div class="center">
               <% if @over_ten %>
                 <%= link_to 'Show More', '?m=all'%>
               <% end %>
             </div>
-            
             <div class="ui segment">
               <% @messages.each do |message| %>
                 <% if message.body %>
@@ -61,20 +60,27 @@
                 <% end %>
               <% end %>
               </div>
-            </div>
-
-          </div>
-          <div class="msg-bottom">
-              <%= form_for [@conversation, @message], html: {:class => "form-inline"} do |f| %>
-              
-                  <%= f.text_area :body, class: "msg-box" %>
-                  <%= f.text_field :profile_id, value: current_account.profile.id, type: "hidden" %>
-                  
-                  <%= f.submit "Send Message", class: "btn btn-primary msg-button" %>
-              
-              <% end %>
           </div>
         </div>
+        <div class="msg-bottom">
+              <% if !current_account.profile.connected_to(receiver) %>
+                <div class="msg-box center alert-warning"><%= "You are currently unable to message #{receiver.first_name}" %></div>
+              <% else %>
+                <%= form_for [@conversation, @message], html: {:class => "form-inline"} do |f| %>
+                
+                    <%= f.text_area :body, class: "msg-box" %>
+                    <%= f.text_field :profile_id, value: current_account.profile.id, type: "hidden" %>
+                    
+                    <%= f.submit "Send Message", class: "btn btn-primary msg-button" %>
+                <% end %>
+              <% end %>
+          </div>
       </div>
     </div>
+  </div>
 </div>
+
+<script>
+  var element = document.getElementById("all-message");
+  element.scrollTop = element.scrollHeight;
+</script>
