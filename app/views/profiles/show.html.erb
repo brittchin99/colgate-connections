@@ -1,6 +1,8 @@
 <head>
   <%= stylesheet_link_tag 'application', media: 'all' %>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
 </head>
 <div class="main">
   
@@ -156,17 +158,27 @@
         <% end %>
         
         <% if current_account.profile.should_show("Photos", @profile) %>
+            <div class="photos" id="items">
             <% if @profile.photos.attached? %>
-              <div class="photos">
                 <% @profile.photos.each do |photo| %>
                   <img class="profile-image-square" src="<%= (url_for(photo)) %>">
-              
                 <%end %>
-            </div>
             <% else %>
               <br/>
               <h5 class="center pad">No photos yet.</h5>
             <% end %>
+            <% if current_account.profile ==@profile && @profile.photos.attachments.length < 13 %>
+            <div class="profile-image-square">
+              <div class="add-form">
+               <%= simple_form_for @profile, :url => url_for(:action => 'update', :controller => 'profiles'), :method => 'patch' do |f| %>
+                <%= f.file_field :photos, id: "f-field", required: true %>
+                <%= f.button :submit %>
+               <% end %>
+               </div>
+              </div>
+            <% end %>
+
+            </div>
         <% else %>
           <br/>
           <h5 class="center pad"><p class="fas fa-lock"/> This user's photos are private</h5>
@@ -184,7 +196,20 @@
     
     
 <script>
-function f() {
-  alert("Not implemented yet");
-}
+var el = document.getElementById("items");
+// from sortableJS
+var sortable = Sortable.create(el, {
+  group: "localStorage-example",
+  store: {
+    get: function (sortable) {
+      var order = localStorage.getItem(sortable.options.group.name);
+      return order ? order.split("|") : [];
+    },
+
+    set: function (sortable) {
+      var order = sortable.toArray();
+      localStorage.setItem(sortable.options.group.name, order.join("|"));
+    },
+  },
+});
 </script>
