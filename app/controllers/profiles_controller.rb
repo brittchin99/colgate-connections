@@ -39,9 +39,9 @@ class ProfilesController < ApplicationController
   
   
   def index
-    @profiles = Profile.where("cast(id as text) NOT LIKE ?", current_account.profile.id)
+    @profiles = Profile.where("cast(id as text) NOT LIKE ?", current_account.profile.id.to_s)
     @profiles = @profiles.where('cast(id as text) NOT IN (?)', current_account.profile.blockees.map(&:id).join(','))
-    @profiles = @profiles.where('cast(id as text) NOT IN (?)', Blockage.where('cast(blockee_id as text) LIKE ?', current_account.profile.id).map(&:profile_id).join(','))
+    @profiles = @profiles.where('cast(id as text) NOT IN (?)', Blockage.where('cast(blockee_id as text) LIKE ?', current_account.profile.id.to_s).map(&:profile_id).join(','))
 
     if !session.has_key?(:filter_list)
       session[:filter_list] = {}
