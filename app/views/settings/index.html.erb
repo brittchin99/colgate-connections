@@ -3,14 +3,14 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 </head>
 <div class="main">
+  <div class="alert alert-primary" role="alert">
+  This is what your profile looks like to those who are not connected to you.
+</div>
   <div style="text-align:left; padding:10px;" class="container">
     <%= link_to setting_path(:id => current_account.id) do %>
       <span class="btn btn-light">&lt; Back to Settings</span>
     <% end %>
     </div>
-    <div class="alert alert-primary" role="alert">
-  This is what your profile looks like to those who are not connected to you.
-</div>
   <div class="profile-container">
     
       <div class="profile-basic">

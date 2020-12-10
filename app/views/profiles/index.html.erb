@@ -41,6 +41,9 @@
               </td>
               <td>
                 <%= link_to "#{p.first_name + " " + p.last_name}", profile_path(p) %>
+                <% if current_account.profile.is_a_match(p) %>
+                   <%= image_tag("heart.png", class: "heart-small", alt:"heart") %> 
+                 <% end %>
               </td>
               <td><%= p.class_year %></td>
               <td>
