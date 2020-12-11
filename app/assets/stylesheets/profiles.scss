@@ -28,17 +28,29 @@ th {
     height: 220px;
     border-radius: 50%;
     box-sizing: border-box;
-    border: 3px solid white;
-    box-shadow: 0 0 0 2px rgba(0,0,0,.15);
+    // border: 3px solid white;
+    // box-shadow: 0 0 0 2px rgba(0,0,0,.15);
 }
 
+.circular-portrait {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.circular-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
 .profile-image-square {
-    width: 250px;
-    height: 250px;
-    box-sizing: border-box;
-    border: 3px solid white;
-    box-shadow: 0 0 0 2px rgba(0,0,0,.15);
+    width: 230px;
+    height: 230px;
+    // box-sizing: border-box;
+    // border: 3px solid white;
+    // box-shadow: 0 0 0 2px rgba(0,0,0,.15);
     margin-right: 30px;
     margin-bottom: 30px;
 
@@ -47,14 +59,17 @@ th {
 .photos {
     padding-top: 20px;
     display: grid;
+    left: 50%;
     grid-template-columns: 1fr 1fr 1fr;
 }
 
 .profile-container {
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
+    // display: flex; 
+    // flex-direction: column; 
+    // align-items: center; 
     margin-top: 50px;
+    margin-left: 13%;
+    margin-right: 13%;
     // margin-right: 160px;
 }
 
@@ -99,6 +114,11 @@ th {
   height: 15px;
   margin-bottom: 4px;
 }
+
+.border {
+  border: 1px solid black;
+}
+
 .add-form {
     position: relative;
     top: 40%;
@@ -107,4 +127,12 @@ th {
 
 #f-field {
     padding-left: 15%;
+}
+
+#pronouns {
+    font-size: 14px;
+}
+
+#status {
+    padding-bottom: 20px;
 }

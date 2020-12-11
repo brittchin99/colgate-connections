@@ -151,7 +151,6 @@ p {
   width: 40%;
 }
 
-
 .pad-left {
   padding-left: 15px; 
 }
@@ -431,7 +430,7 @@ padding: 5px;
 }
 
 .setting {
-  float: right;
+  /*float: right;*/
   font-size: 30px;
-  margin-top: -40px;
+  /*margin-top: -40px;*/
 }
