@@ -34,6 +34,79 @@
   
   
   <div class="profile-container">
+    <div class="profile-row">
+      <div class="profile-column p-left">
+        <div class="circular-portrait">
+          <% if !@profile.blocking(current_account.profile) && !current_account.profile.blocking(@profile) && @profile.avatar.attached? %>
+            <img  src="<%= (url_for(@profile.avatar)) %>">
+          <% else %>
+            <%= image_tag("avatar.jpeg", alt:"photo") %>
+          <% end %>
+        </div>
+      </div>
+      
+    <div class="profile-column p-right">
+      <h2><%= "#{@profile.first_name} #{@profile.last_name}" %>
+      <% if (!@profile.blocking(current_account.profile) && !current_account.profile.blocking(@profile)) && ((current_account.profile == @profile && current_account.profile.setting.dating) || (current_account.profile != @profile and current_account.profile.is_a_match(@profile))) %>
+        <%= image_tag("heart.png", class: "heart", alt:"heart") %> 
+      <% end %>
+      </h2>
+      
+      <% if current_account.profile.should_show("Pronouns", @profile) && !current_account.profile.blocking(@profile)%>
+        <p id="pronouns"><%= "#{@profile.pronouns}"%></p>
+      <% end %>
+      <% if @profile.status && current_account.profile.should_show("Status", @profile) && !current_account.profile.blocking(@profile)%>
+        <div id=status><%= "#{@profile.status}"%></div>
+      <% end %>
+      
+      <% if current_account.profile==@profile %>
+        <% if !@profile.status %>
+          <div id="status"><a href="#">Add a status</a></div>                   
+        <% end %>
+      <% end %>
+      
+      <% if current_account.profile.blocking(@profile) %>
+       <%= link_to "Unblock #{@profile.first_name}", blockage_path(:blockee_id => @profile), :method => :delete, :class => "btn btn-primary" %>
+      <% end %>
+      
+      <% if !@profile.blocking(current_account.profile) && !current_account.profile.blocking(@profile) %>
+        <% if current_account.profile!=@profile %>
+          <% if !current_account.profile.connected_to(@profile) %>
+            <% if @profile.pending_friend_request?(current_account.profile) %>
+              <%= link_to "Unsend Friend Request", friend_request_path(:friend_id => @profile), :method => :delete, :class => "btn btn-secondary" %>
+            <% elsif !current_account.profile.pending_friend_request?(@profile) %>
+                <%= link_to "Send Friend Request", friend_requests_path(:friend_id => @profile), :method => :post, :class => "btn btn-primary" %>
+            <% end %>
+          
+          <% elsif current_account.profile.connected_to(@profile) %>
+              <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Connected
+              </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <%= link_to "Disconnect", connection_path(:friend_id => @profile), :method => :delete, :class => "dropdown-item" %>
+              </div>
+                <%= link_to "Message #{@profile.first_name}", conversations_path(:sender_id => current_account, :receiver_id => @profile), :method => :post, :class => "btn btn-primary" %>
+          <% end %>
+        <% else %>
+          <%= link_to "Update Profile", edit_profile_path(@profile), :class => "btn btn-primary" %>
+          <%= link_to "", settings_path(:id => current_account.id), :class => "btn btn-secondary view fas fa-eye" %>
+          <%= link_to "", setting_path(:id => current_account.id), :class => "btn fas fa-cog setting" %>
+        <% end %>
+        
+        <% if current_account.profile!=@profile %>
+            <div class="btn-group">
+              <button type="button" class="btn options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <h1 class="options-text">&middot;&middot;&middot;</h1>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right">
+                  <%= link_to "Block #{@profile.first_name}", blockages_path(:blockee_id => @profile), :method => :post, :class => "dropdown-item" %>
+              </div>
+            </div>
+        <%end%>
+      <%end %>
+    </div>
+  </div>
+    <br/>
     <% if !@profile.blocking(current_account.profile) && !current_account.profile.blocking(@profile) %>
       <h5><span class="fas fa-graduation-cap"/><%= "Class of #{@profile.class_year}" %></h5>
       <%= Profile.toList(@profile.majors).join(" and ")%><%= Profile.toList(@profile.majors).length > 1 ? " Double Major" : " Major" %>
@@ -89,7 +162,7 @@
     <% elsif current_account.profile.blocking(@profile) %>
       <div class="center pad">User is blocked.</div>
     <% else %>
-      <div class="center pad">User unavailable</div>
+      <div class="center pad">User is unavailable</div>
     <% end %>
   </div>
 </div>

@@ -34,8 +34,8 @@ th {
 
 .circular-portrait {
   position: relative;
-  width: 200px;
-  height: 200px;
+  width: 190px;
+  height: 190px;
   overflow: hidden;
   border-radius: 50%;
 }
@@ -135,4 +135,34 @@ th {
 
 #status {
     padding-bottom: 20px;
+}
+
+/* Create two unequal columns that floats next to each other */
+.profile-column {
+  float: left;
+  padding: 10px;
+}
+
+.p-left {
+object-align: center;
+text-align: center;
+  width: 25%;
+}
+
+.p-right {
+  width: 75%;
+}
+
+/* Clear floats after the columns */
+.profile-row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.view {
+    // height: 20px;
+    font-size: 20px;
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
