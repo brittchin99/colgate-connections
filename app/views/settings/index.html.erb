@@ -3,110 +3,84 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 </head>
 <div class="main">
-  <div class="alert alert-primary" role="alert">
+  <% profile = current_account.profile %>
+  <div class="alert alert-primary pad" role="alert">
   This is what your profile looks like to those who are not connected to you.
-</div>
-  <div style="text-align:left; padding:10px;" class="container">
-    <%= link_to setting_path(:id => current_account.id) do %>
-      <span class="btn btn-light">&lt; Back to Settings</span>
+  <%= link_to :back do %>
+      <div class="btn btn-light float-right">&lt; Exit View As</div>
     <% end %>
-    </div>
+  </div>
+  
   <div class="profile-container">
-    
-      <div class="profile-basic">
-            <% if current_account.profile.avatar.attached? %>
-              <div class="center">
-                <img class="profile-image-circle" src="<%= (url_for(current_account.profile.avatar)) %>">
-              </div>
-            <% else %>
-              <div class="center">
-                <%= image_tag("avatar.jpeg", class: "profile-image-circle", alt:"photo") %>
-              </div>
-            <% end %>
-           
-            <div class="profile-text">
-                 <h4><%= "#{current_account.profile.first_name} #{current_account.profile.last_name}" %>
-                 
-                 <% if current_account.profile.setting.dating %>
-                   <%= image_tag("heart.png", class: "heart", alt:"heart") %> 
-                 <% end %>
-                 
-                 </h4>
-                 <% if Setting.to_list(current_account.profile.setting.public).include? "Pronouns"%>
-                   <p> <%= "#{current_account.profile.pronouns}"%></p>
-                   <% end %>
-                  
-                    <div>
-                      <div class="btn btn-primary">Send Friend Request</div>
-                          
-                      
-                      <div class="btn-group">
-                        <button type="button" class="btn options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <h1 class="options-text">&middot;&middot;&middot;</h1>
-                        </button>
-                          <div class="dropdown-menu dropdown-menu-right">
-                              <div class="dropdown-item">Block <%=current_account.profile.first_name%></div>
-                            
-                        </div>
-                      </div>
-                    </div>
-                   
-             
-                    
-                    <% if Setting.to_list(current_account.profile.setting.public).include? "Status"%>
-                        <div class="pad"><%= "#{current_account.profile.status}"%></div>
-                    <% end %>
-                  
-                  <br/>
-            </div>
-      </div> 
+    <div class="profile-row">
+      <div class="profile-column p-left">
+        <div class="circular-portrait">
+          <% if profile.avatar.attached? %>
+            <img  src="<%= (url_for(profile.avatar)) %>">
+          <% else %>
+            <%= image_tag("avatar.jpeg", alt:"photo") %>
+          <% end %>
+        </div>
+      </div>
+      
+    <div class="profile-column p-right">
+      <h2><%= "#{profile.first_name} #{profile.last_name}" %>
+      <% if (profile.setting.dating) %>
+        <%= image_tag("heart.png", class: "heart", alt:"heart") %> 
+      <% end %>
+      </h2>
+      
+      <% if Setting.to_list(profile.setting.public).include? "Pronouns"%>
+        <p id="pronouns"><%= "#{profile.pronouns}"%></p>
+      <% end %>
+      <% if profile.status && (Setting.to_list(profile.setting.public).include? "Status") %>
+        <div id=status><%= "#{profile.status}"%></div>
+      <% end %>
+      
+      
+        <div class="btn btn-primary">Send Friend Request</div>
 
-        <div>
-          <table class="profile-info">
-                <tr>
-                  <th><%= "Class of #{current_account.profile.class_year}" %></th>
-                </tr>
-                <tr>
-                  <th>Major(s):</th>
-                  <td> 
-                    <%= Profile.toList(current_account.profile.majors).join(", ")%>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Minor(s):</th>
-                  <td> 
-                    <%= Profile.toList(current_account.profile.minors).join(", ")%>
-                  </td>
-                </tr>
-                <% if Setting.to_list(current_account.profile.setting.public).include? "Interests" %>
-                  <tr>
-                    <th>Interest(s):</th>
-                    <td>
-                      <%= Profile.toList(current_account.profile.interests).join(", ")%>
-                    </td>
-                  </tr>
-                <% end %>
-          </table>
-          
-        
-        <% if Setting.to_list(current_account.profile.setting.public).include? "Photos" %>
-            <% if current_account.profile.photos.attached? %>
-              <div class="photos">
-                <% current_account.profile.photos.each do |photo| %>
-                  <img class="profile-image-square" src="<%= (url_for(photo)) %>">
-              
-                <%end %>
+            <div class="btn-group">
+              <button type="button" class="btn options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <h1 class="options-text">&middot;&middot;&middot;</h1>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right">
+                  <div class="dropdown-item">Block <%= profile.first_name %></div>
+              </div>
             </div>
-            <% else %>
+    </div>
+  </div>
+    <br/>
+      <h5><span class="fas fa-graduation-cap"/><%= "Class of #{profile.class_year}" %></h5>
+      <%= Profile.toList(profile.majors).join(" and ")%><%= Profile.toList(profile.majors).length > 1 ? " Double Major" : " Major" %>
+      <br/>
+      <% if Profile.toList(profile.minors).length > 0 %>
+        <%= Profile.toList(profile.minors).join(" and ")%><%= Profile.toList(profile.minors).length > 1 ? " Double Minor" : " Minor" %>
+      <% end %>
+      
+      <% if Setting.to_list(profile.setting.public).include? "Interests" %>
+        <p>Interested in <%= Profile.toList(profile.interests).to_sentence %></p>
+      <% end %>
+      <hr/>
+      
+      
+      <% if Setting.to_list(profile.setting.public).include? "Photos" %>
+            <div class="photos">
+      
+            <% if profile.photos.attached? %>
+                <% profile.photos.each do |photo| %>
+                  <img class="profile-image-square" src="<%= (url_for(photo)) %>">
+                <%end %>
+            <% else%>
               <br/>
               <h5 class="center pad">No photos yet.</h5>
             <% end %>
+            </div>
+            
         <% else %>
           <br/>
           <h5 class="center pad"><p class="fas fa-lock"/> This user's photos are private</h5>
         <% end %>
-            
-       </div>
-
+  </div>
 </div>
 </div>

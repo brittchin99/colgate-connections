@@ -5,7 +5,6 @@
   <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
 </head>
 <div class="main">
-  
   <% if !@profile.pending_friend_request?(current_account.profile) and !!current_account.profile.pending_friend_request?(@profile) %>
     <div class="alert alert-secondary" role="alert">
       <%= @profile.first_name %> would like to connect with you.
@@ -33,131 +32,102 @@
     </div>
   <% end %>
   
-  <% if current_account.profile == @profile %>
-    <%= link_to "", setting_path(:id => current_account.id), :class => "btn fas fa-cog setting" %>
-  <% end %>
-  <div class="profile-container">
-    
-      <!--check logged in to the right user -->
-      <% if current_account.profile == @profile %>
-        <%= link_to "Update Profile", edit_profile_path(@profile), :class => "btn btn-primary update-button" %>
-      <% end %>
-      <div class="profile-basic">
-            <% if !@profile.blocking(current_account.profile) && !current_account.profile.blocking(@profile) && @profile.avatar.attached? %>
-              <div class="center">
-                <img class="profile-image-circle" src="<%= (url_for(@profile.avatar)) %>">
-              </div>
-            <% else %>
-              <div class="center">
-                <%= image_tag("avatar.jpeg", class: "profile-image-circle", alt:"photo") %>
-              </div>
-            <% end %>
-            <div class="profile-text">
-                 <h4><%= "#{@profile.first_name} #{@profile.last_name}" %>
-                 
-                 <% if (current_account.profile == @profile && current_account.profile.setting.dating) || (current_account.profile != @profile and current_account.profile.is_a_match(@profile)) %>
-                   <%= image_tag("heart.png", class: "heart", alt:"heart") %> 
-                 <% end %>
-                 </h4>
-                 <% if current_account.profile.should_show("Pronouns", @profile)%>
-                   <p> <%= "#{@profile.pronouns}"%></p>
-                   <% end %>
-                  <!--check logged in to the right user -->
-                  <% if current_account.profile.blocking(@profile) %>
-                  
-                    <%= link_to "Unblock #{@profile.first_name}", blockage_path(:blockee_id => @profile), :method => :delete, :class => "btn btn-primary" %>
-                
-                  <% end %>
-                  
-                  <% if !@profile.blocking(current_account.profile) && !current_account.profile.blocking(@profile) %>
-                    <div>
-                      <% if current_account.profile!=@profile %>
-                        <% if !current_account.profile.connected_to(@profile) %>
-                          <% if @profile.pending_friend_request?(current_account.profile) %>
-                            <%= link_to "Unsend Friend Request", friend_request_path(:friend_id => @profile), :method => :delete, :class => "btn btn-secondary" %>
-                          <% elsif !current_account.profile.pending_friend_request?(@profile) %>
-                            <%= link_to "Send Friend Request", friend_requests_path(:friend_id => @profile), :method => :post, :class => "btn btn-primary" %>
-                          <% end %>
-    
-                        <% elsif current_account.profile.connected_to(@profile) %>
-                          
-                   
-                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Connected
-                        </button>
-                          <div class="dropdown-menu dropdown-menu-right">
-                            <%= link_to "Disconnect", connection_path(:friend_id => @profile), :method => :delete, :class => "dropdown-item" %>
-                        </div>
-                  
-                          <%= link_to "Message #{@profile.first_name}", conversations_path(:sender_id => current_account, :receiver_id => @profile), :method => :post, :class => "btn btn-primary" %>
-                        <% end %>
-                      <% end %>
-                      
-                      <% if current_account.profile!=@profile %>
-                      <div class="btn-group">
-                        <button type="button" class="btn options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <h1 class="options-text">&middot;&middot;&middot;</h1>
-                        </button>
-                          <div class="dropdown-menu dropdown-menu-right">
-                            
-                              <%= link_to "Block #{@profile.first_name}", blockages_path(:blockee_id => @profile), :method => :post, :class => "dropdown-item" %>
-                           
-                        </div>
-                      </div>
-                    </div>
-                   
-                    <%end%>
-                    
-                    <% if @profile.status && current_account.profile.should_show("Status", @profile)%>
-                        <div class="pad"><%= "#{@profile.status}"%></div>
-                    <% end %>
-                    <% if current_account.profile==@profile %>
-                      <% if !@profile.status %>
-                        <button onclick="toggle()" class="add-button" id="profile-status">Add a status</button>                      
-                      <% end %>
-                    <% end %>
-                    <!--connected & message button -->
-                    
-                  <% end %>
-
-                  <br/>
-            </div>
-      </div> 
-
-      <% if !@profile.blocking(current_account.profile) && !current_account.profile.blocking(@profile) %>
-        <div>
-          <table class="profile-info">
-                <tr>
-                  <th><%= "Class of #{@profile.class_year}" %></th>
-                </tr>
-                <tr>
-                  <th>Major(s):</th>
-                  <td> 
-                    <%= Profile.toList(@profile.majors).join(", ")%>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Minor(s):</th>
-                  <td> 
-                    <%= Profile.toList(@profile.minors).join(", ")%>
-                  </td>
-                </tr>
-                <% if current_account.profile.should_show("Interests", @profile) %>
-                  <tr>
-                    <th>Interest(s):</th>
-                    <td>
-                      <%= Profile.toList(@profile.interests).join(", ")%>
-                    </td>
-                  </tr>
-                <% end %>
-          </table>
-          
   
-        <% if current_account.profile ==@profile && @profile.photos.attachments.length < 13 %>
-          <h4 class="center">Upload up to 13 photos!</h4>
+  <div class="profile-container">
+    <div class="profile-row">
+      <div class="profile-column p-left">
+        <div class="circular-portrait">
+          <% if !@profile.blocking(current_account.profile) && !current_account.profile.blocking(@profile) && @profile.avatar.attached? %>
+            <img  src="<%= (url_for(@profile.avatar)) %>">
+          <% else %>
+            <%= image_tag("avatar.jpeg", alt:"photo") %>
+          <% end %>
+        </div>
+      </div>
+      
+    <div class="profile-column p-right">
+      <h2><%= "#{@profile.first_name} #{@profile.last_name}" %>
+      <% if (!@profile.blocking(current_account.profile) && !current_account.profile.blocking(@profile)) && ((current_account.profile == @profile && current_account.profile.setting.dating) || (current_account.profile != @profile and current_account.profile.is_a_match(@profile))) %>
+        <%= image_tag("heart.png", class: "heart", alt:"heart") %> 
+      <% end %>
+      </h2>
+      
+      <% if current_account.profile.should_show("Pronouns", @profile) && !current_account.profile.blocking(@profile)%>
+        <p id="pronouns"><%= "#{@profile.pronouns}"%></p>
+      <% end %>
+      <% if @profile.status && current_account.profile.should_show("Status", @profile) && !current_account.profile.blocking(@profile)%>
+        <div id=status><%= "#{@profile.status}"%></div>
+      <% end %>
+      
+      <% if current_account.profile==@profile %>
+        <% if !@profile.status %>
+          <div id="status"><a href="#">Add a status</a></div>                   
+        <% end %>
+      <% end %>
+      
+      <% if current_account.profile.blocking(@profile) %>
+       <%= link_to "Unblock #{@profile.first_name}", blockage_path(:blockee_id => @profile), :method => :delete, :class => "btn btn-primary" %>
+      <% end %>
+      
+      <% if !@profile.blocking(current_account.profile) && !current_account.profile.blocking(@profile) %>
+        <% if current_account.profile!=@profile %>
+          <% if !current_account.profile.connected_to(@profile) %>
+            <% if @profile.pending_friend_request?(current_account.profile) %>
+              <%= link_to "Unsend Friend Request", friend_request_path(:friend_id => @profile), :method => :delete, :class => "btn btn-secondary" %>
+            <% elsif !current_account.profile.pending_friend_request?(@profile) %>
+                <%= link_to "Send Friend Request", friend_requests_path(:friend_id => @profile), :method => :post, :class => "btn btn-primary" %>
+            <% end %>
+          
+          <% elsif current_account.profile.connected_to(@profile) %>
+              <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Connected
+              </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <%= link_to "Disconnect", connection_path(:friend_id => @profile), :method => :delete, :class => "dropdown-item" %>
+              </div>
+                <%= link_to "Message #{@profile.first_name}", conversations_path(:sender_id => current_account, :receiver_id => @profile), :method => :post, :class => "btn btn-primary" %>
+          <% end %>
+        <% else %>
+          <%= link_to "Update Profile", edit_profile_path(@profile), :class => "btn btn-primary" %>
+          <%= link_to "", settings_path(:id => current_account.id), :class => "btn btn-secondary view fas fa-eye" %>
+          <%= link_to "", setting_path(:id => current_account.id), :class => "btn fas fa-cog setting" %>
         <% end %>
         
-        <% if current_account.profile.should_show("Photos", @profile) %>
+        <% if current_account.profile!=@profile %>
+            <div class="btn-group">
+              <button type="button" class="btn options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <h1 class="options-text">&middot;&middot;&middot;</h1>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right">
+                  <%= link_to "Block #{@profile.first_name}", blockages_path(:blockee_id => @profile), :method => :post, :class => "dropdown-item" %>
+              </div>
+            </div>
+        <%end%>
+      <%end %>
+    </div>
+  </div>
+    <br/>
+    <% if !@profile.blocking(current_account.profile) && !current_account.profile.blocking(@profile) %>
+      <h5><span class="fas fa-graduation-cap"/><%= "Class of #{@profile.class_year}" %></h5>
+      <%= Profile.toList(@profile.majors).join(" and ")%><%= Profile.toList(@profile.majors).length > 1 ? " Double Major" : " Major" %>
+      <br/>
+      <% if Profile.toList(@profile.minors).length > 0 %>
+        <%= Profile.toList(@profile.minors).join(" and ")%><%= Profile.toList(@profile.minors).length > 1 ? " Double Minor" : " Minor" %>
+      <% end %>
+      
+      <% if current_account.profile.should_show("Interests", @profile) %>
+        <p>Interested in <%= Profile.toList(@profile.interests).to_sentence %></p>
+      <% end %>
+      <hr/>
+      
+      <% if current_account.profile == @profile %>
+      <div class="center">
+          <button class="btn btn-maroon">Edit Photos</button>
+      </div>
+      <% end %>
+      
+      
+      <% if current_account.profile.should_show("Photos", @profile) %>
           <% if current_account.profile == @profile %>
             <div class="photos" id="items">
           <% else %>
@@ -165,36 +135,42 @@
           <% end %>
             <% if @profile.photos.attached? %>
                 <% @profile.photos.each do |photo| %>
-                  <img class="profile-image-square" src="<%= (url_for(photo)) %>">
+                <div class="profile-image-square">
+                  <img class="profile-image-square-img" src="<%= (url_for(photo)) %>">
+                </div>
+                  
                 <%end %>
-            <% else %>
+            <% elsif current_account.profile != @profile%>
               <br/>
               <h5 class="center pad">No photos yet.</h5>
             <% end %>
-            <% if current_account.profile ==@profile && @profile.photos.attachments.length < 13 %>
-            <div class="profile-image-square">
+            
+            <% if current_account.profile == @profile && @profile.photos.attachments.length < 13 %>
+            <div id="no-drag" class="no-drag profile-image-square border" style="position: relative;">
               <div class="add-form">
                <%= simple_form_for @profile, :url => url_for(:action => 'update', :controller => 'profiles'), :method => 'patch' do |f| %>
                 <%= f.file_field :photos, id: "f-field", required: true %>
                 <%= f.button :submit %>
                <% end %>
                </div>
-              </div>
-            <% end %>
-
             </div>
+            <% end %>
+            
+            </div>
+            
+            
+            
         <% else %>
           <br/>
           <h5 class="center pad"><p class="fas fa-lock"/> This user's photos are private</h5>
         <% end %>
-            
-       </div>
-      <% elsif current_account.profile.blocking(@profile) %>
-        <div class="pad">User is blocked.</div>
-      <% else %>
-        <div class="pad">User unavailable</div>
-      <% end %>
-</div>
+        
+    <% elsif current_account.profile.blocking(@profile) %>
+      <div class="center pad">User is blocked.</div>
+    <% else %>
+      <div class="center pad">User is unavailable</div>
+    <% end %>
+  </div>
 </div>
 
     
@@ -204,9 +180,11 @@ var el = document.getElementById("items");
 // from sortableJS
 var sortable = Sortable.create(el, {
   group: "localStorage-example",
+  filter: ".no-drag",
   store: {
     get: function (sortable) {
       var order = localStorage.getItem(sortable.options.group.name);
+      console.log(sortable.options.group)
       return order ? order.split("|") : [];
     },
 
