@@ -135,7 +135,10 @@
           <% end %>
             <% if @profile.photos.attached? %>
                 <% @profile.photos.each do |photo| %>
-                  <img class="profile-image-square" src="<%= (url_for(photo)) %>">
+                <div class="profile-image-square">
+                  <img class="profile-image-square-img" src="<%= (url_for(photo)) %>">
+                </div>
+                  
                 <%end %>
             <% elsif current_account.profile != @profile%>
               <br/>
