@@ -46,7 +46,7 @@
                 <% if Setting.to_list(s.setting.public).include? "Pronouns"%>
                   <h6 class="card-subtitle mb-2 text-muted"><%= "#{s.pronouns}" =%></h6>
                 <% end %>
-                <p class="time"><%="#{current_account.profile.get_mutual_connections(s).length} mutual connections."%></p>
+                <p class="time"><%=pluralize(current_account.profile.get_mutual_connections(s).length, 'mutual connection' )%></p>
               </div>
             </div>
           <%end%>

@@ -39,11 +39,8 @@ class ProfilesController < ApplicationController
   
   
   def index
-    @profiles = Profile.where("cast(id as text) NOT LIKE ?", current_account.profile.id.to_s)
-    @profiles = @profiles.where('id NOT IN (?)', current_account.profile.blockees.map(&:id).join(',')) if current_account.profile.blockees.length>0
-    blockings = Blockage.where('cast(blockee_id as text) LIKE ?', current_account.profile.id.to_s)
-    @profiles = @profiles.where('id NOT IN (?)', blockings.map(&:profile_id).join(',')) if blockings.length>0
-
+    @profiles = current_account.profile.get_accessible_profiles
+    
     if !session.has_key?(:filter_list)
       session[:filter_list] = {}
     end

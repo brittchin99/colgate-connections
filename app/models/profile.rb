@@ -62,9 +62,18 @@ class Profile < ApplicationRecord
     Profile.where("id IN (SELECT a.friend_id FROM Connections a, Connections b WHERE a.friend_id = b.friend_id AND cast(a.profile_id as text) = ? AND cast(b.profile_id as text) = ?)", self.id.to_s, profile.id.to_s)
   end
   
-  def suggested_connections
+  def get_accessible_profiles
     profiles = Profile.where("cast(id as text) NOT LIKE ?", self.id.to_s)
+    profiles = profiles.where('id NOT IN (SELECT blockee_id FROM blockages WHERE cast(profile_id as text) LIKE ?)', self.id.to_s) if self.blockees.length>0
+    blockings = Blockage.where('cast(blockee_id as text) LIKE ?', self.id.to_s)
+    profiles = profiles.where('id NOT IN (SELECT profile_id FROM blockages WHERE cast(blockee_id as text) LIKE ?)', self.id.to_s) if blockings.length>0
+    return profiles
+  end
+  
+  def suggested_connections
+    profiles = get_accessible_profiles
     profiles = profiles.where('id NOT IN (SELECT friend_id FROM connections WHERE cast(profile_id as text) = ?)', self.id.to_s) if self.connections.length>0
+
     matches = Hash.new
     
     profiles.each do |p|
