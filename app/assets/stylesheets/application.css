@@ -282,6 +282,19 @@ padding: 5px;
     overflow: hidden;
 }
 
+.contact-frame {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.contact-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 /* Messaging */
 
  .container {
