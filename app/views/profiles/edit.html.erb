@@ -3,8 +3,9 @@
  
         <%= simple_form_for @profile, :url => url_for(:action => 'update', :controller => 'profiles'), :method => 'patch' do |f| %>
         
-            <%= f.label "Profile photo"%><br>
+            <%= f.label "Profile photo"%><br/>
             <%= f.file_field :avatar %>
+            <br/><br/>
   
             <%= f.input :first_name, input_html: { required: false, size: 40 }%>
             
