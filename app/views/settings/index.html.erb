@@ -59,7 +59,7 @@
       <% end %>
       
       <% if Setting.to_list(profile.setting.public).include? "Interests" %>
-        <p>Interested in <%= Profile.toList(@profile.interests).to_sentence %></p>
+        <p>Interested in <%= Profile.toList(profile.interests).to_sentence %></p>
       <% end %>
       <hr/>
       
