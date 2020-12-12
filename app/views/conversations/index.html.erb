@@ -35,7 +35,8 @@
                      <span class="notif"/>
                   <% end %>
                   </h6>
-                  <p class="time"><%= conversation.last_message.body.truncate(50) %>&middot; <%= conversation.last_message.message_time %></p>
+                  
+                  <p class="time"><%= conversation.last_message.body.truncate(50) %>&middot; <%= conversation.last_message.message_time %> </p>
                   
               </div>
           </div>
@@ -45,3 +46,43 @@
     <% end %>
   <% end %>
 </div>
+
+<script>
+  var moment = require('moment'); // require
+  
+  var REF = moment("2020-06-05");
+  
+  var TODAY = REF.clone().startOf('day');
+  
+  var YESTERDAY = REF.clone().subtract(1, 'days').startOf('day');
+  
+  var A_WEEK_OLD = REF.clone().subtract(7, 'days').startOf('day');
+  
+  function isToday(momentDate) {
+    return momentDate.isSame(TODAY, 'd');
+  }
+  
+  function isYesterday(momentDate) {
+    return momentDate.isSame(YESTERDAY, 'd');
+  }
+  
+  function isWithinAWeek(momentDate) {
+    return momentDate.isAfter(A_WEEK_OLD);
+  }
+  
+  function getDisplayDate(date) {
+    console.log(date)
+    console.log(moment("not a real date").isValid())
+    // if isToday(date) {
+    //   return "Today"
+    // } else if isYesterday(date) {
+    //   return "Yesterday"
+    // } else if isWithinAWeek(date) {
+    //   return 
+    // }
+  }
+  
+  window.onload = function() {
+    console.log("hello")
+  };
+</script>
