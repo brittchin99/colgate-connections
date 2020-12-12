@@ -17,7 +17,7 @@
             
             <%= f.input :majors, label: "Major(s)", collection: Profile::MAJORS, input_html: { multiple: true, required: false }, include_hidden: false %>
             
-            <%= f.input :minors, label: "Minor(s)", collection: Profile::MAJORS, input_html: { multiple: true, required: false }, include_hidden: false %>
+            <%= f.input :minors, label: "Minor(s)", collection: Profile::MINORS, input_html: { multiple: true, required: false }, include_hidden: false %>
             
             <%= f.input :interests, as: :check_boxes, collection: Profile::INTERESTS, wrapper: :vertical_collection_inline, include_hidden: false %>
             

@@ -8,7 +8,7 @@
       
       <p><%= f.input :majors, label: "Major(s)", collection: Profile::MAJORS, input_html: { multiple: true }, include_hidden: false, selected: session[:filter_list][:majors], required: false %></p>
       
-      <p><%= f.input :minors, label: "Minor(s)", collection: Profile::MAJORS, input_html: { multiple: true }, include_hidden: false, selected: session[:filter_list][:minors], required: false %></p>
+      <p><%= f.input :minors, label: "Minor(s)", collection: Profile::MINORS, input_html: { multiple: true }, include_hidden: false, selected: session[:filter_list][:minors], required: false %></p>
       
       <p><%= f.input :interests, as: :check_boxes, collection: Profile::INTERESTS, wrapper: :vertical_collection_inline, include_hidden: false, checked: session[:filter_list][:interests], required: false %></p>
       
@@ -23,7 +23,7 @@
       
       <p><%= f.input :majors, label: "Major(s)", collection: Profile::MAJORS, input_html: { multiple: true }, include_hidden: false, required: false %></p>
       
-      <p><%= f.input :minors, label: "Minor(s)", collection: Profile::MAJORS, input_html: { multiple: true }, include_hidden: false, required: false %></p>
+      <p><%= f.input :minors, label: "Minor(s)", collection: Profile::MINORS, input_html: { multiple: true }, include_hidden: false, required: false %></p>
       
       <p><%= f.input :interests, as: :check_boxes, collection: Profile::INTERESTS, wrapper: :vertical_collection_inline, include_hidden: false, required: false %></p>
       
