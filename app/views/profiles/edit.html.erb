@@ -19,7 +19,7 @@
             
             <%= f.input :minors, label: "Minor(s)", collection: Profile::MINORS, input_html: { multiple: true, required: false }, include_hidden: false %>
             
-            <%= f.input :interests, as: :check_boxes, collection: Profile::INTERESTS, wrapper: :vertical_collection_inline, include_hidden: false %>
+            <%= f.input :interests, :label => "Interests (Choose up to 5)", as: :check_boxes, collection: Profile::INTERESTS, wrapper: :vertical_collection_inline, include_hidden: false %>
             
             <%= f.button :submit, class: "btn-primary" %>
             
