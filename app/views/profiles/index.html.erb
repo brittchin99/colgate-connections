@@ -38,7 +38,7 @@
               <p>
               <td>
                <div class="contact-frame">
-                  <% if p.avatar.attached? %>
+                <% if p.avatar.attached? %>
                   <img src="<%= (url_for(p.avatar)) %>">
                 <% else %>
                   <%= image_tag("avatar.jpeg", class: "", alt:"photo") %>

@@ -64,7 +64,16 @@
             <% if account_signed_in? && current_account.profile.first_name %>
               <div class="btn-group">
                 <button type="button" style="color:white;" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <%= current_account.profile.first_name + " " + current_account.profile.last_name %>
+                  <div>
+                    <div class="contact-frame header-pic float-left">
+                <% if current_account.profile.avatar.attached? %>
+                  <img src="<%= (url_for(current_account.profile.avatar)) %>">
+                <% else %>
+                  <%= image_tag("avatar.jpeg", class: "", alt:"photo") %>
+                <% end %>
+                </div>
+                    <p class="float-left"><%= current_account.profile.first_name + " " + current_account.profile.last_name %></p>
+                  </div>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
                   <%= link_to "My Profile", profile_path(current_account), :class => "dropdown-item" %>

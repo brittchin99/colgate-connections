@@ -295,6 +295,10 @@ padding: 5px;
   object-fit: cover;
 }
 
+.header-pic {
+  margin-right: 10px;
+}
+
 /* Messaging */
 
  .container {

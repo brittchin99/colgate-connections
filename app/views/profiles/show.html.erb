@@ -55,13 +55,14 @@
       <% if current_account.profile.should_show("Pronouns", @profile) && !current_account.profile.blocking(@profile)%>
         <p id="pronouns"><%= "#{@profile.pronouns}"%></p>
       <% end %>
-      <% if @profile.status && current_account.profile.should_show("Status", @profile) && !current_account.profile.blocking(@profile)%>
+      <% if @profile.status && !@profile.status.blank? && current_account.profile.should_show("Status", @profile) && !current_account.profile.blocking(@profile)%>
         <div id=status><%= "#{@profile.status}"%></div>
       <% end %>
       
       <% if current_account.profile==@profile %>
-        <% if !@profile.status %>
-          <div id="status"><a href="#">Add a status</a></div>                   
+        <% if !@profile.status || @profile.status.blank? %>
+          <div id="status"><%= link_to "Add a Status", edit_profile_path(@profile), :class => "link" %></div> 
+          
         <% end %>
       <% end %>
       
@@ -154,9 +155,6 @@
             <% end %>
             
             </div>
-            
-            
-            
         <% else %>
           <br/>
           <h5 class="center pad"><p class="fas fa-lock"/> This user's photos are private</h5>
