@@ -14,7 +14,9 @@ class ProfilesController < ApplicationController
 
   def update 
     @profile = Profile.find(params[:id])
+    
     attributes = {:majors => @profile.majors, :minors => @profile.minors, :interests => @profile.interests, :status => @profile.status}
+    
     unless params[:profile].nil?
       if(!params[:profile][:avatar].nil?)
         @profile.avatar.purge

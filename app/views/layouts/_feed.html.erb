@@ -7,7 +7,7 @@
   <table class="table">
     <tbody>
       <% if current_account.profile.notifications.length == 0 %>
-        <div class="pad-left">No notifications yet.</div>
+        <div class="pad-left center">No notifications yet.</div>
       <% else %>
           <% current_account.profile.notifications.order("created_at DESC").each do |n| %>
           <tr>

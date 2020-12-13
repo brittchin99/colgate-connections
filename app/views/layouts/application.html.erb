@@ -65,9 +65,11 @@
             <% if account_signed_in? && current_account.profile.first_name %>
               <div class="btn-group">
                 <div class="dropdown">
-                  <button class="btn" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <button id="notif" class="btn" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="btn fas fa-bell bell"/>
-                    <!--<span class="feed-notif"/>-->
+                    <% if current_account.profile.has_unread_notifications %>
+                      <div id="dot" class="feed-notif"/>
+                    <% end %>
                   </button>
                   <div class="dropdown-menu notif-bar" style="margin-left: -200px;">
                     <%= render 'layouts/feed' %>
@@ -123,3 +125,25 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </body>
 </html>
+
+<script>
+if (document.getElementById("notif") !== null) {
+  document.getElementById("notif").onclick = function () { 
+    <% 
+    if current_account
+      notifs = current_account.profile.notifications
+    
+      if notifs.last
+        if !notifs.last.read
+          notifs.last.update_attributes(:read => true)
+        end
+      end
+    end
+    %>
+    if (document.getElementById("dot") !== null) {
+      var dot = document.getElementById("dot");
+      dot.remove();
+    };
+  };
+};
+</script>

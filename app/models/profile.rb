@@ -44,6 +44,14 @@ class Profile < ApplicationRecord
     false
   end
   
+  def has_unread_notifications
+    if self.notifications.last == nil
+      return FALSE
+    else
+      return !self.notifications.last.read
+    end
+  end
+  
   def should_show(s, profile)
     return self == profile || self.connected_to(profile) || (self != profile and Setting.to_list(profile.setting.public).include? s)
   end
