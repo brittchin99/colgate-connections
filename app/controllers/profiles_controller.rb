@@ -22,27 +22,39 @@ class ProfilesController < ApplicationController
         @profile.avatar.purge
         @profile.avatar.attach(params[:profile][:avatar])
         current_account.profile.friends.each do |c|
-          c.notifications.create(:updater_id => current_account.profile.id, :category => 'avatar', :read => false)
+          if Setting.to_list(c.setting.notifs).include? "Connection Profile Updates"
+            c.notifications.create(:updater_id => current_account.profile.id, :category => 'avatar', :read => false)
+          end
         end
       end 
   
       if (!params[:profile][:photos].nil?)
         @profile.photos.attach(params[:profile][:photos])
         current_account.profile.friends.each do |c|
-          c.notifications.create(:updater_id => current_account.profile.id, :category => 'photos', :read => false)
+          if Setting.to_list(c.setting.notifs).include? "Connection Profile Updates"
+            c.notifications.create(:updater_id => current_account.profile.id, :category => 'photos', :read => false)
+          end
         end
       end 
       if @profile.update(profile_params)
         flash[:success] = "Profile updated!"
+        
         [:majors, :minors, :interests, :status].each do |field|
           if (!params[:profile][field].blank? && params[:profile][field].to_s!=Profile.toList(attributes[field].to_s).to_s)
-            print params[:profile][field].to_s
-            puts "----"
-            print attributes[field].to_s
-            puts "-------"
-
+            p params[:profile][field]
+            p Profile.toList(attributes[field].to_s)
+            
             current_account.profile.friends.each do |c|
-              c.notifications.create(:updater_id => current_account.profile.id, :category => field.to_s, :read => false)
+              if Setting.to_list(c.setting.notifs).include? "Connection Profile Updates"
+                if field.to_s == "status"
+                  c.notifications.create(:updater_id => current_account.profile.id, :category => field.to_s, :content => params[:profile][field],  :read => false)
+                else
+                  changes = params[:profile][field] - Profile.toList(attributes[field].to_s)
+                  if !(changes).empty?
+                    c.notifications.create(:updater_id => current_account.profile.id, :content => changes, :category => field.to_s, :read => false)
+                  end
+                end
+              end
             end
           end
         end

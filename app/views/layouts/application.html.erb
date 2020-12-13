@@ -37,7 +37,6 @@
               <span class="notif side-notif"/>
             <% end %>
           </div>
-          <%= link_to "My Notifications", notifications_path%>
         </div>
     <% end %>
    
@@ -128,6 +127,7 @@
 
 <script>
 if (document.getElementById("notif") !== null) {
+  
   document.getElementById("notif").onclick = function () { 
     <% 
     if current_account
