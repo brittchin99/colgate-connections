@@ -14,7 +14,7 @@ class ProfilesController < ApplicationController
 
   def update 
     @profile = Profile.find(params[:id])
-    attributes = {:majors => @profile.majors, :minors => @profile.minors, :interests => @profile.interests}
+    attributes = {:majors => @profile.majors, :minors => @profile.minors, :interests => @profile.interests, :status => @profile.status}
     unless params[:profile].nil?
       if(!params[:profile][:avatar].nil?)
         @profile.avatar.purge
@@ -26,7 +26,7 @@ class ProfilesController < ApplicationController
       end 
       if @profile.update(profile_params)
         flash[:success] = "Profile updated!"
-        [:majors, :minors, :interests].each do |field|
+        [:majors, :minors, :interests, :status].each do |field|
           if (!params[:profile][field].blank? && params[:profile][field].to_s!=attributes[field].to_s)
             current_account.profile.friends.each do |c|
               c.notifications.create(:updater_id => current_account.profile.id, :category => field.to_s, :read => false)
@@ -86,6 +86,6 @@ class ProfilesController < ApplicationController
   
   private
   def profile_params
-    params.require(:profile).permit(:first_name, :last_name, :pronouns, :class_year, :majors => [], :minors => [], :interests => [])
+    params.require(:profile).permit(:first_name, :last_name, :pronouns, :status, :class_year, :majors => [], :minors => [], :interests => [])
   end 
 end

@@ -9,7 +9,7 @@
       <% if current_account.profile.notifications.length == 0 %>
         <h4>No notifications yet.</h4>
       <% else %>
-          <% current_account.profile.notifications.each do |n| %>
+          <% current_account.profile.notifications.order("created_at DESC").each do |n| %>
           <tr>
               <td>
                 <div class="contact-frame">
