@@ -5,6 +5,7 @@ class Profile < ApplicationRecord
   has_many :admirers, through: :friend_requests
   has_many :blockages
   has_many :blockees, through: :blockages
+  has_many :notifications
   belongs_to :account
   has_one :setting
   has_one_attached :avatar

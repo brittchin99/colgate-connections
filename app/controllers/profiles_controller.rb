@@ -14,6 +14,7 @@ class ProfilesController < ApplicationController
 
   def update 
     @profile = Profile.find(params[:id])
+    attributes = {:majors => @profile.majors, :minors => @profile.minors, :interests => @profile.interests}
     unless params[:profile].nil?
       if(!params[:profile][:avatar].nil?)
         @profile.avatar.purge
@@ -25,6 +26,13 @@ class ProfilesController < ApplicationController
       end 
       if @profile.update(profile_params)
         flash[:success] = "Profile updated!"
+        [:majors, :minors, :interests].each do |field|
+          if (!params[:profile][field].blank? && params[:profile][field].to_s!=attributes[field].to_s)
+            current_account.profile.friends.each do |c|
+              c.notifications.create(:updater_id => current_account.profile.id, :category => field.to_s, :read => false)
+            end
+          end
+        end
         redirect_to profile_path(@profile)
       else 
         flash[:alert] = "Failed to update profile"

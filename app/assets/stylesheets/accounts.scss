@@ -31,3 +31,31 @@
 .pad-light {
   padding-top: 10px;
 }
+
+.feed {
+    height: auto; 
+    max-height: 39em; 
+    overflow-x: hidden;
+}
+
+.notif-time {
+   display: block;
+   font-size: 12px;
+   margin-bottom: -10px;
+   margin-top: -10px;
+}
+
+.status-update {
+  color: #777;
+  font-size: 14px;
+  margin-top: -15px;
+  margin-left: 5px;
+}
+
+.bell {
+  font-size: 20px;
+  color: white;
+  margin: -7px;
+  margin-right: -20px;
+  margin-left: -20px;
+}
