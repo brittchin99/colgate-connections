@@ -6,68 +6,30 @@
   
   <table class="table">
     <tbody>
-      <tr>
-        <td>
-          <%= image_tag("avatar.jpeg", class: "contact-photo", alt:"photo") %>
-        </td>
-        <td>
-          <div class="float-left">
-            <p><b>Amber Nguyen</b> accepted your connection request.</p>
-            <p class="notif-time">10 hours ago</p>
-          </div>
-        </td>
-      </tr>
-      
-      <tr>
-        <td>
-          <%= image_tag("avatar.jpeg", class: "contact-photo", alt:"photo") %>
-        </td>
-        <td>
-          <div class="float-left">
-            <p><b>Brittney Chin</b> updated her status:</p>
-            <p class="status-update blue">| So happy to be done with finals!</p>
-            <p class="notif-time">12 hours ago</p>
-          </div>
-        </td>
-      </tr>
-      
-      <tr>
-        <td>
-          <%= image_tag("avatar.jpeg", class: "contact-photo", alt:"photo") %>
-        </td>
-        <td>
-          <div class="float-left">
-            <p><b>Nhiem Ngo</b> added a new major: <b class="blue">Mathematical Economics</b></p>
-            <p class="notif-time">Yesterday</p>
-          </div>
-        </td>
-      </tr>
-      
-      <tr>
-        <td>
-          <%= image_tag("avatar.jpeg", class: "contact-photo", alt:"photo") %>
-        </td>
-        <td>
-          <div class="float-left">
-            <p><b>Emily Cruz Gonzalez</b> added a new photo:</p>
-            <%= image_tag("raider2.png", class: "photo-notif", alt:"photo") %>
-            <p class="notif-time">Thursday</p>
-          </div>
-        </td>
-      </tr>
-      
-      <tr>
-        <td>
-          <%= image_tag("avatar.jpeg", class: "contact-photo", alt:"photo") %>
-        </td>
-        <td>
-          <div class="float-left">
-            <p><b>Si Wei</b> added a new minor: <b class="blue">Political Science</b></p>
-            <p class="notif-time">Wednesday</p>
-          </div>
-        </td>
-      </tr>
-      
+      <% if current_account.profile.notifications.length == 0 %>
+        <h4>No notifications yet.</h4>
+      <% else %>
+          <% current_account.profile.notifications.each do |n| %>
+          <tr>
+              <td>
+                <div class="contact-frame">
+                  <% if n.updater.avatar.attached? %>
+                    <img src="<%= (url_for(n.updater.avatar)) %>">
+                  <% else %>
+                    <%= image_tag("avatar.jpeg", class: "", alt:"photo") %>
+                  <% end %>
+                </div>
+              </td>
+              <td>
+                <div class="float-left">
+                  <p> <%= n.body %></p>
+                  <p class="notif-time"><%= n.notif_time %></p>
+                </div>
+
+              </td>
+            </tr>
+          <% end %> 
+      <% end %> 
     </tbody>
   </table>  
 </div> 
