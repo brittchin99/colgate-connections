@@ -35,7 +35,12 @@ class ProfilesController < ApplicationController
       if @profile.update(profile_params)
         flash[:success] = "Profile updated!"
         [:majors, :minors, :interests, :status].each do |field|
-          if (!params[:profile][field].blank? && params[:profile][field].to_s!=attributes[field].to_s)
+          if (!params[:profile][field].blank? && params[:profile][field].to_s!=Profile.toList(attributes[field].to_s).to_s)
+            print params[:profile][field].to_s
+            puts "----"
+            print attributes[field].to_s
+            puts "-------"
+
             current_account.profile.friends.each do |c|
               c.notifications.create(:updater_id => current_account.profile.id, :category => field.to_s, :read => false)
             end
