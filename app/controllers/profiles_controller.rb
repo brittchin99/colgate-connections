@@ -19,10 +19,16 @@ class ProfilesController < ApplicationController
       if(!params[:profile][:avatar].nil?)
         @profile.avatar.purge
         @profile.avatar.attach(params[:profile][:avatar])
+        current_account.profile.friends.each do |c|
+          c.notifications.create(:updater_id => current_account.profile.id, :category => 'avatar', :read => false)
+        end
       end 
   
       if (!params[:profile][:photos].nil?)
         @profile.photos.attach(params[:profile][:photos])
+        current_account.profile.friends.each do |c|
+          c.notifications.create(:updater_id => current_account.profile.id, :category => 'photos', :read => false)
+        end
       end 
       if @profile.update(profile_params)
         flash[:success] = "Profile updated!"

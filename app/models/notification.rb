@@ -12,9 +12,10 @@ class Notification < ApplicationRecord
         elsif self.category == 'photos'
             return self.updater.first_name + ' ' + self.updater.last_name + ' uploaded a new photo.'
         else
-            return self.updater.first_name + ' ' + self.updater.last_name + ' updated their ' + self.category + '.'
+            return self.updater.first_name + ' ' + self.updater.last_name + ' updated ' + PRONOUNS[self.updater.pronouns] + ' ' + self.category + '.'
         end        
     end
     
-    CATEGORY = ['accept', 'status', 'majors', 'minors', 'interests', 'photos']
+    # CATEGORY = ['accept', 'status', 'majors', 'minors', 'interests', 'photos', 'avatar']
+    PRONOUNS = {'he/him/his' => 'his', 'she/her/hers' => 'her', 'they/them/theirs' => 'their', 'Other' => 'their'}
 end
