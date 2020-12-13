@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_09_045152) do
+ActiveRecord::Schema.define(version: 2020_12_12_182148) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -88,6 +88,18 @@ ActiveRecord::Schema.define(version: 2020_12_09_045152) do
     t.index ["profile_id"], name: "index_messages_on_profile_id"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.integer "profile_id"
+    t.integer "updater_id"
+    t.text "category"
+    t.text "content"
+    t.boolean "read"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["profile_id"], name: "index_notifications_on_profile_id"
+    t.index ["updater_id"], name: "index_notifications_on_updater_id"
+  end
+
   create_table "preferences", force: :cascade do |t|
     t.text "pronouns"
     t.text "class_years"
@@ -128,6 +140,7 @@ ActiveRecord::Schema.define(version: 2020_12_09_045152) do
   add_foreign_key "friend_requests", "profiles"
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "profiles"
+  add_foreign_key "notifications", "profiles"
   add_foreign_key "preferences", "settings"
   add_foreign_key "profiles", "accounts"
   add_foreign_key "settings", "profiles"

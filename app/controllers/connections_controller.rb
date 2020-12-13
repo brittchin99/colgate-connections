@@ -47,6 +47,9 @@ class ConnectionsController < ApplicationController
         @friend_request = current_account.profile.friend_requests.find_by(friend_id: params[:friend_id])
         if @friend_request.destroy && @connection.save && @inverse_connection.save
             # flash[:notice] = "Added connection."
+            if Setting.to_list(@friend_account.setting.notifs).include? "New Connections"
+                @friend_account.notifications.create(:updater_id => current_account.profile.id, :category => 'accept', :read => false)
+            end
         else
             # flash[:alert] = "Unable to add connection."
         end

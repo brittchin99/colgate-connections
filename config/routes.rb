@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     end
     resources :friend_requests, :only => [:index, :create, :destroy]
     resources :blockages, :only => [:index, :create, :destroy]
+    resources :notifications, :only => [:index]
 
   root :to => "homes#index"
 end

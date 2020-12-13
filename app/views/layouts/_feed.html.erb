@@ -1,0 +1,43 @@
+<head>
+    <%= stylesheet_link_tag 'accounts', media: 'all' %>
+</head>
+<div class="feed">
+  <h3 class="pad-left">Notifications</h3>
+  
+  <table class="table">
+    <tbody>
+      <% if current_account.profile.notifications.length == 0 %>
+        <div class="pad-left center">No notifications yet.</div>
+      <% else %>
+          <% current_account.profile.notifications.order("created_at DESC").each do |n| %>
+          <tr>
+              <td>
+                <div class="contact-frame">
+                  <% if n.updater.avatar.attached? %>
+                    <img src="<%= (url_for(n.updater.avatar)) %>">
+                  <% else %>
+                    <%= image_tag("avatar.jpeg", class: "", alt:"photo") %>
+                  <% end %>
+                </div>
+              </td>
+              <td>
+                <div class="float-left">
+                  <% if n.category == 'accept' %>
+                    <p><b><%= link_to "#{n.updater.first_name} #{n.updater.last_name}", profile_path(n.updater.id) %></b> accepted your connection request!</p>
+                  <% elsif n.category == 'photos' %>
+                    <p><b><%= link_to "#{n.updater.first_name} #{n.updater.last_name}", profile_path(n.updater.id) %></b> uploaded a new photo.</p>
+                  <% elsif n.category == "status" %>
+                    <p><b><%= link_to "#{n.updater.first_name} #{n.updater.last_name}", profile_path(n.updater.id) %></b> updated <%= Notification::PRONOUNS[n.updater.pronouns] %> <%= n.category %>.</p>
+                    <p class="status-update blue">| <%= n.content %></p>
+                  <% else %>
+                    <p><b><%= link_to "#{n.updater.first_name} #{n.updater.last_name}", profile_path(n.updater.id) %></b> added new <%= n.category %>: <b class="blue"><%= Profile.toList(n.content).join(" and ") %></b></p>
+                  <% end %>
+                  <p class="notif-time"><%= n.notif_time %></p>
+                </div>
+              </td>
+            </tr>
+          <% end %> 
+      <% end %> 
+    </tbody>
+  </table>  
+</div> 

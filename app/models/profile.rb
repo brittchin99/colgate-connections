@@ -5,6 +5,7 @@ class Profile < ApplicationRecord
   has_many :admirers, through: :friend_requests
   has_many :blockages
   has_many :blockees, through: :blockages
+  has_many :notifications
   belongs_to :account
   has_one :setting
   has_one_attached :avatar
@@ -41,6 +42,14 @@ class Profile < ApplicationRecord
       end
     end
     false
+  end
+  
+  def has_unread_notifications
+    if self.notifications.last == nil
+      return FALSE
+    else
+      return !self.notifications.last.read
+    end
   end
   
   def should_show(s, profile)
