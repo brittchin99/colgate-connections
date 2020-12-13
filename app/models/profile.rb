@@ -125,7 +125,7 @@ class Profile < ApplicationRecord
     contents
   end
 
-  validates :first_name, :last_name, :pronouns, :class_year, :majors, :minors, :interests, presence: true
+  validates :first_name, :last_name, :pronouns, :class_year, :majors, :interests, presence: true
 
   PRONOUNS = ['she/her/hers', 'he/him/his', 'they/them/theirs', 'Other']
   MAJORS = ["Africana and Latin American Studies","Anthropology","Applied Mathematics","Art and Art History","Asian Studies","Astrogeophysics","Astronomy/Physics","Biochemistry","Biology","Chemistry","Chinese","Classical Studies","Computer Science","Computer Science/Mathematics","Economics","Educational Studies","English","Environmental Biology","Environmental Economics","Environmental Geography","Environmental Geology","Environmental Studies","Film and Media Studies","French","Geography","Geology","German","Greek","History","International Relations","Japanese","Latin","Mathematical Economics","Mathematics","Middle Eastern and Islamic Studies","Molecular Biology","Native American Studies","Neuroscience","Peace and Conflict Studies","Philosophy","Philosophy and Religion","Physical Science","Physics","Political Science","Psychological Science","Religion","Russian and Eurasian Studies","Sociology","Spanish","Theater","Women's Studies"]
