@@ -42,7 +42,7 @@
                       <div class="received-msg">
                         <div class="received-msg-inbox">
                           <p><%= message.body %></p>
-                          <span class="time"><%= message.message_time %></span>
+                          <span class="time"><%= message.get_display_date %></span>
                         </div>
                      </div>
                     </div>
@@ -52,7 +52,7 @@
                       <div class="outgoing-chats-msg">
                         <div class="outgoing-msg-inbox">
                           <p><%= message.body %></p>
-                          <span class="time"><%= message.message_time %></span>
+                          <span class="time"><%= message.get_display_date %></span>
                         </div>
                       </div>
                     </div>
