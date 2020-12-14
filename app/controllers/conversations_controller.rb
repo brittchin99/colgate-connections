@@ -3,7 +3,8 @@ class ConversationsController < ApplicationController
     before_action :populate_info!
 
     def index
-        @conversations = Conversation.all
+        @conversations = Conversation.order('updated_at DESC')
+
     end
     
     def new
