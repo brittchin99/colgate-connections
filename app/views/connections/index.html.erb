@@ -35,7 +35,7 @@
         <h4>Suggested Connections</h4>
           <div style="width: 100%; display:table-cell;" class="center">
           <% @suggestions.each do |s| %>
-            <div class="card float-left spacer pad" style="width: 15rem; height: 14rem;">
+            <div class="card float-left spacer pad" style="width: 13rem; height: 16rem;">
               <div class="card-body center">
               <% if s.avatar.attached? %>
                 <img class= "suggested-img" src="<%= (url_for(s.avatar)) %>">

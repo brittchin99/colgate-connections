@@ -1,0 +1,98 @@
+<head>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
+</head>
+<div class="main">
+  
+  <div class="profile-container">
+    <div class="profile-row">
+      <div class="profile-column p-left">
+        <div class="circular-portrait">
+          <% if @profile.avatar.attached? %>
+            <img  src="<%= (url_for(@profile.avatar)) %>">
+          <% else %>
+            <%= image_tag("avatar.jpeg", alt:"photo") %>
+          <% end %>
+        </div>
+      </div>
+      
+    <div class="profile-column p-right">
+      <h2><%= "#{@profile.first_name} #{@profile.last_name}" %>
+      <% if (current_account.profile.setting.dating) %>
+        <%= image_tag("heart.png", class: "heart", alt:"heart") %> 
+      <% end %>
+      </h2>
+      
+      <% if current_account.profile.should_show("Pronouns", @profile)%>
+        <p id="pronouns"><%= "#{@profile.pronouns}"%></p>
+      <% end %>
+      <% if @profile.status && !@profile.status.blank? && current_account.profile.should_show("Status", @profile) && !current_account.profile.blocking(@profile)%>
+        <div id=status><%= "#{@profile.status}"%></div>
+      <% end %>
+      
+      <% if current_account.profile==@profile %>
+        <% if !@profile.status || @profile.status.blank? %>
+          <div id="status"><%= link_to "Add a Status", edit_profile_path(@profile), :class => "link" %></div> 
+          
+        <% end %>
+      <% end %>
+      
+      <% if current_account.profile.blocking(@profile) %>
+       <%= link_to "Unblock #{@profile.first_name}", blockage_path(:blockee_id => @profile), :method => :delete, :class => "btn btn-primary" %>
+      <% end %>
+      
+          <%= link_to "Update Profile", edit_profile_path(@profile), :class => "btn btn-primary" %>
+          <%= link_to "", settings_path(:id => current_account.id), :class => "btn btn-secondary view fas fa-eye" %>
+          <%= link_to "", setting_path(:id => current_account.id), :class => "btn fas fa-cog setting" %>
+      
+    </div>
+  </div>
+    <br/>
+
+      <h5><span class="fas fa-graduation-cap"/><%= "Class of #{@profile.class_year}" %></h5>
+      <%= Profile.toList(@profile.majors).join(" and ")%><%= Profile.toList(@profile.majors).length > 1 ? " Double Major" : " Major" %>
+      <br/>
+      <% if Profile.toList(@profile.minors).length > 0 %>
+        <%= Profile.toList(@profile.minors).join(" and ")%><%= Profile.toList(@profile.minors).length > 1 ? " Double Minor" : " Minor" %>
+      <% end %>
+      
+      <% if current_account.profile.should_show("Interests", @profile) %>
+        <p>Interested in <%= Profile.toList(@profile.interests).to_sentence %></p>
+      <% end %>
+      <hr/>
+      <div class="center">
+        <h3 style="color: #821019;">Upload up to 13 photos!</h3>
+      <p>Drag and drop to reorder your photos</p>
+      </div>
+            <%= render 'photos' %>
+            <div class="center">
+          <%= link_to "Save Photos", profile_path(current_account), :class => "btn btn-maroon" %>
+          <br/><br/>
+      </div>
+  </div>
+</div>
+
+    
+    
+<script>
+var el = document.getElementById("items");
+// from sortableJS
+var sortable = Sortable.create(el, {
+  group: "localStorage-example",
+  filter: ".no-drag",
+  store: {
+    get: function (sortable) {
+      var order = localStorage.getItem(sortable.options.group.name);
+      console.log(sortable.options.group)
+      return order ? order.split("|") : [];
+    },
+
+    set: function (sortable) {
+      var order = sortable.toArray();
+      localStorage.setItem(sortable.options.group.name, order.join("|"));
+    },
+  },
+});
+</script>
