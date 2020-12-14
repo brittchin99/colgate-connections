@@ -35,7 +35,7 @@
                      <span class="notif"/>
                   <% end %>
                   </h6>
-                  <p class="time"><%= conversation.last_message.body.truncate(50) %>&middot; <%= conversation.last_message.message_time %></p>
+                  <p class="time"><%= conversation.last_message.body.truncate(50) %>&middot; <%= conversation.last_message.get_display_date %></p>
                   
               </div>
           </div>
