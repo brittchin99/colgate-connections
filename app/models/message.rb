@@ -6,23 +6,24 @@ class Message < ApplicationRecord
   validates_presence_of :body, :conversation_id, :profile_id
   
   def message_time
-    created_at.in_time_zone("Eastern Time (US & Canada)").strftime("%m/%d/%y at %l:%M %p")
+    created_at.strftime("%m/%d/%y at %l:%M %p")
   end
   
   
   def get_display_date
     time = self.message_time.match(/[0-9]{1,2}:[0-9]{2} (AM|PM)/)
-    if self.created_at >= Date.today
+    message_date =self.created_at.strftime("%m/%d/%y")
+    if message_date >= Date.today.strftime("%m/%d/%y")
       return time
     end
-    if self.created_at >= Date.yesterday
+    if message_date ==  Date.yesterday.strftime("%m/%d/%y")
       return "Yesterday"  
     end
     if Range.new(self.created_at-7, self.created_at - 1).include?(Date.today)
-      day = self.created_at.in_time_zone("Eastern Time (US & Canada)").strftime("%A")
+      day = self.created_at.strftime("%A")
       return day
     else
-      return self.created_at.in_time_zone("Eastern Time (US & Canada)").strftime("%m/%d/%y")
+      return message_date
     end
   end
 end
