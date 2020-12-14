@@ -66,27 +66,7 @@
         <h3 style="color: #821019;">Upload up to 13 photos!</h3>
       <p>Drag and drop to reorder your photos</p>
       </div>
-      
-            <div class="photos" id="items">
-            <% if @profile.photos.attached? %>
-                <% @profile.photos.each do |photo| %>
-                  <img class="profile-image-square" src="<%= (url_for(photo)) %>">
-                <%end %>
-            <% end %>
-            
-            <% if @profile.photos.attachments.length < 13 %>
-            <div id="no-drag" class="no-drag profile-image-square border" style="position: relative;">
-              <div class="add-form">
-               <%= simple_form_for @profile, :url => url_for(:action => 'update', :controller => 'profiles'), :method => 'patch' do |f| %>
-                <%= f.file_field :photos, id: "f-field", required: true %>
-                <%= f.button :submit, "Add Photo", :class => "btn btn-secondary search" %>
-               <% end %>
-               </div>
-            </div>
-            <% end %>
-            
-            </div>
-            
+            <%= render 'photos' %>
             <div class="center">
           <%= link_to "Save Photos", profile_path(current_account), :class => "btn btn-maroon" %>
           <br/><br/>

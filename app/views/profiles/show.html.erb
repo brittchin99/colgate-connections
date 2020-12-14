@@ -131,17 +131,8 @@
       
       <% if current_account.profile.should_show("Photos", @profile) %>
           
-            <div class="photos">
-            <% if @profile.photos.attached? %>
-                <% @profile.photos.each do |photo| %>
-                  <img class="profile-image-square" src="<%= (url_for(photo)) %>">
-                <%end %>
-            <% elsif current_account.profile != @profile%>
-              <br/>
-              <h5 class="center pad">No photos yet.</h5>
-            <% end %>
-            
-            </div>
+            <%= render 'photos' %>
+
         <% else %>
           <br/>
           <h5 class="center pad"><p class="fas fa-lock"/> This user's photos are private</h5>
@@ -154,3 +145,19 @@
     <% end %>
   </div>
 </div>
+
+<script>
+var el = document.getElementById("items");
+// from sortableJS
+var sortable = Sortable.create(el, {
+  group: "localStorage-example",
+  filter: ".no-drag",
+  disabled: true,
+  store: {
+    get: function (sortable) {
+      var order = localStorage.getItem(sortable.options.group.name);
+      return order ? order.split("|") : [];
+    }
+  },
+});
+</script>

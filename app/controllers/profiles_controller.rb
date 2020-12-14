@@ -15,6 +15,7 @@ class ProfilesController < ApplicationController
   def update_photos
     @account = current_account
     @profile = @account.profile
+    @in_update = true
   end
 
   def update 
