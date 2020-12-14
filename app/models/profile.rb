@@ -101,11 +101,12 @@ class Profile < ApplicationRecord
     if matches.length > 5
       matches = matches.sort_by { |k,v| -v }[0..4].to_h
     end
-    
+    suggestions = Profile.none
     matches.each do |key,value|
-      profiles = profiles.or(profiles.where("cast(id as text) LIKE (?)", key.to_s))
+      suggestions = suggestions.or(profiles.where("cast(id as text) LIKE (?)", key.to_s))
     end
-    return profiles
+    
+    return suggestions
   end
   
   def compare(current, other)
