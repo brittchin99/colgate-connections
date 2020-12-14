@@ -3,7 +3,7 @@
   <% @profile.photos.each do |photo| %>
       <img class="profile-image-square" src="<%= (url_for(photo)) %>">
   <%end %>
-<% elsif current_account.profile != @profile%>
+<% else %>
     <br/>
     <h5 class="center pad">No photos yet.</h5>
 <% end %>

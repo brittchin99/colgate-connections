@@ -130,9 +130,7 @@
       
       
       <% if current_account.profile.should_show("Photos", @profile) %>
-          
             <%= render 'photos' %>
-
         <% else %>
           <br/>
           <h5 class="center pad"><p class="fas fa-lock"/> This user's photos are private</h5>
