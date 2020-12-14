@@ -33,3 +33,31 @@ admin.profile.photos.attach(io: File.open(Rails.root.join('app', 'assets', 'imag
 admin.profile.photos.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'raider2.png')), filename: 'raider2.png')
 admin.profile.photos.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'raider3.png')), filename: 'raider3.png')
 admin.profile.photos.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'raider4.png')), filename: 'raider4.png')
+
+nhiem = Account.create!(:email => 'nngo@colgate.edu', :admin => false, :password => "colgate13")
+nhiem.profile.update!(:first_name => "Nhiem", :last_name => "Ngo",
+    :pronouns => "he/him/his", :class_year => 2021, :majors => "Computer Science", :minors => "Philosophy", :interests => "Video Games")
+
+j1 = Account.create!(:email => 'mcarey@colgate.edu', :admin => false, :password => "colgate13")
+j1.profile.update!(:first_name => "Mariah", :last_name => "Carey",
+    :pronouns => "she/her/hers", :class_year => 2022, :majors => "Music", :interests => ["Cooking", "Music"])
+
+j2 = Account.create!(:email => 'ntesla@colgate.edu', :admin => false, :password => "colgate13")
+j2.profile.update!(:first_name => "Nikola", :last_name => "Tesla",
+    :pronouns => "he/him/his", :class_year => 2022, :majors => "Physics", :minors => "Mathematics", :interests => "Reading")
+
+s1 = Account.create!(:email => 'wshakespeare@colgate.edu', :admin => false, :password => "colgate13")
+s1.profile.update!(:first_name => "William", :last_name => "Shakespeare",
+    :pronouns => "they/them/theirs", :class_year => 2023, :majors => "English", :minors => "Philosophy", :interests => ["Culture", "Reading"])
+
+s2 = Account.create!(:email => 'cnolan@colgate.edu', :admin => false, :password => "colgate13")
+s2.profile.update!(:first_name => "Christopher", :last_name => "Nolan",
+    :pronouns => "Other", :class_year => 2023, :majors => "Film and Media Studies", :minors => "Art and Art History", :interests => "Photography", :status => "Good morning")
+    
+f1 = Account.create!(:email => 'gramsey@colgate.edu', :admin => false, :password => "colgate13")
+f1.profile.update!(:first_name => "Gordon", :last_name => "Ramsey",
+    :pronouns => "he/him/his", :class_year => 2024, :majors => "Peace and Conflict Studies", :interests => "Cooking")
+
+f2 = Account.create!(:email => 'sfreud@colgate.edu', :admin => false, :password => "colgate13")
+f2.profile.update!(:first_name => "Sigmund", :last_name => "Freud",
+    :pronouns => "they/them/theirs", :class_year => 2024, :majors => "Psychology", :minors => "Neuroscience", :interests => "Reading")
