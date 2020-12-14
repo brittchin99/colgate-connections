@@ -123,17 +123,15 @@
       
       <% if current_account.profile == @profile %>
       <div class="center">
-          <button class="btn btn-maroon">Edit Photos</button>
+        <%= link_to "Edit Photos", profiles_photo_update_path, :class => "btn btn-maroon" %>
+          <!--<button class="btn btn-maroon">Edit Photos</button>-->
       </div>
       <% end %>
       
       
       <% if current_account.profile.should_show("Photos", @profile) %>
-          <% if current_account.profile == @profile %>
-            <div class="photos" id="items">
-          <% else %>
+          
             <div class="photos">
-          <% end %>
             <% if @profile.photos.attached? %>
                 <% @profile.photos.each do |photo| %>
                   <img class="profile-image-square" src="<%= (url_for(photo)) %>">
@@ -141,17 +139,6 @@
             <% elsif current_account.profile != @profile%>
               <br/>
               <h5 class="center pad">No photos yet.</h5>
-            <% end %>
-            
-            <% if current_account.profile == @profile && @profile.photos.attachments.length < 13 %>
-            <div id="no-drag" class="no-drag profile-image-square border" style="position: relative;">
-              <div class="add-form">
-               <%= simple_form_for @profile, :url => url_for(:action => 'update', :controller => 'profiles'), :method => 'patch' do |f| %>
-                <%= f.file_field :photos, id: "f-field", required: true %>
-                <%= f.button :submit %>
-               <% end %>
-               </div>
-            </div>
             <% end %>
             
             </div>
@@ -167,26 +154,3 @@
     <% end %>
   </div>
 </div>
-
-    
-    
-<script>
-var el = document.getElementById("items");
-// from sortableJS
-var sortable = Sortable.create(el, {
-  group: "localStorage-example",
-  filter: ".no-drag",
-  store: {
-    get: function (sortable) {
-      var order = localStorage.getItem(sortable.options.group.name);
-      console.log(sortable.options.group)
-      return order ? order.split("|") : [];
-    },
-
-    set: function (sortable) {
-      var order = sortable.toArray();
-      localStorage.setItem(sortable.options.group.name, order.join("|"));
-    },
-  },
-});
-</script>

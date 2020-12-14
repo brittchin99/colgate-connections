@@ -11,6 +11,11 @@ class ProfilesController < ApplicationController
   def edit
     @profile = Profile.find(params[:id])
   end
+  
+  def update_photos
+    @account = current_account
+    @profile = @account.profile
+  end
 
   def update 
     @profile = Profile.find(params[:id])
@@ -37,7 +42,10 @@ class ProfilesController < ApplicationController
         end
       end 
       if @profile.update(profile_params)
-        flash[:success] = "Profile updated!"
+        if !params[:profile][:photos].nil?
+          redirect_to profiles_photo_update_path
+        else
+          flash[:success] = "Profile updated!"
         
         [:majors, :minors, :interests, :status].each do |field|
           if (!params[:profile][field].blank? && params[:profile][field].to_s!=Profile.toList(attributes[field].to_s).to_s)
@@ -59,6 +67,7 @@ class ProfilesController < ApplicationController
           end
         end
         redirect_to profile_path(@profile)
+        end
       else 
         flash[:alert] = "Failed to update profile"
         respond_to do |format|
