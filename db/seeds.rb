@@ -48,14 +48,14 @@ j2.profile.update!(:first_name => "Nikola", :last_name => "Tesla",
 
 s1 = Account.create!(:email => 'wshakespeare@colgate.edu', :admin => false, :password => "colgate13")
 s1.profile.update!(:first_name => "William", :last_name => "Shakespeare",
-    :pronouns => "they/them/theirs", :class_year => 2023, :majors => "English", :minors => "Philosophy", :interests => ["Culture", "Reading"])
+    :pronouns => "they/them/theirs", :class_year => 2023, :majors => "English", :minors => "Philosophy", :interests => ["Culture", "Reading"], :status => "To be or not to be?")
 
 s2 = Account.create!(:email => 'cnolan@colgate.edu', :admin => false, :password => "colgate13")
 s2.profile.update!(:first_name => "Christopher", :last_name => "Nolan",
     :pronouns => "Other", :class_year => 2023, :majors => "Film and Media Studies", :minors => "Art and Art History", :interests => "Photography", :status => "Good morning")
     
-f1 = Account.create!(:email => 'gramsey@colgate.edu', :admin => false, :password => "colgate13")
-f1.profile.update!(:first_name => "Gordon", :last_name => "Ramsey",
+f1 = Account.create!(:email => 'gramsay@colgate.edu', :admin => false, :password => "colgate13")
+f1.profile.update!(:first_name => "Gordon", :last_name => "Ramsay",
     :pronouns => "he/him/his", :class_year => 2024, :majors => "Peace and Conflict Studies", :interests => "Cooking")
 
 f2 = Account.create!(:email => 'sfreud@colgate.edu', :admin => false, :password => "colgate13")
