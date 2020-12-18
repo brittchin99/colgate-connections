@@ -16,7 +16,6 @@
   <% @conversations.each do |conversation| %>
   
   <% if conversation.has_messages? %>
-     <% if conversation.sender_id == current_account.profile.id ||      conversation.receiver_id == current_account.profile.id %>
       <% if conversation.sender_id == current_account.profile.id %>
         <% receiver = Profile.find(conversation.receiver_id) %>
       <% else %>
@@ -41,7 +40,6 @@
           </div>
         </div>
         <% end %>
-     <% end %>
     <% end %>
   <% end %>
 </div>

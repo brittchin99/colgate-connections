@@ -3,8 +3,10 @@ class ConversationsController < ApplicationController
     before_action :populate_info!
 
     def index
-        @conversations = Conversation.order('updated_at DESC')
-
+        @conversations = Conversation.where('cast(sender_id as text) LIKE ? OR cast(receiver_id as text) LIKE ?', current_account.profile.id.to_s, current_account.profile.id.to_s)
+            .joins('LEFT JOIN messages ON messages.conversation_id = conversations.id')
+            .group('conversations.id')
+            .order('MAX(messages.created_at) DESC')
     end
     
     def new
