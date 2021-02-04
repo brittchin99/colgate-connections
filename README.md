@@ -3,6 +3,7 @@ Colgate Connections is a social application created for students at Colgate Univ
 
 ![Colgate Connections Logo](https://drive.google.com/uc?export=view&id=1_i6jORkHwudb1-phZF4iBm2RIqaIsEff)
 
+Heroku Link: https://limitless-springs-65918.herokuapp.com/ 
 
 ## Motivation
 Colgate Connections is designed to connect Colgate students during Covid-19. As most on-campus events have been moved to a virtual platform, it has become harder to make new friends and meet new people. Colgate Connections aims to overcome this social barrier by allowing students to find others with similar interests in a fun, Colgate-specific way.
